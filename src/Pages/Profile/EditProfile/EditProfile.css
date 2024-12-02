@@ -1,0 +1,24 @@
+.edit-profile-form-wrapper span.GeneralButton {
+  display: flex;
+  justify-content: end;
+}
+.edit-profile-form-wrapper label {
+  font-size: 14px;
+  font-weight: 400;
+  color: #000;
+  margin-bottom: 8px;
+  font-family: var(--PoppinsRegular);
+}
+
+.edit-profile-form-wrapper span.GeneralButton {
+  display: flex;
+  justify-content: end;
+}
+.edit-profile-form-wrapper .form-group {
+  margin: 10px 0px;
+}
+
+.edit-profile-form-wrapper .form-group input {
+  height: 47px;
+  border: 1px solid #8d8d8d;
+}

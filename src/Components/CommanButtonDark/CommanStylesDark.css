@@ -1,0 +1,29 @@
+.darkButton>button {
+    background: #ffffff;
+    color: #000;
+    border: 1px solid black;
+    font-family: var(--FormulaCondensed) !important;
+    font-style: normal;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.22px;
+    border-radius: 10px;
+    /* border: none; */
+    text-transform: uppercase;
+    width: 145px;
+    height: 45px;
+    display: flex;
+    /* line-height: 154px; */
+    align-content: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+
+.darkButton>button:hover {
+    background: #fff;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color) !important;
+    border-radius: 10px;
+    transition: .3s ease-in-out
+}

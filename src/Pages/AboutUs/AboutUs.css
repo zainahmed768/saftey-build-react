@@ -1,0 +1,54 @@
+.about_sec {
+    height: 500px;
+}
+
+.img-one {
+    position: relative;
+    width: 270px;
+    right: 50px;
+}
+
+.img-two {
+    position: absolute;
+    top: 90px;
+    left: 10px;
+    width: 270px;
+}
+
+.center_content_box {
+    height: 180px;
+    padding: 0px 30px;
+}
+
+.heading_balck_section {
+    font-family: var(--FormulaCondensed) !important;
+    font-size: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: white;
+}
+
+.resonance_card {
+    width: 200px;
+    position: relative;
+}
+
+.vertical_line {
+    position: absolute;
+    left: -38px;
+    top: -40px;
+    border-left: 1px solid var(--light-gray);
+    height: 153px;
+    margin: 0 10px;
+}
+
+.training_course_card{
+    width: 280px;
+}
+.training_course_img{
+    width: 280px;
+}
+.training_course_body{
+    width: 270px;
+
+}

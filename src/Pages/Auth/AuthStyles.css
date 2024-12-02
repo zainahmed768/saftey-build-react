@@ -1,0 +1,98 @@
+.auth_banner {
+    background: url("../../assets/images/auth_img.png");
+    background-size: cover;
+    height: 100vh;
+}
+
+.auth_inner {
+    position: relative;
+    top: 8%;
+    left: 25%;
+    padding: 50px;
+}
+
+.auth_fields_ {
+    width: 75%;
+}
+.auth_inner h1 {
+    color: #121212;
+    font-size: 67px;
+}
+/* styles.css */
+
+.ant-segmented-item-selected {
+    background-color: #f3c13a !important;
+    color: #14252A;
+    font-family: var(--FormulaCondensed);
+}
+:where(.css-dev-only-do-not-override-14i19y2).ant-segmented {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 4px;
+    color: rgba(0, 0, 0, 0.65);
+    font-size: 19px;
+    letter-spacing: 0.3px;
+    line-height: 1.5714285714285714;
+    list-style: none;
+    font-family: var(--FormulaCondensed);
+    display: inline-block;
+    background: #f5f5f5;
+    border-radius: 6px;
+    transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+.ant-segmented-item {
+    padding: 5px;
+    color: #14252A;
+    font-family: var(--FormulaCondensed);
+    background-color:white;
+}
+
+.ant-segmented-item-label {
+    padding: 5px;
+    color: #14252A;
+    font-family: var(--FormulaCondensed);
+    padding: 0 !important;
+}
+/* .ant-segmented-item:hover {
+background-color: white;
+}
+.ant-segmented-item-label:hover {
+    background-color: white;
+    } */
+:where(.css-dev-only-do-not-override-14i19y2).ant-segmented .ant-segmented-group {
+    background-color: white;
+}
+.ant-tabs-tab {
+    font-size: 18px;
+    font-weight: bold;
+    background-color: white;
+}
+.ant-segmented-item:hover{
+    background-color: transparent;
+}
+
+@media (min-width: 200px) and (max-width:1050px) {
+    .auth_section {
+        overflow: hidden;
+    }
+
+    .auth_inner {
+        position: relative;
+        top: 20%;
+        left: unset;
+        padding: 20px;
+    }
+
+    .auth_fields_ {
+        width: 100%;
+    }
+
+    .auth_banner {
+        display: none;
+    }
+}
+.ant-otp .ant-otp-input {
+    height: 50px;
+    font-family: var(--PoppinsBold);
+
+}

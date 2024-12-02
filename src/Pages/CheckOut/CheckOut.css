@@ -1,0 +1,11 @@
+.gray_back_box{
+     background-color: #F6F6F6;
+     padding: 30px;
+     border-radius: 20px;
+}
+.dark_gray_box{
+    background-color: var(--secondary-color);
+    padding: 25px 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+}

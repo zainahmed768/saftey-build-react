@@ -1,0 +1,29 @@
+.certificates-card-wrapper .certificates-img-wrapper {
+  flex: 0 0 43%;
+}
+.certificates-card-wrapper {
+  background: #f6f6f6;
+  padding: 20px;
+  border-radius: 9px;
+}
+.certificates-card-wrapper .progress .progress-bar {
+  background: #e8b71b;
+}
+.certificates-card-wrapper  .progress {
+  background: #262626;
+  border-radius: 14px;
+  height: 12px;
+}
+.certificates-content-wrapper .score-wrapper p {
+    font-size: 14px;
+    font-family: 'PoppinsMedium';
+    margin-bottom: 10px;
+}
+
+.certificates-content-wrapper .completion-level p {
+    margin-bottom: 6px;
+}
+.certificates-content-wrapper h4 {
+    font-family: 'PoppinsBold';
+    font-size: 18px;
+}

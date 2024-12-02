@@ -1,0 +1,39 @@
+.accordion {
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
+}
+
+.accordion-item {
+    border: none !important;
+}
+.open{
+    transition: all 5s;
+}
+.accordion-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 25px 10px;
+    cursor: pointer;
+    background-color: #ffffff;
+    border-bottom: 1px solid #00000057;
+    
+}
+
+.accordion-header h4 {
+    font-family: var(--PoppinsMedium);
+    font-size: 16px;
+}
+
+.accordion-content {
+    padding: 15px;
+    background-color: #ffffff00;
+    font-family: var(--PoppinsRegular);
+    font-size: 14px;
+    border-top: 1px solid #D8C69A;
+}
+.img_arrow{
+    width: 30px;
+    position: relative;
+    right: 25px;
+}

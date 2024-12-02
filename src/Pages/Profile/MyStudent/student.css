@@ -1,0 +1,112 @@
+.student-search-wrapper .form-group {
+  display: flex;
+  border: 1px solid #aaaaaa;
+  padding: 6px;
+  border-radius: 4px;
+  background: #fcfcfc;
+}
+.student-search-wrapper .form-group input {
+  border: 0px;
+  background: #fcfcfc;
+}
+.student-search-wrapper .form-group input::placeholder {
+  color: #565656;
+  text-transform: capitalize;
+  font-weight: 400;
+  font-size: 14px;
+  font-family: var(--PoppinsMedium);
+}
+.student-search-wrapper .form-group button {
+  background: #e8b71b;
+  border: 0px;
+  height: 37px;
+  width: 37px;
+  border-radius: 5px;
+}
+.profile__wrapp h2.student-heaing {
+  font-size: 37px;
+}
+.profile__wrapp span.add-btn-student button {
+  width: 124px;
+}
+.student-card-wrapper {
+  background: #f6f6f6;
+  padding: 40px 20px;
+  border-radius: 10px;
+}
+.student-card-wrapper .student-info-wrapper .student-info-img-wrapper img {
+  height: 87px;
+  width: 87px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.student-card-wrapper .student-info-wrapper .student-info-img-wrapper {
+  text-align: center;
+}
+.student-card-wrapper
+  .student-info-wrapper
+  .student-info-img-wrapper
+  .student-name-wrapper
+  p {
+  font-size: 12px;
+}
+.student-course-info-wrapper .course-overview-wrapper {
+  background: #fff;
+  padding: 15px;
+  border-radius: 14px;
+  margin-top: 20px;
+}
+.student-card-wrapper .student-info-wrapper {
+  flex: 0 0 30%;
+}
+.student-card-wrapper .student-course-info-wrapper {
+  flex: 0 0 67%;
+}
+.student-course-info-wrapper .course-overview-wrapper ul li {
+  font-size: 12px;
+  font-family: "PoppinsRegular";
+  color: #14252a;
+  padding: 6px 0px;
+  border-bottom: 1px solid #000;
+}
+.course-overview-wrapper .course-heading-wrap h5 {
+  font-size: 15px;
+  font-family: var(--PoppinsSemiBold);
+}
+.course-overview-wrapper .course-heading-wrap p {
+  font-size: 13px;
+  font-family: "PoppinsRegular";
+  color: #000;
+}
+.course-completeing-wrap h6 {
+  font-size: 13px;
+  color: #000;
+  font-family: "PoppinsRegular";
+}
+.course-stats-wrapper ul li {
+  border: 0px !important;
+  padding: 3px 0px !important;
+}
+.course-completeing-wrap .progress {
+  background: #262626;
+  border-radius: 14px;
+  height: 12px;
+}
+.course-completeing-wrap .progress .progress-bar {
+  background: #e8b71b;
+}
+.completion-level p {
+  font-size: 14px;
+}
+.completion-level p span.complete {
+  font-family: "PoppinsMedium";
+}
+.chapters-tags-wrapper .chapter-tag-wrapper span.badge {
+  font-size: 12px;
+  font-weight: 400;
+  font-family: "PoppinsRegular";
+  height: 30px;
+  display: flex;
+  align-items: center;
+}

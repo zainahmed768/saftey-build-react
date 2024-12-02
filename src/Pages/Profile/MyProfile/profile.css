@@ -1,0 +1,375 @@
+.profile__sidebar {
+  background: var(--dark-color);
+  border: 1px solid #ffffff3d;
+  position: sticky !important;
+  top: 80px;
+  width: 300px;
+}
+
+#profile_heading {
+  font-family: var(--Grotesk-font);
+  font-weight: 900;
+}
+
+.img__wrapp label {
+  right: 60px;
+  top: 10px;
+  background: black;
+  width: 30px;
+  height: 30px;
+  border-radius: 50px;
+}
+
+.img__wrapp label img {
+  width: 16px;
+}
+
+.profile__img {
+  border: 6px solid #ffffff;
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+}
+
+.profile__info {
+  max-width: 270px;
+  margin: auto;
+  text-align: center;
+  margin-top: -80px;
+  position: relative;
+  z-index: 9;
+}
+
+.sidebar__list {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.sidebar__list a {
+  border-bottom: 1px solid #000;
+  list-style: none;
+  text-decoration: none;
+}
+.sidebar__list a:hover {
+  list-style: none;
+  text-decoration: none;
+  color: #000;
+}
+.sidebar__list a:first-child {
+  border-top: 1px solid #000;
+  list-style: none;
+  text-decoration: none;
+}
+
+.sidebar__list li a {
+  text-decoration: none;
+  display: flex !important;
+  justify-content: start;
+  margin-left: 40px;
+}
+
+.sidebar__list li a span {
+  text-decoration: none;
+  align-items: center;
+}
+
+/* My address */
+/* .address_card input[type="radio"]:checked+.radio-span::before {
+    content: "";
+    position: relative;
+    bottom: 80%;
+    left: 80%;
+    font-family: var(--primary-medium-font);
+  } */
+.profile__wrapp p.label {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.profile__wrapp p.value {
+  font-family: "poppins";
+  font-weight: bold;
+  font-size: 18px;
+}
+.profile__wrapp p .password {
+  font-size: 14px;
+}
+.profile__wrapp p.value a {
+  font-family: "FormulaCondensed";
+  text-decoration: underline;
+  font-size: 18px;
+  margin-left: 20px;
+  letter-spacing: 0.5px;
+}
+.profile__wrapp p.value {
+  font-family: "poppins";
+  font-weight: bold;
+  font-size: 18px;
+}
+.form-check-input:checked {
+  background-color: #000000;
+  border-color: #000000;
+}
+
+.house_icon {
+  border-radius: 50px;
+  background-color: var(--dark-color);
+  padding: 10px;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.address_card #check_box {
+  background-color: #000000 !important;
+  width: 130px;
+  position: absolute;
+  top: 0;
+  right: 0px;
+  padding-right: 10px;
+  padding-bottom: 2px;
+}
+
+.inner_order_no h3 {
+  color: black;
+}
+
+.inner_order_no p {
+  color: black;
+}
+
+.form-check-input {
+  width: 13px;
+  height: 13px;
+  margin-top: 0.25em;
+  vertical-align: top;
+  margin-right: 6px;
+  background-color: #000;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  border: 1px solid white;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-print-color-adjust: exact;
+  color-adjust: exact;
+}
+
+.form-check-input:checked {
+  background-color: #000000;
+  border-color: #ffffff;
+}
+
+.form-check-input::before {
+  content: "";
+  position: relative;
+  bottom: 80%;
+  left: 80%;
+  font-family: var(--primary-medium-font);
+}
+
+/*  */
+.address_card {
+  background-color: var(--light-color);
+  padding: 0px 10px 10px 10px 10px;
+  border: 1px solid var(--dark-color);
+  height: 150px;
+  align-content: center;
+  position: relative;
+}
+
+/* my orders */
+
+.light-bg-div {
+  background: rgba(255, 255, 255, 0);
+  padding: 70px 69px;
+  margin: 10px 0;
+}
+
+.my__orders-table {
+  border-spacing: 10px 10px;
+  margin: 10px 0;
+}
+
+.border-1 {
+  border: 1px solid rgb(0, 0, 0);
+}
+
+.my__orders-table tr td:not(:last-child) {
+  position: relative;
+}
+
+/* .my__orders-table tr td::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  height: 50%;
+  width: 1px;
+  background: #676767;
+  transform: translateY(-50%);
+} */
+.my__orders-table tr td:not(:first-child) {
+  border-left: 1px solid #676767 !important;
+}
+table.my__orders-table tbody tr {
+  border: 1px solid #676767 !important;
+  background: #fff !important;
+}
+.my__orders-table tr td:last-child::before {
+  content: none;
+}
+
+.my__orders-table tr td:nth-child(4):before {
+  content: none;
+}
+
+.my__orders-table .tag {
+  max-width: 90%;
+  margin: auto;
+  padding: 4px 0;
+}
+
+.my-order-product-img {
+  width: 50px;
+  height: 50px;
+  background-color: var(--light-gray);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* order Details */
+.order_status_pending {
+  background-color: #00fb0a;
+  width: 173px;
+  height: 25px;
+  padding: 5px;
+  text-align: center;
+  align-content: center;
+  display: flex;
+  align-items: center;
+}
+
+.order_status_Approved {
+  background-color: #00fb0a;
+  width: 135px;
+  height: 25px;
+  padding: 5px;
+  text-align: center;
+  align-content: center;
+  display: flex;
+  align-items: center;
+}
+
+.order_status_completed {
+  background-color: rgb(0, 30, 128);
+}
+
+.order_status_reject {
+  background-color: rgb(241, 14, 14);
+}
+
+.black_box_order_details {
+  max-width: 250px;
+  display: flex;
+  padding: 5px 5px;
+  background: black;
+  align-items: center;
+  justify-content: start;
+  margin: 7px 0px;
+}
+
+.order_details_list {
+  background-color: #f4f4f4;
+  width: 556px;
+  padding: 30px;
+}
+
+.order_details_list_overFlow {
+  max-width: 556px;
+  margin: 30px auto 0px auto;
+  overflow-y: scroll;
+  height: 310px;
+  overflow-y: scroll;
+}
+
+.product_img {
+  width: 80px;
+  height: 80px;
+}
+
+/* /// */
+.refun_order_details {
+  border: 1px solid black;
+  display: flex;
+  align-items: center;
+  /* justify-content: space-around; */
+  width: 372px;
+  height: 78px;
+  padding: 0px 20px;
+  position: relative;
+  margin: 15px 0px;
+}
+.inner_order_date {
+  position: relative;
+  left: 90px;
+}
+
+.refun_order_details .inner_order_no::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 180px;
+  height: 70%;
+  width: 1px;
+  background: #020202;
+  transform: translateY(-50%);
+}
+
+@media (min-width: 200px) and (max-width: 992px) {
+  .my__orders-table {
+    border-spacing: 10px 10px;
+    margin: 10px 0;
+    width: 500px !important;
+    overflow-x: scroll;
+  }
+  .refun_order_details {
+    width: auto !important;
+  }
+  .order_details_list {
+    background-color: #f4f4f4;
+    width: 100%;
+    padding: 30px;
+  }
+
+  .profile__sidebar {
+    background: var(--dark-color);
+    border: 1px solid #ffffff3d;
+    position: sticky !important;
+    top: 80px;
+    width: auto;
+  }
+
+  .my__orders-table tr td::before {
+    content: "";
+    width: 0px;
+  }
+
+  .address_card {
+    height: 120px;
+    padding: 0px;
+    width: 330px;
+    /* margin: auto; */
+  }
+
+  .pagination-section {
+    display: flex;
+    justify-content: center;
+  }
+}

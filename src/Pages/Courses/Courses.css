@@ -1,0 +1,78 @@
+.search_box {
+  position: absolute;
+  top: 3px;
+  right: 10px;
+  background: var(--primary-color);
+  border-radius: 5px;
+  width: 34px;
+  height: 34px;
+}
+
+.search_box img {
+  padding: 8px !important;
+}
+
+.yellow_box {
+  background-color: var(--primary-color);
+  width: 38px !important;
+  height: 38px !important;
+  padding: 6px 9px;
+  border-radius: 5px;
+}
+
+.dots_bar {
+  position: relative;
+  border-radius: 5px;
+  border: 1px solid #d1d1d1;
+  width: 38px !important;
+  height: 38px !important;
+  right: 35px;
+}
+
+.dots_bar img {
+  padding: 8px !important;
+}
+
+.ant-pagination .ant-pagination-next .ant-pagination-item-link {
+  border: 1px solid #d1d1d1;
+  border-radius: 5px;
+  background: #fcfcfc;
+  font-family: var(--PoppinsRegular);
+}
+
+.ant-pagination .ant-pagination-prev .ant-pagination-item-link {
+  border: 1px solid #d1d1d1;
+  border-radius: 5px;
+  background: #fcfcfc;
+  font-family: var(--PoppinsRegular);
+}
+
+.ant-pagination .ant-pagination-item {
+  border: 0px;
+  font-family: var(--PoppinsRegular);
+}
+
+.anticon svg {
+  display: inline-block;
+  color: black;
+  font-family: var(--PoppinsBold);
+  font-weight: 900;
+}
+
+.main-header-mobile .anticon svg {
+  color: #fff;
+}
+
+.course-heading-wrapper h1 {
+  font-size: 29px;
+}
+
+a.course-wishlist-btn {
+  font-size: 14px;
+  letter-spacing: 0.4px;
+}
+
+.course-btns-wrapper button.complete-quiz-btn {
+  font-size: 12px;
+  letter-spacing: 0.4px;
+}

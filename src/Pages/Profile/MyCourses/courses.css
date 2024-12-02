@@ -1,0 +1,59 @@
+.courses-card-wrapper .courses-img-wrapper {
+  flex: 0 0 35%;
+}
+.courses-card-wrapper .courses-content-wrapper {
+  flex: 0 0 41%;
+}
+.courses-card-wrapper .courses-btn-wrapper button.btn-review {
+  background: transparent;
+  border: 0px;
+  padding: 0px;
+  font-family: var(--PoppinsBold) !important;
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 600 !important;
+}
+.courses-card-wrapper .courses-content-wrapper h4 {
+  font-family: "PoppinsBold";
+  font-size: 18px;
+}
+.courses-card-wrapper {
+  background: #f6f6f6;
+  border-radius: 8px;
+  padding: 12px;
+}
+.courses-card-wrapper .courses-content-wrapper .progress {
+  background: #262626;
+  border-radius: 14px;
+  height: 12px;
+}
+.courses-card-wrapper .courses-content-wrapper .progress .progress-bar {
+  background: #e8b71b;
+}
+.courses-card-wrapper .courses-content-wrapper p {
+  font-size: 13px;
+  font-family: "PoppinsRegular";
+  color: #000;
+}
+.courses-card-wrapper .courses-img-wrapper img {
+  height: 161px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.rating-star-wrapper svg.star-svg {
+  width: 30px;
+  height: 30px;
+}
+.write-reviews {
+  background: #f6f6f6;
+  border-radius: 8px;
+  padding: 12px;
+}
+.allcourse-wrapper{
+    background: #f6f6f6;
+    border-radius: 8px;
+}
+.courses-content-wrapper span.value b {
+    font-size: 13px;
+    font-family: 'PoppinsBold';
+}

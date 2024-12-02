@@ -1,0 +1,103 @@
+.profile__wrapp table.order-table th.level-5 {
+  font-size: 12px;
+  font-family: "PoppinsBold";
+  text-transform: uppercase;
+  color: #030303;
+}
+.product-wrapper span.level-6 {
+  font-family: "PoppinsBold";
+  font-size: 14px;
+}
+table.order-table {
+  border-spacing: 0 10px !important; /* Space between rows */
+  width: 100% !important; /* Make the table take full width */
+}
+table.order-table tbody {
+  background: #fff !important;
+}
+.product-wrapper .my-order-product-img {
+  width: 86px;
+  height: 65px;
+  border-radius: 10px;
+}
+.order-table th.order-img-col {
+  width: 40%;
+}
+table.order-table p.order-no {
+  font-family: "PoppinsRegular";
+  font-size: 12px;
+}
+table.order-table p.dated {
+  font-family: "PoppinsRegular";
+  font-size: 14px;
+}
+table.order-table p.price {
+  font-family: "PoppinsRegular";
+  font-size: 14px;
+}
+table.order-table tbody tr {
+  border: 1px solid #676767 !important;
+  background: #fff !important;
+  border-radius: 6px;
+  margin: 10px 0px;
+  /* display: block; */
+}
+
+/* table.order-table {
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    width: 100%; 
+} */
+
+table.order-table tbody tr {
+  border: 1px solid #676767;
+  background: #fff;
+  border-radius: 6px;
+}
+
+table.order-table tbody td {
+  padding: 10px; /* Adds space inside each cell */
+  text-align: center; /* Centers text in each cell */
+}
+table.order-table tbody td:not(:first-child) {
+  border-left: 1px solid #000 !important;
+}
+
+table.order-table tbody tr td:first-child {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+table.order-table tbody tr td:last-child {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.order-table th.order-img-col {
+  width: 40%;
+}
+
+.order-table th.order-no-col {
+  width: 19%;
+}
+
+.order-table th.dated-col {
+  width: 21%;
+}
+
+.order-table th.amount-col {
+  width: 25%;
+}
+
+table.order-table tbody tr td .product-wrapper span {
+  font-size: 12px;
+  line-height: 1;
+}
+.product-wrapper .my-order-product-img img {
+  width: 76px;
+  height: 65px;
+  object-fit: cover;
+}
+.profile__wrapp {
+  padding-bottom: 140px !important;
+}

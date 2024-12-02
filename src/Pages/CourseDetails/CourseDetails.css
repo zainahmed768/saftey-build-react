@@ -1,0 +1,70 @@
+/* .rounded_img{
+    height: 800px;
+} */
+.rounded_img img {
+  border-radius: 20px;
+}
+
+.rating {
+  font-family: var(--PoppinsBold) !important;
+  font-size: 12px;
+  text-transform: uppercase;
+  margin: 0;
+  color: black;
+}
+
+.learn-section {
+  background-color: #f6f6f6;
+  border-radius: 20px;
+  margin: 20px 0;
+}
+.video-player-wrapper .video-play-wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+/* .learn-list{
+    padding: 0;
+} */
+.learn-list{
+    padding-left: 20px;
+}
+.learn-list li::before {
+  content: "";
+  width: 20px;
+  height: 20px;
+  background-image: url("../../assets/images/check-circle.png");
+  display: block;
+  background-repeat: no-repeat;
+}
+.learn-list li {
+  /* list-style-image: url("../../assets/images/check-circle.png"); */
+  font-family: var(--PoppinsRegular);
+  color: black;
+  font-size: 12px;
+  padding: 0 0 5px 0;
+  display: flex;
+}
+
+.video_listing_sec {
+  position: relative;
+  margin: 20px 0;
+}
+
+.vertical_video_list_line {
+  position: absolute;
+  top: 50%;
+  left: 49%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  border-left: 1px solid var(--light-gray);
+  height: 440px;
+  margin: 0 10px;
+}
+
+@media (min-width: 200px) and (max-width: 992px) {
+  .vertical_video_list_line {
+    display: none;
+  }
+}

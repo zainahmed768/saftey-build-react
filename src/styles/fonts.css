@@ -1,0 +1,50 @@
+@font-face {
+  font-family: "FormulaCondensed";
+  font-display: swap;
+  src: local("FormulaCondensed"), url("/src/assets/fonts/FormulaCondensed-Bold.otf") format("truetype");
+}
+@font-face {
+  font-family: "FormulaCondensed_light";
+  font-display: swap;
+  src: local("FormulaCondensed_light"), url("/src/assets/fonts/FormulaCondensed-Light.otf") format("truetype");
+}
+@font-face {
+  font-family: "PoppinsRegular";
+  font-display: swap;
+  src: local("PoppinsRegular"), url("/src/assets/fonts/Poppins/Poppins-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "PoppinsMedium";
+  font-display: swap;
+  src: local("PoppinsMedium"), url("/src/assets/fonts/Poppins/Poppins-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "PoppinsBold";
+  font-display: swap;
+  src: local("PoppinsBold"), url("/src/assets/fonts/Poppins/Poppins-Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "PoppinsBlack";
+  font-display: swap;
+  src: local("PoppinsBlack"), url("/src/assets/fonts/Poppins/Poppins-Black.ttf") format("truetype");
+}
+@font-face {
+  font-family: "PoppinsExtraBold";
+  font-display: swap;
+  src: local("PoppinsExtraBold"), url("/src/assets/fonts/Poppins/Poppins-ExtraBold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "PoppinsLight";
+  font-display: swap;
+  src: local("PoppinsLight"), url("/src/assets/fonts/Poppins/Poppins-Light.ttf") format("truetype");
+}
+
+
+@font-face {
+  font-family: "PoppinsSemiBold";
+  font-display: swap;
+  src: local("PoppinsLight"), url("/src/assets/fonts/Poppins/Poppins-SemiBold.ttf") format("truetype");
+}
