@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../Profile/MyProfile/profile.css";
 import ProfileLayout from "../../../layout/ProfileLayout/ProfileLayout";
 import CommanButton from "../../../Components/CommanButton/CommanButton";
 import { Link } from "react-router-dom";
+import { useGetProfileQuery } from "../../../redux/services/AuthServices";
+import { useSelector } from "react-redux";
 const MyProfile = () => {
+  // const { data: getProfile } = useGetProfileQuery();
+  const user = useSelector((state) => state?.AuthReducer?.user);
+  // const user = getProfile?.response?.data;
+  // const [user, setUser] = useState(getProfile?.response?.data);
+
   return (
     <>
       <ProfileLayout type={"team leader"}>
@@ -26,7 +33,7 @@ const MyProfile = () => {
               First Name
             </p>
             <p class="m-0 secondary-bold-font bold-font  dark-color value level-5">
-              Jordan Gilbert
+              {user?.first_name}
             </p>
           </div>
           <div class="col-md-4 my-md-4 my-2 info ">
@@ -34,7 +41,7 @@ const MyProfile = () => {
               Last Name
             </p>
             <p class="m-0 secondary-bold-font bold-font dark-color value level-5">
-              Jordan Gilbert
+              {user?.last_name}
             </p>
           </div>
           <div class="col-md-4 my-md-4 my-2 info ">
@@ -42,7 +49,7 @@ const MyProfile = () => {
               Phone Number
             </p>
             <p class="m-0 secondary-bold-font bold-font dark-color value level-5">
-              123456789
+              {user?.phone}
             </p>
           </div>
         </div>
@@ -52,7 +59,7 @@ const MyProfile = () => {
               Email Address
             </p>
             <p class="m-0 secondary-bold-font bold-font dark-color value level-5">
-              Jordangilbert@sample.com
+              {user?.email}
             </p>
           </div>
           <div class="info col-md-6 px-md-3 px-0 my-md-3 my-2">

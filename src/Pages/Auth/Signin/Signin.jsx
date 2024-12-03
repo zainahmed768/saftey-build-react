@@ -1,19 +1,75 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../../Auth/AuthStyles.css";
 import { Link, useNavigate } from "react-router-dom";
 import { Checkbox } from "antd";
 import CommanButton from "../../../Components/CommanButton/CommanButton";
+import { signInValidation } from "../../../constant/HelperFunction";
+import {
+  useLoginMutation,
+  useAuthRegisterMutation,
+} from "../../../redux/services/AuthServices";
+import { setUserToken } from "../../../redux/reducers/AuthReducer";
+import { useDispatch } from "react-redux";
+import CommonInputField from "../../../Components/CommonInputField/CommonInputField";
+import Alert from "../../../Components/SweetAlert/Alert";
 
 const Signin = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const onChange = (e) => {
     console.log(`checked = ${e.target.checked}`);
   };
-  const navigate = useNavigate();
+  const [authLogin, response] = useLoginMutation();
+  const [login, setLogin] = useState({
+    email: "",
+    password: "",
+  });
+  const [formErrors, setFormErrors] = useState(null);
 
   const handleRedirection = () => {
     navigate("/my-profile");
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (signInValidation(login, setFormErrors)) {
+      let data = new FormData();
+      data.append("email", login.email);
+      data.append("password", login.password);
+      authLogin(data);
+    }
+  };
+  useEffect(() => {
+    if (response?.isSuccess) {
+      dispatch(setUserToken(response?.data?.response?.data));
+
+      Alert({
+        title: "Success",
+        text: response?.data?.message,
+      });
+      navigate("/my-profile");
+      setLogin({
+        email: "",
+        password: "",
+      });
+    }
+
+    if (response?.isError) {
+      if (response?.error?.data?.errors?.email[0]) {
+        Alert({
+          title: "Error",
+          text: response?.error?.data?.errors?.email[0],
+          iconStyle: "error",
+        });
+      } else {
+        Alert({
+          title: "Error",
+          text: response?.error?.data?.message,
+          iconStyle: "error",
+        });
+      }
+    }
+  }, [response]);
   return (
     <>
       <section className="auth_section">
@@ -45,11 +101,18 @@ const Signin = () => {
                   <label className="med-font level-8 text-capitalize mb-1">
                     Email
                   </label>
-                  <input
-                    type="email"
-                    name=""
-                    id=""
+                  <CommonInputField
                     className="form-control-1"
+                    type={"email"}
+                    name="email"
+                    value={login.email}
+                    onChange={(e) =>
+                      setLogin({
+                        ...login,
+                        email: e.target.value,
+                      })
+                    }
+                    errors={formErrors?.email ? formErrors?.email : null}
                   />
                 </div>
 
@@ -57,11 +120,19 @@ const Signin = () => {
                   <label className="med-font level-8 text-capitalize mb-1">
                     Password
                   </label>
-                  <input
-                    type="email"
-                    name=""
-                    id=""
+
+                  <CommonInputField
                     className="form-control-1"
+                    type={"password"}
+                    name="email"
+                    value={login.password}
+                    onChange={(e) =>
+                      setLogin({
+                        ...login,
+                        password: e.target.value,
+                      })
+                    }
+                    errors={formErrors?.password ? formErrors?.password : null}
                   />
                 </div>
                 <div className="row">
@@ -89,11 +160,12 @@ const Signin = () => {
                     </div>
                   </div>
                 </div>
-                <div className="" onClick={handleRedirection}>
+                <div className="" onClick={handleSubmit}>
                   <CommanButton
                     label={"sign in"}
-                    onClick={handleRedirection}
+                    onClick={handleSubmit}
                     style={{ width: "100%" }}
+                    disabled={response?.isLoading}
                   />
                 </div>
               </div>

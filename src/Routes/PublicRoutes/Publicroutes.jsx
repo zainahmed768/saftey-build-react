@@ -29,6 +29,7 @@ import MyCertificates from "../../Pages/Profile/MyCertificates/MyCertificates";
 import ViewCourses from "../../Pages/Profile/Courses/ViewCourses";
 import QuizPage from "../../Pages/Profile/Quiz/Quiz";
 import UserChangePassword from "../../Pages/Auth/ChangePassword/UserChangePassword";
+import VerifyOTP from "../../Pages/Auth/OTP/VerifyOTP";
 
 const PublicRoutes = () => {
   return (
@@ -42,6 +43,7 @@ const PublicRoutes = () => {
         <Route path="/sign-up" element={<Signup />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/otp" element={<OTP />} />
+        <Route path="/verify-otp" element={<VerifyOTP />} />
         <Route path="/courses" element={<Courses />} />
         <Route path="/my-cart" element={<MyCart />} />
         <Route path="/check-out" element={<CheckOut />} />
