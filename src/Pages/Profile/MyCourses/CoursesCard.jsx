@@ -16,17 +16,18 @@ const CoursesCard = (props) => {
   return (
     <>
       {courses?.map((item) => {
+        console.log(item, "sujcsdjn");
         return (
           <div className="courses-card-wrapper d-flex gap-2 justify-content-between my-3">
             <div className="courses-img-wrapper">
               <figure className="mb-0">
-                <Link to="/view-courses">
-                  <img src={item?.images} className="img-fluid" alt="" />
+                <Link to={`/view-courses/${item?.slug}`}>
+                  <img src={item?.thumbnail} className="img-fluid" alt="" />
                 </Link>
               </figure>
             </div>
             <div className="courses-content-wrapper">
-              <h4>{item?.name}</h4>
+              <h4>{item?.title}</h4>
               {location?.pathname == "/my-wishlist" && (
                 <>
                   <div className="mb-2 d-flex gap-2 align-items-center">
@@ -41,14 +42,14 @@ const CoursesCard = (props) => {
                   </div>
                 </>
               )}
-              <p>{item?.des}</p>
+              <p>{item?.description}</p>
               {location.pathname !== "/my-wishlist" && (
                 <>
                   <div class="progress">
                     <div
                       class="progress-bar"
                       role="progressbar"
-                      style={{ width: `${item?.completion}%` }}
+                      style={{ width: `${0}%` }}
                       aria-valuenow="50"
                       aria-valuemin="0"
                       aria-valuemax="100"
@@ -56,8 +57,7 @@ const CoursesCard = (props) => {
                   </div>
                   <div className="completion-level mt-2">
                     <p>
-                      {item?.completion}%{" "}
-                      <span className="complete">Completed</span>
+                      {0}% <span className="complete">Completed</span>
                     </p>
                   </div>
                 </>

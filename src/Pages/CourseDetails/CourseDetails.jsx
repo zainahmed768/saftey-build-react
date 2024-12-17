@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import PrimaryHeader from "../../layout/Header/PrimaryHeader";
 import "../CourseDetails/CourseDetails.css";
 import img from "../../assets/images/course-detail.png";
-import { Col, Row, List, Divider, Skeleton } from "antd";
+import { Col, Row, List, Divider, Skeleton, Spin } from "antd";
 import { FaStar } from "react-icons/fa";
 import CommanButton from "../../Components/CommanButton/CommanButton";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import icon1 from "../../assets/images/hours-on-demand.png";
 import icon2 from "../../assets/images/mobile-icon.png";
 import icon3 from "../../assets/images/articles.png";
@@ -18,9 +18,24 @@ import { FeaturedReviews } from "../../data";
 import FeedBackCard from "../../Components/FeedBackCard/FeedBackCard";
 import Footer from "../../layout/footer/Footerr";
 import { FaCirclePlay } from "react-icons/fa6";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../../redux/reducers/CartReducer";
+import { useGetSingleCourseQuery } from "../../redux/services/CourseServices";
+import Alert from "../../Components/SweetAlert/Alert";
 const CourseDetails = () => {
-  console.log(FeaturedReviews, "FeaturedReviews");
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const param = useParams();
+  const checkUser = useSelector((state) => state?.AuthReducer?.userToken);
+  const cart = useSelector((state) => state?.CartReducer?.cart);
 
+  const [showControls, setShowControls] = useState();
+
+  const { data: getSingleCourse, isLoading } = useGetSingleCourseQuery(
+    param?.id
+  );
+  let courseDetail = getSingleCourse?.response?.data;
+  console.log(getSingleCourse, "ishdkvb");
   const rating = 9;
   const renderStars = (rating) => {
     const stars = [];
@@ -32,11 +47,47 @@ const CourseDetails = () => {
     return stars;
   };
 
-  const data = [
-    "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis",
-    "Praesentium voluptatum deleniti atque corrupti quos dolores et quas",
-    "Molestias excepturi sint occaecati cupiditate",
-  ];
+  const handleControls = () => {
+    setShowControls((showControls) => !showControls);
+  };
+
+  const handleCart = (item) => {
+    if (!checkUser) {
+      return Alert({
+        title: "Error",
+        text: "Please Login To Add Products",
+        iconStyle: "error",
+      });
+    }
+    const checkCourseInCart = cart.some((course) => course?.id == item?.id);
+    if (!checkCourseInCart) {
+      dispatch(addToCart(item));
+      Alert({
+        title: "Success",
+        text: `${item?.title} is added to the cart`,
+        iconStyle: "success",
+      });
+    } else {
+      Alert({
+        title: "Warning",
+        text: `Product is Already in the cart`,
+        iconStyle: "warning",
+      });
+    }
+  };
+  if (isLoading) {
+    return (
+      <div className="loader-wrapper">
+        <Spin
+          size="large"
+          style={{
+            color: "#000",
+          }}
+        />
+        ;
+      </div>
+    );
+  }
   return (
     <>
       <PrimaryHeader
@@ -60,7 +111,7 @@ const CourseDetails = () => {
                 <Col xs={24} sm={24} md={14}>
                   <div className="pt-3 course-heading-wrapper">
                     <h1 className="heading-font level-4-lg text-uppercase dark-color letter-2">
-                      Version 3. respirators and CPC chapters
+                      {courseDetail?.title}
                     </h1>
                   </div>
                 </Col>
@@ -73,26 +124,22 @@ const CourseDetails = () => {
               </Row>
 
               <div className="col-lg-10">
-                <p className="reg-font level-8">
-                  At vero eos et accusamus et iusto odio dignissimos ducimus qui
-                  blanditiis praesentium voluptatum deleniti atque corrupti quos
-                  dolores et quas molestias excepturi sint occaecati cupiditate
-                  non provident, similique sunt in culpa qui officia deserunt
-                  mollitia animi, id est laborum et dolorum fuga. Et harum
-                  quidem re
-                </p>
+                <p className="reg-font level-8">{courseDetail?.short_des}</p>
               </div>
 
               <div className="row">
                 <div className="col-lg-2">
                   <span className="reg-font level-8">Price</span>
                   <h1 className="heading-font level-5 text-uppercase dark-color letter-2">
-                    $39.95
+                    ${courseDetail?.price}
                   </h1>
                 </div>
 
                 <div className="col-lg-4 my-auto">
-                  <CommanButton label={"add to cart"} link={"/my-cart"} />
+                  <CommanButton
+                    label={"add to cart"}
+                    onClick={(e) => handleCart(courseDetail)}
+                  />
                 </div>
 
                 <div className="col-lg-3 my-auto">
@@ -115,13 +162,24 @@ const CourseDetails = () => {
                   What You Will Learn
                 </h3>
               </Col>
+              {courseDetail?.what_you_will_learn && (
+                <div className="row">
+                  <div className="col-lg-12 px-lg-0">
+                    <ul className="learn-list">
+                      {JSON.parse(courseDetail?.what_you_will_learn).map(
+                        (learn) => {
+                          return <li>{learn}</li>;
+                        }
+                      )}
+                    </ul>
+                  </div>
+                </div>
+              )}
 
-              <div className="row">
-                <div className="col-lg-6 px-lg-0">
+              {/* <div className="col-lg-6 px-lg-0">
                   <ul className="learn-list">
                     <li>
                       At vero eos et accusamus et iusto odio dignissimos ducimus
-                      qui{" "}
                     </li>
                     <li>
                       praesentium voluptatum deleniti atque corrupti quos
@@ -129,21 +187,8 @@ const CourseDetails = () => {
                     </li>
                     <li>molestias excepturi sint occaecati cupiditate </li>
                   </ul>
-                </div>
-
-                <div className="col-lg-6 px-lg-0">
-                  <ul className="learn-list">
-                    <li>
-                      At vero eos et accusamus et iusto odio dignissimos ducimus
-                    </li>
-                    <li>
-                      praesentium voluptatum deleniti atque corrupti quos
-                      dolores et quas{" "}
-                    </li>
-                    <li>molestias excepturi sint occaecati cupiditate </li>
-                  </ul>
-                </div>
-              </div>
+                </div> */}
+              {/* </div> */}
             </div>
           </div>
 
@@ -154,15 +199,7 @@ const CourseDetails = () => {
               description
             </h3>
             <p className="reg-font level-8 dark-color">
-              Lorem ipsum dolor sit amet consectetur. Egestas aliquam felis at
-              condimentum ut ultrices erat sed eu. Phasellus amet pulvinar
-              fringilla posuere adipiscing viverra. Mattis nulla nisi sit tortor
-              magna quam proin. Velit lacinia pellentesque mattis quam commodo
-              ac. Dui imperdiet morbi duis risus urna convallis eget. Metus a
-              felis nec arcu neque eu vitae sit. Eleifend vitae vitae congue et
-              ut urna quisque et mauris. Nisl sed orci convallis et placerat
-              euismod eget. Non feugiat ut vulputate donec ut dolor non
-              porttitor.
+              {courseDetail?.description}
             </p>
           </div>
 
@@ -171,11 +208,7 @@ const CourseDetails = () => {
               requirements
             </h3>
             <p className="reg-font level-8 dark-color">
-              Lorem ipsum dolor sit amet consectetur. Egestas aliquam felis at
-              condimentum ut ultrices erat sed eu. Phasellus amet pulvinar
-              fringilla posuere adipiscing viverra. Mattis nulla nisi sit tortor
-              magna quam proin. Velit lacinia pellentesque mattis quam commodo
-              ac. Dui imperdiet morbi duis ris
+              {courseDetail?.requirements}
             </p>
           </div>
 
@@ -269,10 +302,19 @@ const CourseDetails = () => {
               introductory video
             </h3>
             <div className="video-player-wrapper position-relative">
-              <img src={centerd_img} alt="" className="img-fluid" />
-              <div className="video-play-wrap">
-                <FaCirclePlay size={40} color="#fff" />
-              </div>
+              <video
+                src={courseDetail?.introductory_video}
+                width={"100%"}
+                poster={courseDetail?.thumbnail}
+                onClick={handleControls}
+                controls={showControls}
+              />
+              {/* <img src={centerd_img} alt="" className="img-fluid" /> */}
+              {!showControls && (
+                <div className="video-play-wrap">
+                  <FaCirclePlay size={40} color="#fff" />
+                </div>
+              )}
             </div>
           </div>
 
@@ -282,155 +324,33 @@ const CourseDetails = () => {
             </h3>
             <Row justify="space-between" align="middle" className="my-2">
               <Divider type="vertical" className="vertical_video_list_line" />
-              <Col xs={24} sm={24} md={11}>
-                <h6 className=" semi-b-font level-6 text-uppercase dark-color">
-                  Version 3. Respirators And CPC Chapters
-                </h6>
-                <p className="med-font level-7">
-                  sque mattis quam commodo ac. Dui imperdiet morbi duis ris
-                </p>
+              {console.log(courseDetail, "dosjnsd")}
+              {courseDetail?.chapters?.map((chapter, i) => {
+                return (
+                  <Col xs={24} sm={24} md={11}>
+                    <h6 className=" semi-b-font level-6 text-uppercase dark-color">
+                      {chapter?.title}
+                    </h6>
+                    <p className="med-font level-7">{chapter?.description}</p>
 
-                <span>
-                  <span>
-                    {" "}
-                    <img
-                      src={video_icon}
-                      alt=""
-                      className="img-fluid"
-                      width="20"
-                    />
-                  </span>
-                  <span className="med-font level-8 secondary-3 ps-2 pt-lg-1">
-                    11 Minute
-                  </span>
-                </span>
-                <Divider style={{ borderColor: "rgb(0 0 0 / 40%)" }} />
-              </Col>
-
-              <Col xs={24} sm={24} md={11}>
-                <h6 className=" semi-b-font level-6 text-uppercase dark-color">
-                  Version 3. Respirators And CPC Chapters
-                </h6>
-                <p className="med-font level-7">
-                  sque mattis quam commodo ac. Dui imperdiet morbi duis ris
-                </p>
-
-                <span>
-                  <span>
-                    {" "}
-                    <img
-                      src={video_icon}
-                      alt=""
-                      className="img-fluid"
-                      width="20"
-                    />
-                  </span>
-                  <span className="med-font level-8 secondary-3 ps-2 pt-lg-1">
-                    11 Minute
-                  </span>
-                </span>
-                <Divider style={{ borderColor: "rgb(0 0 0 / 40%)" }} />
-              </Col>
-
-              <Col xs={24} sm={24} md={11}>
-                <h6 className=" semi-b-font level-6 text-uppercase dark-color">
-                  Version 3. Respirators And CPC Chapters
-                </h6>
-                <p className="med-font level-7">
-                  sque mattis quam commodo ac. Dui imperdiet morbi duis ris
-                </p>
-
-                <span>
-                  <span>
-                    {" "}
-                    <img
-                      src={video_icon}
-                      alt=""
-                      className="img-fluid"
-                      width="20"
-                    />
-                  </span>
-                  <span className="med-font level-8 secondary-3 ps-2 pt-lg-1">
-                    11 Minute
-                  </span>
-                </span>
-                <Divider style={{ borderColor: "rgb(0 0 0 / 40%)" }} />
-              </Col>
-
-              <Col xs={24} sm={24} md={11}>
-                <h6 className=" semi-b-font level-6 text-uppercase dark-color">
-                  Version 3. Respirators And CPC Chapters
-                </h6>
-                <p className="med-font level-7">
-                  sque mattis quam commodo ac. Dui imperdiet morbi duis ris
-                </p>
-
-                <span>
-                  <span>
-                    {" "}
-                    <img
-                      src={video_icon}
-                      alt=""
-                      className="img-fluid"
-                      width="20"
-                    />
-                  </span>
-                  <span className="med-font level-8 secondary-3 ps-2 pt-lg-1">
-                    11 Minute
-                  </span>
-                </span>
-                <Divider style={{ borderColor: "rgb(0 0 0 / 40%)" }} />
-              </Col>
-
-              <Col xs={24} sm={24} md={11}>
-                <h6 className=" semi-b-font level-6 text-uppercase dark-color">
-                  Version 3. Respirators And CPC Chapters
-                </h6>
-                <p className="med-font level-7">
-                  sque mattis quam commodo ac. Dui imperdiet morbi duis ris
-                </p>
-
-                <span>
-                  <span>
-                    {" "}
-                    <img
-                      src={video_icon}
-                      alt=""
-                      className="img-fluid"
-                      width="20"
-                    />
-                  </span>
-                  <span className="med-font level-8 secondary-3 ps-2 pt-lg-1">
-                    11 Minute
-                  </span>
-                </span>
-                <Divider style={{ borderColor: "rgb(0 0 0 / 40%)" }} />
-              </Col>
-
-              <Col xs={24} sm={24} md={11}>
-                <h6 className=" semi-b-font level-6 text-uppercase dark-color">
-                  Version 3. Respirators And CPC Chapters
-                </h6>
-                <p className="med-font level-7">
-                  sque mattis quam commodo ac. Dui imperdiet morbi duis ris
-                </p>
-
-                <span>
-                  <span>
-                    {" "}
-                    <img
-                      src={video_icon}
-                      alt=""
-                      className="img-fluid"
-                      width="20"
-                    />
-                  </span>
-                  <span className="med-font level-8 secondary-3 ps-2 pt-lg-1">
-                    11 Minute
-                  </span>
-                </span>
-                <Divider style={{ borderColor: "rgb(0 0 0 / 40%)" }} />
-              </Col>
+                    <span>
+                      <span>
+                        {" "}
+                        <img
+                          src={video_icon}
+                          alt=""
+                          className="img-fluid"
+                          width="20"
+                        />
+                      </span>
+                      <span className="med-font level-8 secondary-3 ps-2 pt-lg-1">
+                        11 Minute
+                      </span>
+                    </span>
+                    <Divider style={{ borderColor: "rgb(0 0 0 / 40%)" }} />
+                  </Col>
+                );
+              })}
             </Row>
           </div>
 

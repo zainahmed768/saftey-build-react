@@ -10,8 +10,14 @@ import CoursesCard from "../../Components/CoursesCard/CoursesCard";
 import { FeaturedCourses } from "../../data";
 import CommanButtonDark from "../../Components/CommanButtonDark/CommanButtonDark";
 import { Link, useNavigate } from "react-router-dom";
+import { usePagesQuery } from "../../redux/services/SiteSettingServices";
+import { useAllCoursesQuery } from "../../redux/services/CourseServices";
+import { Spin } from "antd";
 const Home = () => {
-  console.log(FeaturedCourses, "FeaturedCourses");
+  const { data: homepageContent, isLoading } = usePagesQuery("home");
+  const { data: allcourses } = useAllCoursesQuery();
+  let homepage = homepageContent?.response?.data;
+  let allCourses = allcourses?.response?.data;
 
   var settings = {
     dots: false,
@@ -49,19 +55,37 @@ const Home = () => {
   };
   const navigate = useNavigate();
 
-  const onClick = () => {
-    navigate("/course-details");
+  const onClick = (item) => {
+    navigate("/course-details/" + item?.id, {
+      state: {
+        course: item,
+      },
+    });
   };
 
-
+  console.log(allCourses, "allCourses");
+  if (isLoading) {
+    return (
+      <div className="loader-wrapper">
+        <Spin
+          size="large"
+          style={{
+            color: "#000",
+          }}
+        />
+        ;
+      </div>
+    );
+  }
   return (
     <>
       <Header />
 
       <section className="main_banner">
         <div className="banner_heading">
-          <h1>Welcome to Saftey built</h1>
-          <h1> online Hazewoper training</h1>
+          {/* <h1>Welcome to Saftey built</h1>
+          <h1> online Hazewoper training</h1> */}
+          <h1>{homepage?.home_banner_heading}</h1>
           <div className="d-flex justify-content-center mt-3">
             <CommanButton label={"Lets start"} link={"/courses"} />
           </div>
@@ -70,73 +94,27 @@ const Home = () => {
       {/* <div className="bg-danger"> */}
 
       <Slider {...settings} className="rotate_line_1">
-        <div className="rotate_text">
-          <h3>8-hour hazwoper</h3>
-        </div>
-        <div className="rotate_text">
-          <h3>8-hour hazwoper</h3>
-        </div>
-        <div className="rotate_text">
-          <h3>8-hour hazwoper</h3>
-        </div>
-        <div className="rotate_text">
-          <h3>8-hour hazwoper</h3>
-        </div>
-        <div className="rotate_text">
-          <h3>8-hour hazwoper</h3>
-        </div>
-        <div className="rotate_text">
-          <h3>8-hour hazwoper</h3>
-        </div>
-
-        <div className="rotate_text">
-          <h3>8-hour hazwoper</h3>
-        </div>
-        <div className="rotate_text">
-          <h3>8-hour hazwoper</h3>
-        </div>
-        <div className="rotate_text">
-          <h3>8-hour hazwoper</h3>
-        </div>
-        <div className="rotate_text">
-          <h3>8-hour hazwoper</h3>
-        </div>
+        {Array(10)
+          .fill(homepage?.homepage_banner_ticker)
+          .map((ticker) => {
+            return (
+              <div className="rotate_text">
+                <h3>{ticker}</h3>
+              </div>
+            );
+          })}
       </Slider>
 
       <Slider {...settings2} className="rotate_line_2">
-        <div className="rotate_text">
-          <h3>8-hour hazwoper</h3>
-        </div>
-        <div className="rotate_text">
-          <h3>8-hour hazwoper</h3>
-        </div>
-        <div className="rotate_text">
-          <h3>8-hour hazwoper</h3>
-        </div>
-        <div className="rotate_text">
-          <h3>8-hour hazwoper</h3>
-        </div>
-        <div className="rotate_text">
-          <h3>8-hour hazwoper</h3>
-        </div>
-        <div className="rotate_text">
-          <h3>8-hour hazwoper</h3>
-        </div>
-        <div className="rotate_text">
-          <h3>8-hour hazwoper</h3>
-        </div>
-        <div className="rotate_text">
-          <h3>8-hour hazwoper</h3>
-        </div>
-        <div className="rotate_text">
-          <h3>8-hour hazwoper</h3>
-        </div>
-        <div className="rotate_text">
-          <h3>8-hour hazwoper</h3>
-        </div>
-        <div className="rotate_text">
-          <h3>8-hour hazwoper</h3>
-        </div>
+        {Array(10)
+          .fill(homepage?.homepage_banner_ticker)
+          .map((ticker) => {
+            return (
+              <div className="rotate_text">
+                <h3>{ticker}</h3>
+              </div>
+            );
+          })}
       </Slider>
       {/* </div> */}
 
@@ -147,23 +125,13 @@ const Home = () => {
           <div className="row">
             <div className="col-lg-6">
               <h1 className="level-3-sm heading-font dark-color text-uppercase">
-                Why choose Safety Built?
+                {homepage?.homepage_section_1_heading}
               </h1>
 
-              <p className="level-6 reg-font">
-                Safety Built offers high quality online training that’s based
-                upon years of classroom training experience. SafetyBuilt is the
-                perfect choice for anyone who wants to prioritize safety on
-                construction sites. Our courses are designed to provide site
-                workers with the knowledge and skills they need to identify
-                potential hazards, mitigate risks, and promote a culture of
-                safety in the workplace. By choosing SafetyBuilt, you can be
-                confident that you are investing in the safety and wellbeing of
-                your team, as well as ensuring compliance with industry
-                standards and regulations. With experienced instructors,
-                flexible course options, and a commitment to excellence,
-                SafetyBuilt is the smart choice for site safety training.
-              </p>
+              <p
+                className="level-6 reg-font"
+                dangerouslySetInnerHTML={{ __html: homepage?.content }}
+              ></p>
 
               <CommanButton label={"Learn more"} link={"/about-us"} />
             </div>
@@ -203,11 +171,11 @@ const Home = () => {
             </p>
           </div>
           <div className="row">
-            {FeaturedCourses?.map((item, key) => (
+            {allCourses?.map((item, key) => (
               <div className="col-lg-4" key={key}>
                 <CoursesCard
-                  onClick={onClick}
-                  img={item?.image}
+                  onClick={(e) => onClick(item)}
+                  img={item?.course_img}
                   label={item?.label}
                   title={item?.title}
                   price={item?.price}

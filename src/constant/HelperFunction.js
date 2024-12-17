@@ -188,7 +188,10 @@ export const contactFormValidation = (formData, setFormErrors) => {
     }
     errors.first_name.push("First name is required");
     isValid = false;
-  } else if (formData?.first_name?.length < 2 || formData?.first_name?.length > 50) {
+  } else if (
+    formData?.first_name?.length < 2 ||
+    formData?.first_name?.length > 50
+  ) {
     if (!errors?.first_name) {
       errors.first_name = [];
     }
@@ -203,7 +206,10 @@ export const contactFormValidation = (formData, setFormErrors) => {
     }
     errors.last_name.push("Last name is required");
     isValid = false;
-  } else if (formData?.last_name?.length < 2 || formData?.last_name?.length > 50) {
+  } else if (
+    formData?.last_name?.length < 2 ||
+    formData?.last_name?.length > 50
+  ) {
     if (!errors?.last_name) {
       errors.last_name = [];
     }
@@ -233,7 +239,9 @@ export const contactFormValidation = (formData, setFormErrors) => {
     }
     errors.email.push("Email is required");
     isValid = false;
-  } else if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(formData?.email)) {
+  } else if (
+    !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(formData?.email)
+  ) {
     if (!errors?.email) {
       errors.email = [];
     }
@@ -248,6 +256,99 @@ export const contactFormValidation = (formData, setFormErrors) => {
     }
     errors.message.push("Message cannot exceed 500 characters");
     isValid = false;
+  }
+
+  setFormErrors(errors);
+  return isValid;
+};
+
+export const checkoutFormValidation = (formData, setFormErrors) => {
+  let isValid = true;
+  let errors = {};
+
+  // Helper function to add errors
+  const addError = (field, message) => {
+    if (!errors[field]) {
+      errors[field] = [];
+    }
+    errors[field].push(message);
+    isValid = false;
+  };
+
+  // First name validation
+  if (!formData || !formData?.firstName) {
+    addError("firstName", "First name is required");
+  } else if (
+    formData?.firstName?.length < 2 ||
+    formData?.firstName?.length > 50
+  ) {
+    addError("firstName", "First name must be between 2 and 50 characters");
+  }
+
+  // Last name validation
+  if (!formData || !formData?.lastName) {
+    addError("lastName", "Last name is required");
+  } else if (
+    formData?.lastName?.length < 2 ||
+    formData?.lastName?.length > 50
+  ) {
+    addError("lastName", "Last name must be between 2 and 50 characters");
+  }
+
+  // Phone number validation
+  if (!formData || !formData?.phone) {
+    addError("phone", "Phone number is required");
+  } else if (!/^\d{10}$/.test(formData?.phone)) {
+    addError("phone", "Phone number must be 10 digits");
+  }
+
+  // Email validation
+  if (!formData || !formData?.email) {
+    addError("email", "Email is required");
+  } else if (
+    !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(formData?.email)
+  ) {
+    addError("email", "Please enter a valid email address");
+  }
+
+  // Address Line 1 validation
+  if (!formData || !formData?.addressLine1) {
+    addError("addressLine1", "Address Line 1 is required");
+  }
+
+  // Address Line 2 validation (optional)
+  if (formData?.addressLine2 && formData?.addressLine2?.length > 100) {
+    addError("addressLine2", "Address Line 2 cannot exceed 100 characters");
+  }
+
+  // City validation
+  if (!formData || !formData?.city) {
+    addError("city", "City is required");
+  }
+
+  // Country validation
+  if (!formData || !formData?.country) {
+    addError("country", "Country is required");
+  }
+
+  // State validation
+  if (!formData || !formData?.state) {
+    addError("state", "State is required");
+  }
+
+  // Postcode validation
+  if (!formData || !formData?.postcode) {
+    addError("postcode", "Postcode is required");
+  } else if (!/^\d{5,10}$/.test(formData?.postcode)) {
+    addError("postcode", "Postcode must be between 5 and 10 digits");
+  }
+
+  // Additional Info validation (optional)
+  if (formData?.additionalInfo && formData?.additionalInfo.length > 500) {
+    addError(
+      "additionalInfo",
+      "Additional information cannot exceed 500 characters"
+    );
   }
 
   setFormErrors(errors);

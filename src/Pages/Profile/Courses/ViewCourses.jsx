@@ -6,10 +6,16 @@ import CourseContent from "./CourseContent";
 import "../Courses/courses.css";
 import { coursesContent } from "../../../constant/data";
 import { Modal, Button } from "react-bootstrap";
-import { Checkbox, Divider } from "antd";
+import { Checkbox, Divider, Spin } from "antd";
 import PaymentModal from "../../../Components/Payment/Payment";
+import { useParams } from "react-router-dom";
+import { useMyCourseDetailQuery } from "../../../redux/services/AuthServices";
 
 const ViewCourses = () => {
+  const param = useParams();
+  console.log(param, "view data");
+  const { data: getCourse, isLoading } = useMyCourseDetailQuery(param?.slug);
+  let viewCourse = getCourse?.response?.data;
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -17,6 +23,19 @@ const ViewCourses = () => {
   const onChange = (e) => {
     console.log(`checked = ${e.target.checked}`);
   };
+
+  if (isLoading) {
+    return (
+      <div className="loader-wrapper">
+        <Spin
+          size="large"
+          style={{
+            color: "#000",
+          }}
+        />
+      </div>
+    );
+  }
   return (
     <>
       <ProfileLayout type={"team leader"} sidebar={false}>
@@ -36,16 +55,9 @@ const ViewCourses = () => {
               <div className="view-course-content-wrapper mt-3">
                 <div className="view-course-headings-wrapper">
                   <h2 className="heading-font text-uppercase">
-                    Version 3. respirators and CPC chapters
+                    {viewCourse?.title}
                   </h2>
-                  <p>
-                    At vero eos et accusamus et iusto odio dignissimos ducimus
-                    qui blanditiis praesentium voluptatum deleniti atque
-                    corrupti quos dolores et quas molestias excepturi sint
-                    occaecati cupiditate non provident, similique sunt in culpa
-                    qui officia deserunt mollitia animi, id est laborum et
-                    dolorum fuga. Et harum quidem re
-                  </p>
+                  <p>{viewCourse?.description}</p>
                 </div>
                 <div className="view-course-btn-wrapper d-flex gap-3 mb-5">
                   <span className={`GeneralButton`} onClick={handleShow}>
@@ -157,11 +169,16 @@ const ViewCourses = () => {
                       </li>
                       <li>
                         <span className="property">Chapters :</span>
-                        <span className="value">6</span>
+                        <span className="value">
+                          {viewCourse?.chapters_count}
+                        </span>
                       </li>
                       <li>
                         <span className="property">Total Quizes :</span>
-                        <span className="value">24</span>
+                        <span className="value">
+                          {" "}
+                          {viewCourse?.quizzes_count}
+                        </span>
                       </li>
                       <li>
                         <span className="property">Total Marks :</span>
@@ -180,7 +197,7 @@ const ViewCourses = () => {
                       course content
                     </h4>
                   </div>
-                  <CourseContent content={coursesContent} />
+                  <CourseContent content={viewCourse} />
                 </div>
               </div>
             </div>

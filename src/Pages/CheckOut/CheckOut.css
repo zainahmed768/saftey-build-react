@@ -1,11 +1,26 @@
-.gray_back_box{
-     background-color: #F6F6F6;
-     padding: 30px;
-     border-radius: 20px;
+.gray_back_box {
+  background-color: #f6f6f6;
+  padding: 30px;
+  border-radius: 20px;
 }
-.dark_gray_box{
-    background-color: var(--secondary-color);
-    padding: 25px 20px;
-    border-radius: 10px;
-    margin: 20px 0;
+.dark_gray_box {
+  background-color: var(--secondary-color);
+  padding: 25px 20px;
+  border-radius: 10px;
+  margin: 20px 0;
+}
+.course-cart-pro-wrapper .cart-img-text-wrapper {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 13px;
+}
+.course-cart-pro-wrapper .cart-img-text-wrapper img {
+  width: 100px;
+  height: 50px;
+  object-fit: cover;
+}
+.course-cart-pro-wrapper .cart-img-text-wrapper h1 {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }

@@ -4,9 +4,13 @@ import {
   EDIT_PROFILE,
   GET_PROFILE,
   LOGIN_URL,
+  MY_ORDERS,
   REGISTER_URL,
   RESEND_VERIFY_OTP,
   VERIFY_ACCOUNT,
+  MY_COURSES,
+  GET_QUIZ_DETAIL,
+  MY_COURSE_DETAIL,
 } from "../../utils/endpoints";
 
 const AuthServices = createApi({
@@ -84,6 +88,42 @@ const AuthServices = createApi({
       },
       invalidatesTags: ["editInfo"],
     }),
+    myOrders: build.query({
+      query: () => {
+        return {
+          url: MY_ORDERS,
+          method: "GET",
+        };
+      },
+      invalidatesTags: ["editInfo"],
+    }),
+    myCourses: build.query({
+      query: () => {
+        return {
+          url: MY_COURSES,
+          method: "GET",
+        };
+      },
+      invalidatesTags: ["editInfo"],
+    }),
+    myCourseDetail: build.query({
+      query: (slug) => {
+        return {
+          url: `${MY_COURSE_DETAIL}/${slug}`,
+          method: "GET",
+        };
+      },
+      invalidatesTags: ["editInfo"],
+    }),
+    getQuiz: build.query({
+      query: (slug) => {
+        return {
+          url: `${GET_QUIZ_DETAIL}/${slug}`,
+          method: "GET",
+        };
+      },
+      invalidatesTags: ["editInfo"],
+    }),
   }),
 });
 
@@ -96,4 +136,8 @@ export const {
   useLoginMutation,
   useGetProfileQuery,
   useEditProfileMutation,
+  useMyOrdersQuery,
+  useMyCoursesQuery,
+  useMyCourseDetailQuery,
+  useGetQuizQuery,
 } = AuthServices;

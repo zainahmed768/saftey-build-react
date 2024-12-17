@@ -9,6 +9,8 @@ import { editProfileValidation } from "../../../constant/HelperFunction";
 import Alert from "../../../Components/SweetAlert/Alert";
 import { setUserToken } from "../../../redux/reducers/AuthReducer";
 import { useNavigate } from "react-router-dom";
+import { Spin } from "antd";
+
 const EditProfile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -120,7 +122,11 @@ const EditProfile = () => {
                       onClick={handleSubmit}
                       className="GeneralButton"
                     >
-                      Save profile
+                      {response?.isLoading ? (
+                        <Spin />
+                      ) : (
+                        "Save profile"
+                      )}
                     </button>
                   </span>
                 </div>

@@ -21,12 +21,12 @@ const CoursesReview = (props) => {
         <div className="courses-card-wrapper d-flex gap-3 ">
           <div className="courses-img-wrapper">
             <figure className="mb-0">
-              <img src={course?.images} className="img-fluid" alt="" />
+              <img src={course?.thumbnail} className="img-fluid" alt="" />
             </figure>
           </div>
           <div className="courses-content-wrapper">
-            <h4>{course?.name}</h4>
-            <p>{course?.des}</p>
+            <h4>{course?.title}</h4>
+            <p>{course?.description}</p>
             <div class="progress">
               <div
                 class="progress-bar"
@@ -39,7 +39,7 @@ const CoursesReview = (props) => {
             </div>
             <div className="completion-level mt-2">
               <p>
-                {course?.completion}%{" "}
+                {0}%{" "}
                 <span className="complete">Completed</span>
               </p>
             </div>
@@ -58,7 +58,6 @@ const CoursesReview = (props) => {
                 onPointerEnter={onPointerEnter}
                 onPointerLeave={onPointerLeave}
                 onPointerMove={onPointerMove}
-                
               />
             </div>
           </div>
