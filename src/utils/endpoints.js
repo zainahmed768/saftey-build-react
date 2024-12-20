@@ -32,3 +32,11 @@ export const MY_COURSES = "my-courses";
 export const MY_COURSE_DETAIL = "my-course-detail";
 
 export const GET_QUIZ_DETAIL = "get-quiz-detail";
+
+export const GET_WISHLIST = "my-wishlist";
+
+export const ADD_WISHLIST = "wishlist/add";
+
+export const REMOVE_WISHLIST = "wishlist/remove";
+
+export const CHANGE_PASSWORD = "user/changePassword";

@@ -10,202 +10,175 @@ import { Checkbox, Divider, Spin } from "antd";
 import PaymentModal from "../../../Components/Payment/Payment";
 import { useParams } from "react-router-dom";
 import { useMyCourseDetailQuery } from "../../../redux/services/AuthServices";
+import ReactPlayer from "react-player";
 
 const ViewCourses = () => {
-  const param = useParams();
-  console.log(param, "view data");
-  const { data: getCourse, isLoading } = useMyCourseDetailQuery(param?.slug);
-  let viewCourse = getCourse?.response?.data;
-  const [show, setShow] = useState(false);
+	const param = useParams();
+	console.log(param, "view data");
+	const { data: getCourse, isLoading } = useMyCourseDetailQuery(param?.slug);
+	let viewCourse = getCourse?.response?.data;
+	const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  const onChange = (e) => {
-    console.log(`checked = ${e.target.checked}`);
-  };
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);
+	const onChange = (e) => {
+		console.log(`checked = ${e.target.checked}`);
+	};
 
-  if (isLoading) {
-    return (
-      <div className="loader-wrapper">
-        <Spin
-          size="large"
-          style={{
-            color: "#000",
-          }}
-        />
-      </div>
-    );
-  }
-  return (
-    <>
-      <ProfileLayout type={"team leader"} sidebar={false}>
-        <div className="col-lg-12">
-          <div className="row">
-            <div className="col-lg-8">
-              <div className="view-course-img-wrapper position-relative">
-                <figure className="mb-0">
-                  <img src={coursesImage} className="img-fluid" alt="" />
-                  <img
-                    src={playImg}
-                    alt=""
-                    className="img-fluid position-absolute top-50 start-50 translate-middle play-img"
-                  />
-                </figure>
-              </div>
-              <div className="view-course-content-wrapper mt-3">
-                <div className="view-course-headings-wrapper">
-                  <h2 className="heading-font text-uppercase">
-                    {viewCourse?.title}
-                  </h2>
-                  <p>{viewCourse?.description}</p>
-                </div>
-                <div className="view-course-btn-wrapper d-flex gap-3 mb-5">
-                  <span className={`GeneralButton`} onClick={handleShow}>
-                    <button type="submit">submit review</button>
-                  </span>
-                  <CommanButton
-                    label={"download certificate"}
-                    onClick={handleShow}
-                  />
-                </div>
-                <div className="view-course-result-wrapper">
-                  <div className="view-course-result-heading-wrapper">
-                    <h3 className="heading-font level-4  text-uppercase">
-                      results
-                    </h3>
-                  </div>
-                  <div className="view-course-result-list-wrapper">
-                    <ul className="p-0">
-                      <li>
-                        Chapters Covered : 10<b>/15</b>
-                      </li>
-                      <li>Quiz Percentage : 50%</li>
-                      <li>Quiz Score By Chapters :</li>
-                      <li>Quiz Total Marks : 10</li>
-                      <li>Achieved Marked : 10</li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-lg-8">
-                    <div className="view-courses-chapter-wrapper">
-                      <div className="chapters-tags-wrapper mt-3 d-flex gap-2 flex-wrap">
-                        <div className="chapter-tag-wrapper">
-                          <span class="badge bg-dark">
-                            Chapter 1 : 10<b>/15</b>
-                          </span>
-                        </div>
-                        <div className="chapter-tag-wrapper">
-                          <span class="badge bg-dark">
-                            Chapter 2 : 10<b>/15</b>
-                          </span>
-                        </div>
-                        <div className="chapter-tag-wrapper">
-                          <span class="badge bg-dark">
-                            Chapter 3 : 10<b>/15</b>
-                          </span>
-                        </div>
-                        <div className="chapter-tag-wrapper">
-                          <span class="badge bg-dark">
-                            Chapter 4 : 10<b>/15</b>
-                          </span>
-                        </div>
-                        <div className="chapter-tag-wrapper">
-                          <span class="badge bg-dark">
-                            Chapter 5 : 10<b>/15</b>
-                          </span>
-                        </div>
-                        <div className="chapter-tag-wrapper">
-                          <span class="badge bg-dark">
-                            Chapter 6 : 10<b>/15</b>
-                          </span>
-                        </div>
-                        <div className="chapter-tag-wrapper">
-                          <span class="badge bg-dark">
-                            Chapter 4 : 10<b>/15</b>
-                          </span>
-                        </div>
-                        <div className="chapter-tag-wrapper">
-                          <span class="badge bg-dark">
-                            Chapter 5 : 10<b>/15</b>
-                          </span>
-                        </div>
-                        <div className="chapter-tag-wrapper">
-                          <span class="badge bg-dark">
-                            Chapter 6 : 10<b>/15</b>
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4">
-              <div className="courses-sidebar-detail-wrapper">
-                <div className="course-sidebar-card-wrapper bg-white p-2 rounded">
-                  <div className="courses-sidebar-heading-wrapper">
-                    <h4 className="text-uppercase level-4 heading-font">
-                      course details
-                    </h4>
-                  </div>
-                  <div className="course-completeing-wrap my-3">
-                    <div class="progress">
-                      <div
-                        class="progress-bar"
-                        role="progressbar"
-                        style={{ width: "100%" }}
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                  </div>
-                  <div className="course-stats-wrapper">
-                    <ul className="m-0 p-0">
-                      <li>
-                        <span className="property">Progress :</span>
-                        <span className="value">100% Completed</span>
-                      </li>
-                      <li>
-                        <span className="property">Chapters :</span>
-                        <span className="value">
-                          {viewCourse?.chapters_count}
-                        </span>
-                      </li>
-                      <li>
-                        <span className="property">Total Quizes :</span>
-                        <span className="value">
-                          {" "}
-                          {viewCourse?.quizzes_count}
-                        </span>
-                      </li>
-                      <li>
-                        <span className="property">Total Marks :</span>
-                        <span className="value">50</span>
-                      </li>
-                      <li>
-                        <span className="property">Achieved Marks :</span>
-                        <span className="value">50</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="course-content-wrapper mt-3">
-                  <div className="course-content-heading-wrapper">
-                    <h4 className="level-4 heading-font text-uppercase">
-                      course content
-                    </h4>
-                  </div>
-                  <CourseContent content={viewCourse} />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+	if (isLoading) {
+		return (
+			<div className="loader-wrapper">
+				<Spin
+					size="large"
+					style={{
+						color: "#000",
+					}}
+				/>
+			</div>
+		);
+	}
+	return (
+		<>
+			<ProfileLayout type={"team leader"} sidebar={false}>
+				<div className="col-lg-12">
+					<div className="row">
+						<div className="col-lg-8">
+							<div className="view-course-img-wrapper position-relative">
+								<ReactPlayer
+									url={viewCourse?.introductory_video}
+									playing={true}
+									width={"100%"}
+									controls={true}
+								/>
+								{/* <figure className="mb-0">
+									<img src={coursesImage} className="img-fluid" alt="" />
+									<img
+										src={playImg}
+										alt=""
+										className="img-fluid position-absolute top-50 start-50 translate-middle play-img"
+									/>
+								</figure> */}
+							</div>
+							<div className="view-course-content-wrapper mt-3">
+								<div className="view-course-headings-wrapper">
+									<h2 className="heading-font text-uppercase">
+										{viewCourse?.title}
+									</h2>
+									<p>{viewCourse?.description}</p>
+								</div>
+								<div className="view-course-btn-wrapper d-flex gap-3 mb-5">
+									<span className={`GeneralButton`} onClick={handleShow}>
+										<button type="submit">submit review</button>
+									</span>
+									<CommanButton
+										label={"download certificate"}
+										onClick={handleShow}
+									/>
+								</div>
+								<div className="view-course-result-wrapper">
+									<div className="view-course-result-heading-wrapper">
+										<h3 className="heading-font level-4  text-uppercase">
+											results
+										</h3>
+									</div>
+									<div className="view-course-result-list-wrapper">
+										<ul className="p-0">
+											<li>
+												Chapters Covered : 10<b>/15</b>
+											</li>
+											<li>Quiz Percentage : 50%</li>
+											<li>Quiz Score By Chapters :</li>
+											<li>Quiz Total Marks : 10</li>
+											<li>Achieved Marked : 10</li>
+										</ul>
+									</div>
+								</div>
+								<div className="row">
+									<div className="col-lg-8">
+										<div className="view-courses-chapter-wrapper">
+											<h3 className="heading-font level-4  text-uppercase">
+												Chapters
+											</h3>
+											<div className="chapters-tags-wrapper mt-3 d-flex gap-2 flex-wrap">
+												{viewCourse?.chapters?.map((item, key) => (
+													<div className="chapter-tag-wrapper" key={key}>
+														<span class="badge bg-dark">
+															{/* Chapter 1 : 10<b>/15</b> */}
+															{item?.title}
+														</span>
+													</div>
+												))}
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div className="col-lg-4">
+							<div className="courses-sidebar-detail-wrapper">
+								<div className="course-sidebar-card-wrapper bg-white p-2 rounded">
+									<div className="courses-sidebar-heading-wrapper">
+										<h4 className="text-uppercase level-4 heading-font">
+											course details
+										</h4>
+									</div>
+									<div className="course-completeing-wrap my-3">
+										<div class="progress">
+											<div
+												class="progress-bar"
+												role="progressbar"
+												style={{ width: "100%" }}
+												aria-valuenow="50"
+												aria-valuemin="0"
+												aria-valuemax="100"
+											></div>
+										</div>
+									</div>
+									<div className="course-stats-wrapper">
+										<ul className="m-0 p-0">
+											<li>
+												<span className="property">Progress :</span>
+												<span className="value">100% Completed</span>
+											</li>
+											<li>
+												<span className="property">Chapters :</span>
+												<span className="value">
+													{viewCourse?.chapters_count}
+												</span>
+											</li>
+											<li>
+												<span className="property">Total Quizes :</span>
+												<span className="value">
+													{" "}
+													{viewCourse?.quizzes_count}
+												</span>
+											</li>
+											<li>
+												<span className="property">Total Marks :</span>
+												<span className="value">50</span>
+											</li>
+											<li>
+												<span className="property">Achieved Marks :</span>
+												<span className="value">50</span>
+											</li>
+										</ul>
+									</div>
+								</div>
+								<div className="course-content-wrapper mt-3">
+									<div className="course-content-heading-wrapper">
+										<h4 className="level-4 heading-font text-uppercase">
+											course content
+										</h4>
+									</div>
+									<CourseContent content={viewCourse} />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 
-        <PaymentModal show={show} handleClose={handleClose} />
-        {/* <Modal show={show} onHide={handleClose}  size="lg">
+				<PaymentModal show={show} handleClose={handleClose} />
+				{/* <Modal show={show} onHide={handleClose}  size="lg">
          
           <Modal.Body>
             <div className="row">
@@ -272,9 +245,9 @@ const ViewCourses = () => {
           </Modal.Body>
        
         </Modal> */}
-      </ProfileLayout>
-    </>
-  );
+			</ProfileLayout>
+		</>
+	);
 };
 
 export default ViewCourses;
