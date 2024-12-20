@@ -37,6 +37,10 @@ const PublicRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/faq" element={<Faq />} />
+        <Route path="/courses" element={<Courses />} />
         <Route element={<AuthRoute />}>
           <Route path="/sign-in" element={<Signin />} />
           <Route path="/sign-up" element={<Signup />} />
@@ -45,11 +49,8 @@ const PublicRoutes = () => {
           <Route path="/verify-otp" element={<VerifyOTP />} />
         </Route>
         <Route element={<PrivateRoutes />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/about-us" element={<AboutUs />} />
           <Route path="/course-details/:id" element={<CourseDetails />} />
-          <Route path="/faq" element={<Faq />} />
-          <Route path="/courses" element={<Courses />} />
+       
           <Route path="/my-cart" element={<MyCart />} />
           <Route path="/check-out" element={<CheckOut />} />
           <Route path="/contact-us" element={<ContacUs />} />
