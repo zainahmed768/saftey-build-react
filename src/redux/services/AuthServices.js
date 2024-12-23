@@ -12,13 +12,14 @@ import {
 	GET_QUIZ_DETAIL,
 	MY_COURSE_DETAIL,
 	CHANGE_PASSWORD,
+	POST_QUIZ,
 } from "../../utils/endpoints";
 
 const AuthServices = createApi({
 	reducerPath: "AuthServices",
 	baseQuery: fetchBaseQuery({
 		baseUrl: BASE_URL,
-		tagTypes: "editInfo",
+		tagTypes: ["editInfo", "quiz"],
 		prepareHeaders: (headers, { getState, endpoint }) => {
 			const reducers = getState();
 			const token = reducers?.AuthReducer?.userToken;
@@ -123,9 +124,18 @@ const AuthServices = createApi({
 					method: "GET",
 				};
 			},
-			invalidatesTags: ["editInfo"],
+			providesTags: ["quiz"],
 		}),
-
+		postQuiz: build.mutation({
+			query: (data) => {
+				return {
+					url: POST_QUIZ,
+					method: "POST",
+					body: data,
+				};
+			},
+			invalidatesTags: ["quiz"],
+		}),
 		changePassword: build.mutation({
 			query: (data) => {
 				return {
@@ -151,5 +161,6 @@ export const {
 	useMyCoursesQuery,
 	useMyCourseDetailQuery,
 	useGetQuizQuery,
+	usePostQuizMutation,
 	useChangePasswordMutation,
 } = AuthServices;

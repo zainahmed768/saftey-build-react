@@ -33,6 +33,8 @@ export const MY_COURSE_DETAIL = "my-course-detail";
 
 export const GET_QUIZ_DETAIL = "get-quiz-detail";
 
+export const POST_QUIZ = "take-quiz";
+
 export const GET_WISHLIST = "my-wishlist";
 
 export const ADD_WISHLIST = "wishlist/add";

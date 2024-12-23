@@ -181,19 +181,27 @@
 // export default QuizCard;
 
 import React, { useState } from "react";
+import Alert from "../../../Components/SweetAlert/Alert";
+import { usePostQuizMutation } from "../../../redux/services/AuthServices";
 
 const QuizCard = ({ quiz, setQuizStatus }) => {
-	console.log(quiz, "quiz");
+	// Post Quiz Api CALL
+	const [quizData, response] = usePostQuizMutation();
+
 	const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 	const [selectedAnswers, setSelectedAnswers] = useState([]);
+	console.log(selectedAnswers, "selectedAnswers");
 	const [isSubmitted, setIsSubmitted] = useState(false);
 
 	// Handle answer selection
 	const handleAnswerSelect = (questionIndex, answerIndex) => {
-		setSelectedAnswers((prev) => ({
-			...prev,
-			[questionIndex]: answerIndex,
-		}));
+		console.log(quiz[questionIndex]?.options[answerIndex], "answerIndex");
+		let quizObj = {
+			questionId: quiz[questionIndex]?.id,
+			answerId: quiz[questionIndex]?.options[answerIndex]?.id,
+		};
+		console.log(quizObj, "quizObj");
+		setSelectedAnswers((prev) => [...prev, quizObj]);
 	};
 	console.log(quiz, "sdvhbs");
 	// Calculate the final score
@@ -215,6 +223,19 @@ const QuizCard = ({ quiz, setQuizStatus }) => {
 
 	// Move to the next question
 	const handleNextQuestion = () => {
+		const currentAnswer = selectedAnswers.find(
+			(answer) => answer.questionId === quiz[currentQuestionIndex]?.id,
+		);
+
+		if (!currentAnswer) {
+			Alert({
+				title: "Error",
+				text: "Please select an option",
+				iconStyle: "warning",
+			});
+			return;
+		}
+
 		if (currentQuestionIndex < quiz?.length - 1) {
 			setCurrentQuestionIndex(currentQuestionIndex + 1);
 		}
@@ -223,13 +244,23 @@ const QuizCard = ({ quiz, setQuizStatus }) => {
 	// Submit quiz and calculate the score
 	const handleSubmit = () => {
 		setIsSubmitted(true);
-		setQuizStatus(true);
+		// setQuizStatus(true);
+		const formData = new FormData();
+		formData.append("quiz_id", quiz[0]?.quiz_id);
+		selectedAnswers?.map((item, index) => {
+			formData.append(`answers[${index}][question_id]`, item?.questionId);
+			formData.append(`answers[${index}][option_id]`, item?.answerId);
+		});
+
+		if (isSubmitted) {
+			quizData(formData);
+		}
 	};
 
 	console.log(selectedAnswers, "seuvhdv");
 	const handleRetake = () => {
 		setCurrentQuestionIndex(0);
-		setSelectedAnswers({});
+		setSelectedAnswers([]);
 		setIsSubmitted(false);
 	};
 
@@ -270,58 +301,65 @@ const QuizCard = ({ quiz, setQuizStatus }) => {
 			<div className="col-lg-1"></div>
 			<div className="col-lg-10">
 				<div className="quiz-content-wrapper mt-4">
-					{!isSubmitted ? (
-						<>
-							<div className="quiz-question-wrapper text-center mt-4">
-								<p>{quiz[currentQuestionIndex]?.question}</p>
-							</div>
-							<div className="quiz-answer-wrapper mt-5">
-								<div className="row">
-									{quiz[currentQuestionIndex]?.options?.map((option, index) => (
-										<div className="col-lg-6 my-2" key={option.id}>
-											<label className="d-flex align-items-center position-relative">
-												<input
-													type="radio"
-													name={`question-${currentQuestionIndex}`}
-													className="btn-checkd"
-													checked={
-														selectedAnswers[currentQuestionIndex] === option.id
-													}
-													onChange={() =>
-														handleAnswerSelect(currentQuestionIndex, option.id)
-													}
-												/>
-												<label
-													className="btn btn-outline-secondary rounded-pill  w-100 position-relative"
-													htmlFor={`question-${currentQuestionIndex}`}
-												>
-													<span className="fw-bold me-2">
-														{String.fromCharCode(65 + index)}
-													</span>
-													{option.value}
-												</label>
+					<>
+						<div className="quiz-question-wrapper text-center mt-4">
+							<p>{quiz[currentQuestionIndex]?.question}</p>
+						</div>
+						<div className="quiz-answer-wrapper mt-5">
+							<div className="row">
+								{quiz[currentQuestionIndex]?.options?.map((option, index) => (
+									<div className="col-lg-6 my-2" key={option.id}>
+										<label className="d-flex align-items-center position-relative">
+											<input
+												type="radio"
+												name={`question-${currentQuestionIndex}`}
+												className="btn-checkd"
+												checked={
+													selectedAnswers[currentQuestionIndex]?.answerId ==
+													option?.id
+												}
+												onChange={() =>
+													handleAnswerSelect(currentQuestionIndex, index)
+												}
+											/>
+											<label
+												className="btn btn-outline-secondary rounded-pill  w-100 position-relative"
+												htmlFor={`question-${currentQuestionIndex}`}
+											>
+												<span className="fw-bold me-2">
+													{String.fromCharCode(65 + index)}
+												</span>
+												{option.value}
 											</label>
-										</div>
-									))}
-								</div>
-							</div>
-							<div className="quiz-btn-wrapper text-center mt-4">
-								{currentQuestionIndex < quiz?.length - 1 ? (
-									<span className={`GeneralButton d-block`}>
-										<button onClick={handleNextQuestion}>Next</button>
-									</span>
-								) : (
-									<div className="d-flex gap-2 justify-content-center">
-										<span className={`GeneralButton d-block`}>
-											<button onClick={handleSubmit}>Submit</button>
-										</span>
-										<span className={`GeneralButton d-block`}>
-											<button onClick={handleRetake}>Retake Quiz</button>
-										</span>
+										</label>
 									</div>
-								)}
+								))}
 							</div>
-						</>
+						</div>
+						<div className="quiz-btn-wrapper text-center mt-4">
+							{currentQuestionIndex < quiz?.length - 1 ? (
+								<span className={`GeneralButton d-block`}>
+									<button onClick={handleNextQuestion}>Next</button>
+								</span>
+							) : (
+								<div className="d-flex gap-2 justify-content-center">
+									<span className={`GeneralButton d-block`}>
+										<button
+											onClick={handleSubmit}
+											disabled={response?.isLoading}
+										>
+											Submit
+										</button>
+									</span>
+									<span className={`GeneralButton d-block`}>
+										<button onClick={handleRetake}>Retake Quiz</button>
+									</span>
+								</div>
+							)}
+						</div>
+					</>
+					{/* {!isSubmitted ? (
+						
 					) : (
 						<div className="quiz-score-wrapper text-center">
 							<div className="row">
@@ -361,7 +399,7 @@ const QuizCard = ({ quiz, setQuizStatus }) => {
 								</div>
 							</div>
 						</div>
-					)}
+					)} */}
 				</div>
 			</div>
 		</div>
