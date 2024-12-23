@@ -5,6 +5,7 @@ import {
 	ALL_COURSES,
 	GET_SINGLE_COURSES,
 	GET_WISHLIST,
+	POST_COURSE_REVIEW,
 	REMOVE_WISHLIST,
 } from "../../utils/endpoints";
 
@@ -29,6 +30,7 @@ const CourseServices = createApi({
 					method: "GET",
 				};
 			},
+			providesTags: ["courseTag"],
 		}),
 		getSingleCourse: build.query({
 			query: (id) => {
@@ -40,7 +42,7 @@ const CourseServices = createApi({
 					},
 				};
 			},
-			invalidatesTags: ["courseTag"],
+			providesTags: ["courseTag"],
 		}),
 		sortCourses: build.query({
 			query: (sortBy) => {
@@ -81,6 +83,7 @@ const CourseServices = createApi({
 					body: id,
 				};
 			},
+			invalidatesTags: ["courseTag"],
 		}),
 		removeWishlist: build.mutation({
 			query: (id) => {
@@ -88,6 +91,16 @@ const CourseServices = createApi({
 					url: REMOVE_WISHLIST,
 					method: "POST",
 					body: id,
+				};
+			},
+			invalidatesTags: ["courseTag"],
+		}),
+		postReview: build.mutation({
+			query: (data) => {
+				return {
+					url: POST_COURSE_REVIEW,
+					method: "POST",
+					body: data,
 				};
 			},
 			invalidatesTags: ["courseTag"],
@@ -105,4 +118,5 @@ export const {
 	useGetWishlistQuery,
 	useAddWishlistMutation,
 	useRemoveWishlistMutation,
+	usePostReviewMutation,
 } = CourseServices;

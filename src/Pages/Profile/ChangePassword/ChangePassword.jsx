@@ -4,7 +4,9 @@ import ProfileLayout from "../../../layout/ProfileLayout/ProfileLayout";
 import CommanButton from "../../../Components/CommanButton/CommanButton";
 import { useChangePasswordMutation } from "../../../redux/services/AuthServices";
 import Alert from "../../../Components/SweetAlert/Alert";
+import { changePasswordValidation } from "../../../constant/HelperFunction";
 const ChangePassword = () => {
+	const [formErrors, setFormErrors] = useState({});
 	// CHANGE PASSWORD API CALL
 	const [changePassword, response] = useChangePasswordMutation();
 
@@ -25,7 +27,9 @@ const ChangePassword = () => {
 		formData.append("current_password", passwordState.oldPassword);
 		formData.append("password", passwordState.newPassword);
 		formData.append("confirm_password", passwordState.confirmPassword);
-		changePassword(formData);
+		if (changePasswordValidation(passwordState, setFormErrors)) {
+			changePassword(formData);
+		}
 	};
 
 	useEffect(() => {
@@ -81,6 +85,19 @@ const ChangePassword = () => {
 										onChange={handleChange}
 										className="form-control"
 									/>
+									{formErrors?.oldPassword && (
+										<p
+											className="error text-start"
+											style={{
+												color: "red",
+												fontSize: "13px",
+												marginBottom: "0",
+												marginTop: "10px",
+											}}
+										>
+											{formErrors?.oldPassword}
+										</p>
+									)}
 								</div>
 								<div className="form-group">
 									<label htmlFor="l_Name">New Password</label>
@@ -91,6 +108,19 @@ const ChangePassword = () => {
 										onChange={handleChange}
 										className="form-control"
 									/>
+									{formErrors?.newPassword && (
+										<p
+											className="error text-start"
+											style={{
+												color: "red",
+												fontSize: "13px",
+												marginBottom: "0",
+												marginTop: "10px",
+											}}
+										>
+											{formErrors?.newPassword}
+										</p>
+									)}
 								</div>
 								<div className="form-group">
 									<label htmlFor="phone_number">Confirm New Password</label>
@@ -101,6 +131,19 @@ const ChangePassword = () => {
 										value={passwordState?.confirmPassword}
 										className="form-control"
 									/>
+									{formErrors?.confirmPassword && (
+										<p
+											className="error text-start"
+											style={{
+												color: "red",
+												fontSize: "13px",
+												marginBottom: "0",
+												marginTop: "10px",
+											}}
+										>
+											{formErrors?.confirmPassword}
+										</p>
+									)}
 								</div>
 								<div className="form-group text-end">
 									<span className="GeneralButton mt-4">

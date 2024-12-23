@@ -120,10 +120,7 @@ const CoursesCard = (props) => {
 							{location.pathname == "/my-wishlist" && (
 								<>
 									<span className="GeneralButton">
-										<button
-											type="button"
-											onClick={() => handleCart(item?.course)}
-										>
+										<button type="button" onClick={() => handleCart(item)}>
 											add to cart
 										</button>
 									</span>

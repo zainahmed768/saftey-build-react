@@ -42,3 +42,5 @@ export const ADD_WISHLIST = "wishlist/add";
 export const REMOVE_WISHLIST = "wishlist/remove";
 
 export const CHANGE_PASSWORD = "user/changePassword";
+
+export const POST_COURSE_REVIEW = "review/store";

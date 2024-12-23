@@ -152,7 +152,7 @@ const CourseDetails = () => {
 										{renderStars(rating)}
 										<span className="ms-2 rating">
 											{courseDetail?.course_avg_rating > 0
-												? courseDetail?.course_avg_rating
+												? Number(courseDetail?.course_avg_rating)
 												: 0}
 										</span>
 									</div>
@@ -338,14 +338,14 @@ const CourseDetails = () => {
 						<h3 className="leter-2 heading-font level-5-md  text-uppercase dark-color mb-3">
 							featured reviews
 						</h3>
-						<Row justify="space-between" align="middle">
+						<Row justify="start" align="middle">
 							{courseDetail?.reviews?.length > 0 ? (
-								isLoading ? (
-									courseDetail?.reviews.map((item, index) => (
+								!isLoading ? (
+									courseDetail?.reviews?.slice(0, 3)?.map((item, index) => (
 										<Col xs={24} sm={24} md={8} key={index}>
 											<FeedBackCard
 												title={item?.title}
-												desc={item?.des}
+												desc={item?.content}
 												avatar={item?.image}
 												blockquote={item?.blockquote}
 												rating={item?.rating}

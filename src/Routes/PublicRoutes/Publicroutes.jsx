@@ -32,51 +32,53 @@ import UserChangePassword from "../../Pages/Auth/ChangePassword/UserChangePasswo
 import VerifyOTP from "../../Pages/Auth/OTP/VerifyOTP";
 import AuthRoute from "../AuthRoutes/AuthRoutes";
 import PrivateRoutes from "../PrivateRoutes/PrivateRoutes";
+import QuizResult from "../../Pages/Profile/Quiz/Result";
 
 const PublicRoutes = () => {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about-us" element={<AboutUs />} />
-        <Route path="/faq" element={<Faq />} />
-        <Route path="/courses" element={<Courses />} />
-        <Route element={<AuthRoute />}>
-          <Route path="/sign-in" element={<Signin />} />
-          <Route path="/sign-up" element={<Signup />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/otp" element={<OTP />} />
-          <Route path="/verify-otp" element={<VerifyOTP />} />
-        </Route>
-        <Route element={<PrivateRoutes />}>
-          <Route path="/course-details/:id" element={<CourseDetails />} />
-       
-          <Route path="/my-cart" element={<MyCart />} />
-          <Route path="/check-out" element={<CheckOut />} />
-          <Route path="/contact-us" element={<ContacUs />} />
-          <Route path="/terms-conditions" element={<TermCondition />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/my-profile" element={<MyProfile />} />
-          <Route path="/edit-profile" element={<EditProfile />} />
-          <Route
-            path="/auth-change-password"
-            element={<UserChangePassword />}
-          />
-          <Route path="/change-password" element={<ChangePassword />} />
-          <Route path="/my-orders" element={<MyOrders />} />
-          <Route path="/my-student" element={<MyStudent />} />
-          <Route path="/my-student-detail" element={<StudentCourseDetail />} />
-          <Route path="/add-student" element={<AddStudent />} />
-          <Route path="/my-course" element={<MyCourses />} />
-          <Route path="/review-course" element={<CoursesReview />} />
-          <Route path="/my-wishlist" element={<MyWishlist />} />
-          <Route path="/my-certificates" element={<MyCertificates />} />
-          <Route path="/view-courses/:slug" element={<ViewCourses />} />
-          <Route path="/quiz/:slug" element={<QuizPage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  );
+	return (
+		<BrowserRouter>
+			<Routes>
+				<Route path="/" element={<Home />} />
+				<Route path="/about-us" element={<AboutUs />} />
+				<Route path="/faq" element={<Faq />} />
+				<Route path="/courses" element={<Courses />} />
+				<Route element={<AuthRoute />}>
+					<Route path="/sign-in" element={<Signin />} />
+					<Route path="/sign-up" element={<Signup />} />
+					<Route path="/forgot-password" element={<ForgotPassword />} />
+					<Route path="/otp" element={<OTP />} />
+					<Route path="/verify-otp" element={<VerifyOTP />} />
+				</Route>
+				<Route element={<PrivateRoutes />}>
+					<Route path="/course-details/:id" element={<CourseDetails />} />
+
+					<Route path="/my-cart" element={<MyCart />} />
+					<Route path="/check-out" element={<CheckOut />} />
+					<Route path="/contact-us" element={<ContacUs />} />
+					<Route path="/terms-conditions" element={<TermCondition />} />
+					<Route path="/privacy-policy" element={<PrivacyPolicy />} />
+					<Route path="/my-profile" element={<MyProfile />} />
+					<Route path="/edit-profile" element={<EditProfile />} />
+					<Route
+						path="/auth-change-password"
+						element={<UserChangePassword />}
+					/>
+					<Route path="/change-password" element={<ChangePassword />} />
+					<Route path="/my-orders" element={<MyOrders />} />
+					<Route path="/my-student" element={<MyStudent />} />
+					<Route path="/my-student-detail" element={<StudentCourseDetail />} />
+					<Route path="/add-student" element={<AddStudent />} />
+					<Route path="/my-course" element={<MyCourses />} />
+					<Route path="/review-course" element={<CoursesReview />} />
+					<Route path="/my-wishlist" element={<MyWishlist />} />
+					<Route path="/my-certificates" element={<MyCertificates />} />
+					<Route path="/view-courses/:slug" element={<ViewCourses />} />
+					<Route path="/quiz/:slug" element={<QuizPage />} />
+					<Route path="/result" element={<QuizResult />} />
+				</Route>
+			</Routes>
+		</BrowserRouter>
+	);
 };
 
 export default PublicRoutes;
