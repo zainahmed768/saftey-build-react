@@ -33,6 +33,7 @@ import VerifyOTP from "../../Pages/Auth/OTP/VerifyOTP";
 import AuthRoute from "../AuthRoutes/AuthRoutes";
 import PrivateRoutes from "../PrivateRoutes/PrivateRoutes";
 import QuizResult from "../../Pages/Profile/Quiz/Result";
+import ChapterDetail from "../../Pages/Profile/Courses/ChapterDetail";
 
 const PublicRoutes = () => {
 	return (
@@ -51,6 +52,7 @@ const PublicRoutes = () => {
 				</Route>
 				<Route element={<PrivateRoutes />}>
 					<Route path="/course-details/:id" element={<CourseDetails />} />
+					<Route path="/chapter-detail/:slug" element={<ChapterDetail />} />
 
 					<Route path="/my-cart" element={<MyCart />} />
 					<Route path="/check-out" element={<CheckOut />} />

@@ -23,6 +23,7 @@ import { addToCart } from "../../redux/reducers/CartReducer";
 import {
 	useAddWishlistMutation,
 	useGetSingleCourseQuery,
+	useRemoveWishlistMutation,
 } from "../../redux/services/CourseServices";
 import Alert from "../../Components/SweetAlert/Alert";
 import ReactPlayer from "react-player";
@@ -30,17 +31,26 @@ const CourseDetails = () => {
 	const location = useLocation();
 	const dispatch = useDispatch();
 	const param = useParams();
+	console.log(param, "param");
 	const checkUser = useSelector((state) => state?.AuthReducer?.userToken);
 	const cart = useSelector((state) => state?.CartReducer?.cart);
 
 	// ADD WISHLIST API CALL
 	const [addWishlist, response] = useAddWishlistMutation();
+	const [removeWishlist, Removeresponse] = useRemoveWishlistMutation();
 
 	// Add Wishlist Handle
 	const handleWishlist = (id) => {
 		const formData = new FormData();
 		formData.append("course_id", id);
 		addWishlist(formData);
+	};
+
+	// Remove Wishlist Handle
+	const handleRemoveWishlist = (id) => {
+		const formData = new FormData();
+		formData.append("course_id", id);
+		removeWishlist(formData);
 	};
 
 	useEffect(() => {
@@ -53,12 +63,23 @@ const CourseDetails = () => {
 		}
 	}, [response?.isSuccess]);
 
+	useEffect(() => {
+		if (Removeresponse?.isSuccess) {
+			Alert({
+				title: "Success",
+				text: Removeresponse.data.message,
+				iconStyle: "success",
+			});
+		}
+	}, [Removeresponse?.isSuccess]);
+
 	const [showControls, setShowControls] = useState();
 
 	const { data: getSingleCourse, isLoading } = useGetSingleCourseQuery(
 		param?.id,
 	);
 	let courseDetail = getSingleCourse?.response?.data;
+	console.log(courseDetail, "courseDetail");
 	const rating = 9;
 	const renderStars = (rating) => {
 		const stars = [];
@@ -111,7 +132,6 @@ const CourseDetails = () => {
 						color: "#000",
 					}}
 				/>
-				;
 			</div>
 		);
 	}
@@ -178,15 +198,27 @@ const CourseDetails = () => {
 									/>
 								</div>
 
-								<div className="col-lg-3 my-auto">
-									<button
-										onClick={() => handleWishlist(courseDetail?.id)}
-										className="bg-transparent border-0 p-0 heading-font level-5-sm text-uppercase dark-color letter-1 underline course-wishlist-btn"
-										disabled={response?.isLoading}
-									>
-										add to wishlist
-									</button>
-								</div>
+								{!courseDetail?.is_wishlisted ? (
+									<div className="col-lg-3 my-auto">
+										<button
+											onClick={() => handleWishlist(courseDetail?.id)}
+											className="bg-transparent border-0 p-0 heading-font level-5-sm text-uppercase dark-color letter-1 underline course-wishlist-btn"
+											disabled={response?.isLoading}
+										>
+											add to wishlist
+										</button>
+									</div>
+								) : (
+									<div className="col-lg-3 my-auto">
+										<button
+											onClick={() => handleRemoveWishlist(courseDetail?.id)}
+											className="bg-transparent border-0 p-0 heading-font level-5-sm text-uppercase dark-color letter-1 underline course-wishlist-btn"
+											disabled={Removeresponse?.isLoading}
+										>
+											remove wishlist
+										</button>
+									</div>
+								)}
 							</div>
 						</Col>
 					</Row>

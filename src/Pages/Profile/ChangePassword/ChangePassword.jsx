@@ -24,9 +24,9 @@ const ChangePassword = () => {
 	const handleChangePassword = (e) => {
 		e.preventDefault();
 		const formData = new FormData();
-		formData.append("current_password", passwordState.oldPassword);
-		formData.append("password", passwordState.newPassword);
-		formData.append("confirm_password", passwordState.confirmPassword);
+		formData.append("old_password", passwordState.oldPassword);
+		formData.append("new_password", passwordState.newPassword);
+		formData.append("new_password_confirmation", passwordState.confirmPassword);
 		if (changePasswordValidation(passwordState, setFormErrors)) {
 			changePassword(formData);
 		}

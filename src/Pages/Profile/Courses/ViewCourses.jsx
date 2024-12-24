@@ -8,13 +8,14 @@ import { coursesContent } from "../../../constant/data";
 import { Modal, Button } from "react-bootstrap";
 import { Checkbox, Divider, Spin } from "antd";
 import PaymentModal from "../../../Components/Payment/Payment";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useMyCourseDetailQuery } from "../../../redux/services/AuthServices";
 import ReactPlayer from "react-player";
 
 const ViewCourses = () => {
+	const navigate = useNavigate();
 	const param = useParams();
-	console.log(param, "view data");
+
 	const { data: getCourse, isLoading } = useMyCourseDetailQuery(param?.slug);
 	let viewCourse = getCourse?.response?.data;
 	const [show, setShow] = useState(false);
@@ -23,6 +24,10 @@ const ViewCourses = () => {
 	const handleShow = () => setShow(true);
 	const onChange = (e) => {
 		console.log(`checked = ${e.target.checked}`);
+	};
+
+	const handleChapterDetail = (slug) => {
+		navigate(`/chapter-detail/${slug}`);
 	};
 
 	if (isLoading) {
@@ -101,7 +106,12 @@ const ViewCourses = () => {
 											</h3>
 											<div className="chapters-tags-wrapper mt-3 d-flex gap-2 flex-wrap">
 												{viewCourse?.chapters?.map((item, key) => (
-													<div className="chapter-tag-wrapper" key={key}>
+													<div
+														className="chapter-tag-wrapper"
+														onClick={() => handleChapterDetail(item?.slug)}
+														key={key}
+														style={{ cursor: "pointer" }}
+													>
 														<span class="badge bg-dark">
 															{/* Chapter 1 : 10<b>/15</b> */}
 															{item?.title}

@@ -23,7 +23,11 @@ export const ALL_COURSES = "get-all-course";
 
 export const GET_SINGLE_COURSES = "get-single-course";
 
+export const GET_COURSE_DETAIL = "my-course-detail";
+
 export const CHECKOUT = "order-store";
+
+export const PROMO_CODE_URL = "check-promo-code";
 
 export const MY_ORDERS = "my-orders";
 
@@ -41,6 +45,10 @@ export const ADD_WISHLIST = "wishlist/add";
 
 export const REMOVE_WISHLIST = "wishlist/remove";
 
-export const CHANGE_PASSWORD = "user/changePassword";
+export const CHANGE_PASSWORD = "auth/change-password";
 
 export const POST_COURSE_REVIEW = "review/store";
+
+export const GET_CHAPTER_DETAIL = "chapter/detail";
+
+export const POST_CHAPTER_WATCHTIME = "chapter/store-watch-time";

@@ -3,8 +3,11 @@ import { BASE_URL } from "../../utils/baseUrl";
 import {
 	ADD_WISHLIST,
 	ALL_COURSES,
+	GET_CHAPTER_DETAIL,
+	GET_COURSE_DETAIL,
 	GET_SINGLE_COURSES,
 	GET_WISHLIST,
+	POST_CHAPTER_WATCHTIME,
 	POST_COURSE_REVIEW,
 	REMOVE_WISHLIST,
 } from "../../utils/endpoints";
@@ -33,13 +36,10 @@ const CourseServices = createApi({
 			providesTags: ["courseTag"],
 		}),
 		getSingleCourse: build.query({
-			query: (id) => {
+			query: (slug) => {
 				return {
-					url: GET_SINGLE_COURSES,
+					url: `${GET_COURSE_DETAIL}/${slug}`,
 					method: "GET",
-					params: {
-						id: id,
-					},
 				};
 			},
 			providesTags: ["courseTag"],
@@ -105,6 +105,25 @@ const CourseServices = createApi({
 			},
 			invalidatesTags: ["courseTag"],
 		}),
+		getChapterDetail: build.query({
+			query: (slug) => {
+				return {
+					url: `${GET_CHAPTER_DETAIL}/${slug}`,
+					method: "GET",
+				};
+			},
+			providesTags: ["courseTag"],
+		}),
+		postChapterDetail: build.mutation({
+			query: (data) => {
+				return {
+					url: `${POST_CHAPTER_WATCHTIME}/${data?.slug}`,
+					method: "POST",
+					body: data?.watch_time,
+				};
+			},
+			providesTags: ["courseTag"],
+		}),
 	}),
 });
 
@@ -119,4 +138,6 @@ export const {
 	useAddWishlistMutation,
 	useRemoveWishlistMutation,
 	usePostReviewMutation,
+	useGetChapterDetailQuery,
+	usePostChapterDetailMutation,
 } = CourseServices;

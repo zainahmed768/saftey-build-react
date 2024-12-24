@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PrimaryHeader from "../../layout/Header/PrimaryHeader";
 import product_img from "../../assets/images/product_img.png";
 import "../MyCart/MyCart.css";
@@ -9,221 +9,264 @@ import { Input } from "antd";
 import CommanButton from "../../Components/CommanButton/CommanButton";
 import { useDispatch, useSelector } from "react-redux";
 import { removeItem } from "../../redux/reducers/CartReducer";
+import { usePromoCodeMutation } from "../../redux/services/PaymentServices";
+import Alert from "../../Components/SweetAlert/Alert";
 
 const MyCart = () => {
-  const dispatch = useDispatch();
-  const cart = useSelector((state) => state?.CartReducer?.cart);
-  const subTotal = useSelector((state) => state?.CartReducer?.subtotal);
-  const { Group: InputGroup } = Input;
-  const rating = 5;
-  const renderStars = (rating) => {
-    const stars = [];
-    for (let i = 1; i <= 5; i++) {
-      stars.push(
-        <FaStar
-          key={i}
-          color={i <= rating ? "#F0BD08" : "#e4e5e9"}
-          size={13}
-          style={{ margin: 3 }}
-        />
-      );
-    }
-    return stars;
-  };
+	const dispatch = useDispatch();
+	const cart = useSelector((state) => state?.CartReducer?.cart);
+	const subTotal = useSelector((state) => state?.CartReducer?.subtotal);
 
-  const [promoCode, setPromoCode] = useState("");
-  const [subtotal] = useState(312.21);
-  const [promoDiscount] = useState(20.0);
-  const [total, setTotal] = useState(subtotal - promoDiscount);
+	const { Group: InputGroup } = Input;
+	const rating = 5;
+	const renderStars = (rating) => {
+		const stars = [];
+		for (let i = 1; i <= 5; i++) {
+			stars.push(
+				<FaStar
+					key={i}
+					color={i <= rating ? "#F0BD08" : "#e4e5e9"}
+					size={13}
+					style={{ margin: 3 }}
+				/>,
+			);
+		}
+		return stars;
+	};
 
-  const handleApplyCode = () => {
-    // Logic for applying promo code and adjusting the total
-    setTotal(subtotal - promoDiscount);
-  };
+	const [promoCode, setPromoCode] = useState("");
+	console.log(promoCode, "promoCode");
+	const [subtotal] = useState(312.21);
+	const [promoDiscount] = useState(20.0);
+	const [total, setTotal] = useState(subtotal - promoDiscount);
 
-  const handleRemoveCart = (id) => {
-    dispatch(removeItem(id));
-  };
+	// PROMO CODE API CALL
+	const [addPromoCode, response] = usePromoCodeMutation();
 
-  return (
-    <>
-      <PrimaryHeader
-        pageTitle={"my cart"}
-        pageDesc={
-          "Stay Ahead of the Game with SafetyBuilt’s Site Safety Training Courses"
-        }
-      />
-      {cart?.length < 1 ? (
-        <div className="nothing">
-          <div className="nothing-wrapper">
-            <div className="row">
-              <div className="col-lg-12">
-                <h2 className="text-uppercase heading-font text-dark level-3-sm">
-                  Cart is Empty
-                </h2>
-                <div className="nothing-btn-wrapper text-center">
-                  <CommanButton
-                    label={"Explore Courses"}
-                    style={{ margin: "0px auto" }}
-                    link={"/courses"}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      ) : (
-        <div className="site_width py-5">
-          <div className="cart_container">
-            <table className="table">
-              <thead className="">
-                <tr>
-                  <th scope="col"></th>
-                  <th scope="col"></th>
-                  <th
-                    scope="col"
-                    className="heading-font level-5-sm text-uppercase leter-2 text-dark"
-                  >
-                    product
-                  </th>
-                  <th scope="col"></th>
-                  <th scope="col"></th>
-                  <th
-                    scope="col"
-                    className="heading-font level-5-sm text-uppercase leter-2 text-dark"
-                  >
-                    Subtotal
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {cart?.map((course) => {
-                  return (
-                    <tr>
-                      <td colspan="2">
-                        <div className="product_img">
-                          <img
-                            src={course?.course_img}
-                            alt={course?.title}
-                            className="img-fluid"
-                          />
-                        </div>
-                      </td>
-                      <td colspan="2">
-                        <div className="my-auto">
-                          <h2 className="bold-font level-6 text-capitalize">
-                            {course?.title}
-                          </h2>
-                          <p className="med-font level-8 text-capitalize colo-dark">
-                            {course?.short_des}
-                          </p>
-                          <p>
-                            {renderStars(rating)}{" "}
-                            <span className="level-9 bold-font text-uppercase">
-                              4.9
-                            </span>
-                          </p>
-                        </div>
-                      </td>
-                      <td>
-                        <div className="my-auto">
-                          <a onClick={(e) => handleRemoveCart(course?.id)}>
-                            <span className="heading-font level-6 text-uppercase underline text-dark leter-2">
-                              Remove
-                            </span>
-                          </a>
-                        </div>
-                      </td>
-                      <td>
-                        <div className="my-auto">
-                          <h2 className="bold-font level-6 text-capitalize">
-                            $ {course?.price}
-                          </h2>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+	const handleApplyCode = (e) => {
+		e.preventDefault();
+		const formData = new FormData();
+		formData.append("code", promoCode);
+		addPromoCode(formData);
+	};
 
-          <div className="row">
-            <div className="col-lg-6">
-              <div className="d-flex justify-content-lg-start justify-content-center">
-                <CommanButton label={"update cart"} link={"/courses"} />
-              </div>
-            </div>
+	const handleRemoveCart = (id) => {
+		dispatch(removeItem(id));
+	};
 
-            <div className="col-lg-4 offset-lg-2">
-              <div className="cart_total_box">
-                <h1 className="heading-font level-5-sm text-uppercase leter-1 text-white m-0">
-                  Apply Promo Code
-                </h1>
+	useEffect(() => {
+		if (response?.isError && response?.error?.data?.errors) {
+			for (let key in response?.error?.data?.errors) {
+				if (response?.error?.data?.errors.hasOwnProperty(key)) {
+					Alert({
+						title: "Error",
+						text: response.error.data.errors[key],
+						iconStyle: "error",
+					});
+					setPromoCode("");
+				}
+			}
+		}
+	}, [response?.error]);
 
-                <div className="input_otp">
-                  <input type="text" />
-                  <button className="addCode">add code</button>
-                </div>
+	useEffect(() => {
+		if (response?.isSuccess) {
+			Alert({
+				title: "Success",
+				text: response.data.message,
+				iconStyle: "success",
+			});
+			setPromoCode("");
+		}
+	}, [response?.isSuccess]);
 
-                <h1 className="heading-font level-5-sm text-uppercase leter-1 text-white mb-3">
-                  Cart Totals
-                </h1>
+	return (
+		<>
+			<PrimaryHeader
+				pageTitle={"my cart"}
+				pageDesc={
+					"Stay Ahead of the Game with SafetyBuilt’s Site Safety Training Courses"
+				}
+			/>
+			{cart?.length < 1 ? (
+				<div className="nothing">
+					<div className="nothing-wrapper">
+						<div className="row">
+							<div className="col-lg-12">
+								<h2 className="text-uppercase heading-font text-dark level-3-sm">
+									Cart is Empty
+								</h2>
+								<div className="nothing-btn-wrapper text-center">
+									<CommanButton
+										label={"Explore Courses"}
+										style={{ margin: "0px auto" }}
+										link={"/courses"}
+									/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			) : (
+				<div className="site_width py-5">
+					<div className="cart_container">
+						<table className="table">
+							<thead className="">
+								<tr>
+									<th scope="col"></th>
+									<th scope="col"></th>
+									<th
+										scope="col"
+										className="heading-font level-5-sm text-uppercase leter-2 text-dark"
+									>
+										product
+									</th>
+									<th scope="col"></th>
+									<th scope="col"></th>
+									<th
+										scope="col"
+										className="heading-font level-5-sm text-uppercase leter-2 text-dark"
+									>
+										Subtotal
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								{cart?.map((course) => {
+									return (
+										<tr>
+											<td colspan="2">
+												<div className="product_img">
+													<img
+														src={course?.course_img}
+														alt={course?.title}
+														className="img-fluid"
+													/>
+												</div>
+											</td>
+											<td colspan="2">
+												<div className="my-auto">
+													<h2 className="bold-font level-6 text-capitalize">
+														{course?.title}
+													</h2>
+													<p className="med-font level-8 text-capitalize colo-dark">
+														{course?.short_des}
+													</p>
+													<p>
+														{renderStars(rating)}{" "}
+														<span className="level-9 bold-font text-uppercase">
+															4.9
+														</span>
+													</p>
+												</div>
+											</td>
+											<td>
+												<div className="my-auto">
+													<a onClick={(e) => handleRemoveCart(course?.id)}>
+														<span className="heading-font level-6 text-uppercase underline text-dark leter-2">
+															Remove
+														</span>
+													</a>
+												</div>
+											</td>
+											<td>
+												<div className="my-auto">
+													<h2 className="bold-font level-6 text-capitalize">
+														$ {course?.price}
+													</h2>
+												</div>
+											</td>
+										</tr>
+									);
+								})}
+							</tbody>
+						</table>
+					</div>
 
-                <div className="row">
-                  <div className="col-lg-8">
-                    <p className="light-font level-7 text-capitalize leter-1 text-white">
-                      Subtotal
-                    </p>
-                  </div>
-                  <div className="col-lg-4">
-                    <p className="med-font level-7 text-capitalize leter-1 text-white">
-                      ${subTotal}
-                    </p>
-                  </div>
-                </div>
+					<div className="row">
+						<div className="col-lg-6">
+							<div className="d-flex justify-content-lg-start justify-content-center">
+								<CommanButton label={"update cart"} link={"/courses"} />
+							</div>
+						</div>
 
-                <div className="row">
-                  <div className="col-lg-8">
-                    <p className="light-font level-7 text-capitalize leter-1 text-white">
-                      Promo Code Discount
-                    </p>
-                  </div>
-                  <div className="col-lg-4">
-                    <p className="med-font level-7 text-capitalize leter-1 text-white">
-                      $20.00
-                    </p>
-                  </div>
-                </div>
+						<div className="col-lg-4 offset-lg-2">
+							<div className="cart_total_box">
+								<h1 className="heading-font level-5-sm text-uppercase leter-1 text-white m-0">
+									Apply Promo Code
+								</h1>
 
-                <div className="row mb-3">
-                  <div className="col-lg-8">
-                    <p className="light-font level-7 text-capitalize leter-1 text-white">
-                      Total
-                    </p>
-                  </div>
-                  <div className="col-lg-4">
-                    <p className="med-font level-7 text-capitalize leter-1 text-white">
-                      $312.21
-                    </p>
-                  </div>
-                </div>
-                <div className="w-100">
-                  <CommanButton
-                    label={"Proceed to checkout"}
-                    className="proceedToCheckOut"
-                    link={"/check-out"}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+								<div className="input_otp">
+									<form onSubmit={handleApplyCode}>
+										<input
+											type="text"
+											value={promoCode}
+											onChange={(e) => setPromoCode(e.target.value)}
+										/>
+										<button className="addCode" disabled={response?.isLoading}>
+											add code
+										</button>
+									</form>
+								</div>
 
-      <Footer />
-    </>
-  );
+								<h1 className="heading-font level-5-sm text-uppercase leter-1 text-white mb-3">
+									Cart Totals
+								</h1>
+
+								<div className="row">
+									<div className="col-lg-8">
+										<p className="light-font level-7 text-capitalize leter-1 text-white">
+											Subtotal
+										</p>
+									</div>
+									<div className="col-lg-4">
+										<p className="med-font level-7 text-capitalize leter-1 text-white">
+											${subTotal}
+										</p>
+									</div>
+								</div>
+
+								<div className="row">
+									<div className="col-lg-8">
+										<p className="light-font level-7 text-capitalize leter-1 text-white">
+											Promo Code Discount
+										</p>
+									</div>
+									<div className="col-lg-4">
+										<p className="med-font level-7 text-capitalize leter-1 text-white">
+											$20.00
+										</p>
+									</div>
+								</div>
+
+								<div className="row mb-3">
+									<div className="col-lg-8">
+										<p className="light-font level-7 text-capitalize leter-1 text-white">
+											Total
+										</p>
+									</div>
+									<div className="col-lg-4">
+										<p className="med-font level-7 text-capitalize leter-1 text-white">
+											$312.21
+										</p>
+									</div>
+								</div>
+								<div className="w-100">
+									<CommanButton
+										label={"Proceed to checkout"}
+										className="proceedToCheckOut"
+										link={"/check-out"}
+									/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			)}
+
+			<Footer />
+		</>
+	);
 };
 
 export default MyCart;
