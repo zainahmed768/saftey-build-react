@@ -11,11 +11,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeItem } from "../../redux/reducers/CartReducer";
 import { usePromoCodeMutation } from "../../redux/services/PaymentServices";
 import Alert from "../../Components/SweetAlert/Alert";
+import { setDiscount } from "../../redux/reducers/CartReducer";
 
 const MyCart = () => {
 	const dispatch = useDispatch();
 	const cart = useSelector((state) => state?.CartReducer?.cart);
+	const promoDiscount = useSelector(
+		(state) => state?.CartReducer?.promoDiscount,
+	);
 	const subTotal = useSelector((state) => state?.CartReducer?.subtotal);
+	const [discount, setDiscount] = useState(0);
+
+	useEffect(() => {
+		if (promoDiscount?.type) {
+			if (promoDiscount.type === "fixed") {
+				setDiscount(promoDiscount.discount);
+			} else {
+				setDiscount(Math.round((subtotal * promoDiscount.discount) / 100));
+			}
+		}
+	}, [promoDiscount]);
 
 	const { Group: InputGroup } = Input;
 	const rating = 5;
@@ -37,7 +52,7 @@ const MyCart = () => {
 	const [promoCode, setPromoCode] = useState("");
 	console.log(promoCode, "promoCode");
 	const [subtotal] = useState(312.21);
-	const [promoDiscount] = useState(20.0);
+	// const [promoDiscount] = useState(20.0);
 	const [total, setTotal] = useState(subtotal - promoDiscount);
 
 	// PROMO CODE API CALL
@@ -55,17 +70,12 @@ const MyCart = () => {
 	};
 
 	useEffect(() => {
-		if (response?.isError && response?.error?.data?.errors) {
-			for (let key in response?.error?.data?.errors) {
-				if (response?.error?.data?.errors.hasOwnProperty(key)) {
-					Alert({
-						title: "Error",
-						text: response.error.data.errors[key],
-						iconStyle: "error",
-					});
-					setPromoCode("");
-				}
-			}
+		if (response?.isError) {
+			Alert({
+				title: "Error",
+				text: response?.error?.data?.errors,
+				iconStyle: "error",
+			});
 		}
 	}, [response?.error]);
 
@@ -76,6 +86,7 @@ const MyCart = () => {
 				text: response.data.message,
 				iconStyle: "success",
 			});
+			dispatch(setDiscount(response?.data?.response?.data));
 			setPromoCode("");
 		}
 	}, [response?.isSuccess]);
@@ -234,7 +245,7 @@ const MyCart = () => {
 									</div>
 									<div className="col-lg-4">
 										<p className="med-font level-7 text-capitalize leter-1 text-white">
-											$20.00
+											${discount}
 										</p>
 									</div>
 								</div>
@@ -247,7 +258,7 @@ const MyCart = () => {
 									</div>
 									<div className="col-lg-4">
 										<p className="med-font level-7 text-capitalize leter-1 text-white">
-											$312.21
+											${subTotal - discount}
 										</p>
 									</div>
 								</div>

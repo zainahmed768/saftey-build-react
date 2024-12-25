@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { BASE_URL } from "../../utils/baseUrl";
 import {
+	ADD_PAYMENT,
 	ADD_WISHLIST,
 	ALL_COURSES,
 	GET_CHAPTER_DETAIL,
@@ -124,6 +125,16 @@ const CourseServices = createApi({
 			},
 			providesTags: ["courseTag"],
 		}),
+		addPayment: build.mutation({
+			query: (data) => {
+				return {
+					url: ADD_PAYMENT,
+					method: "POST",
+					body: data,
+				};
+			},
+			providesTags: ["courseTag"],
+		}),
 	}),
 });
 
@@ -140,4 +151,5 @@ export const {
 	usePostReviewMutation,
 	useGetChapterDetailQuery,
 	usePostChapterDetailMutation,
+	useAddPaymentMutation,
 } = CourseServices;

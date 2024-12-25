@@ -21,11 +21,12 @@ const ChapterDetail = () => {
 		refetch,
 	} = useGetChapterDetailQuery(slug);
 	const chapterDetails = viewChapter?.response?.data;
+	console.log(chapterDetails, "chapterDetails");
 
 	const [progress, setProgress] = useState(0);
 	const [duration, setDuration] = useState(0);
 	const [play, setPlay] = useState(false);
-	console.log(duration, progress, "duration", "progress");
+	console.log(`Progress: ${progress}, Duration: ${duration}`);
 
 	const playerRef = useRef(null);
 	const [stopVideo, response] = usePostChapterDetailMutation();
@@ -49,11 +50,12 @@ const ChapterDetail = () => {
 	}, []);
 
 	const formatTime = (seconds) => {
-		const minutes = Math.floor(seconds / 60);
-		const secs = Math.floor(seconds % 60);
-		return `${minutes.toString().padStart(2, "0")}:${secs
+		const hours = Math.floor(seconds / 3600); // Calculate hours
+		const minutes = Math.floor((seconds % 3600) / 60); // Calculate remaining minutes
+		const secs = Math.floor(seconds % 60); // Calculate remaining seconds
+		return `${hours.toString().padStart(2, "0")}:${minutes
 			.toString()
-			.padStart(2, "0")}`;
+			.padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
 	};
 
 	const handleProgress = (progress) => {
@@ -77,7 +79,8 @@ const ChapterDetail = () => {
 	};
 
 	useEffect(() => {
-		if (progress == duration) {
+		// Trigger handleStop when progress is close to duration
+		if (duration > 0 && progress >= duration - 1) {
 			handleStop(false);
 		}
 	}, [progress, duration]);
@@ -109,12 +112,13 @@ const ChapterDetail = () => {
 							<div className="view-course-img-wrapper position-relative">
 								<ReactPlayer
 									ref={playerRef}
-									url={DummyVideo}
+									url={chapterDetails?.video}
 									playing={play}
 									width={"100%"}
 									height={"auto"}
 									onProgress={handleProgress}
 									onDuration={handleDuration}
+									onEnded={() => handleStop(false)}
 									onReady={() => setReadyToSeek(true)} // Triggered when the player is ready
 								/>
 								<div className="timestamp position-absolute bottom-0 text-white p-3">

@@ -52,3 +52,5 @@ export const POST_COURSE_REVIEW = "review/store";
 export const GET_CHAPTER_DETAIL = "chapter/detail";
 
 export const POST_CHAPTER_WATCHTIME = "chapter/store-watch-time";
+
+export const ADD_PAYMENT = "charge-price";

@@ -23,6 +23,10 @@ const CheckOut = () => {
 	const [errorMessage, setErrorMessage] = useState(null);
 	const [checkoutRequest, response] = useCheckoutMutation();
 	const cart = useSelector((state) => state?.CartReducer?.cart);
+	const subtotal = useSelector((state) => state?.CartReducer?.subtotal);
+	const promoDiscount = useSelector(
+		(state) => state?.CartReducer?.promoDiscount,
+	);
 	const user_id = useSelector((state) => state?.AuthReducer?.user?.id);
 	const [formErrors, setFormErrors] = useState();
 	const [paymentInfo, setPaymentInfo] = useState({
@@ -57,6 +61,21 @@ const CheckOut = () => {
 		}
 		return stars;
 	};
+
+	const [discount, setDiscount] = useState(0);
+
+	useEffect(() => {
+		if (promoDiscount?.type) {
+			if (promoDiscount.type === "fixed") {
+				setPaymentInfo({ ...paymentInfo, promo_code: promoDiscount.discount });
+			} else {
+				setPaymentInfo({
+					...paymentInfo,
+					promo_code: Math.round(subtotal * promoDiscount.discount) / 100,
+				});
+			}
+		}
+	}, [promoDiscount]);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -496,8 +515,8 @@ const CheckOut = () => {
 									</p>
 								</div>
 								<div className="col-lg-4">
-									<p className="med-font level-7 text-capitalize leter-1 text-white">
-										$20.00
+									<p className="med-font level-7 text-end text-capitalize leter-1 text-white">
+										${paymentInfo?.promo_code}
 									</p>
 								</div>
 							</div>
@@ -509,8 +528,8 @@ const CheckOut = () => {
 									</p>
 								</div>
 								<div className="col-lg-4">
-									<p className="med-font level-7 text-capitalize leter-1 text-white">
-										$312.21
+									<p className="med-font level-7 text-end text-capitalize leter-1 text-white">
+										${subtotal}
 									</p>
 								</div>
 							</div>
@@ -523,8 +542,8 @@ const CheckOut = () => {
 									</p>
 								</div>
 								<div className="col-lg-4">
-									<p className="med-font level-7 text-capitalize leter-1 text-white">
-										$312.21
+									<p className="med-font level-7 text-capitalize text-end leter-1 text-white">
+										${subtotal - paymentInfo?.promo_code}
 									</p>
 								</div>
 							</div>

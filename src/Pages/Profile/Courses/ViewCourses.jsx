@@ -17,6 +17,7 @@ const ViewCourses = () => {
 	const param = useParams();
 
 	const { data: getCourse, isLoading } = useMyCourseDetailQuery(param?.slug);
+	const [chapterId, setChapterId] = useState(null);
 	let viewCourse = getCourse?.response?.data;
 	const [show, setShow] = useState(false);
 
@@ -26,8 +27,13 @@ const ViewCourses = () => {
 		console.log(`checked = ${e.target.checked}`);
 	};
 
-	const handleChapterDetail = (slug) => {
-		navigate(`/chapter-detail/${slug}`);
+	const handleChapterDetail = (item) => {
+		if (item?.watch_time !== item?.video_length) {
+			navigate(`/chapter-detail/${item?.slug}`);
+		} else {
+			setChapterId(item?.id);
+			handleShow();
+		}
 	};
 
 	if (isLoading) {
@@ -72,7 +78,7 @@ const ViewCourses = () => {
 									<p>{viewCourse?.description}</p>
 								</div>
 								<div className="view-course-btn-wrapper d-flex gap-3 mb-5">
-									<span className={`GeneralButton`} onClick={handleShow}>
+									<span className={`GeneralButton`}>
 										<button type="submit">submit review</button>
 									</span>
 									<CommanButton
@@ -108,7 +114,7 @@ const ViewCourses = () => {
 												{viewCourse?.chapters?.map((item, key) => (
 													<div
 														className="chapter-tag-wrapper"
-														onClick={() => handleChapterDetail(item?.slug)}
+														onClick={() => handleChapterDetail(item)}
 														key={key}
 														style={{ cursor: "pointer" }}
 													>
@@ -187,7 +193,12 @@ const ViewCourses = () => {
 					</div>
 				</div>
 
-				<PaymentModal show={show} handleClose={handleClose} />
+				<PaymentModal
+					show={show}
+					handleClose={handleClose}
+					chapterId={chapterId}
+					type={"video"}
+				/>
 				{/* <Modal show={show} onHide={handleClose}  size="lg">
          
           <Modal.Body>

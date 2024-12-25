@@ -1,6 +1,7 @@
 .view-course-img-wrapper .timestamp {
 	opacity: 0;
 	transition: 0.3s;
+	background: #000000b3;
 }
 .view-course-img-wrapper:hover .timestamp {
 	opacity: 1;
