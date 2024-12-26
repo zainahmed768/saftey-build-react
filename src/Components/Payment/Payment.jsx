@@ -1,17 +1,19 @@
 import { Modal, Button } from "react-bootstrap";
-import { Checkbox, Divider } from "antd";
+import { Checkbox, Divider, Spin } from "antd";
 import React, { useEffect, useState } from "react";
 import CommanButton from "../CommanButton/CommanButton";
-import { CardElement, useStripe } from "@stripe/react-stripe-js";
+import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useAddPaymentMutation } from "../../redux/services/CourseServices";
+import Alert from "../SweetAlert/Alert";
 
 const PaymentModal = ({ show, handleClose, type, chapterId }) => {
 	const stripe = useStripe();
+	const elements = useElements();
 	// Payment Api Call
 	const [addPayment, response] = useAddPaymentMutation();
 
 	const [errorMessage, setErrorMessage] = useState(null);
-
+	console.log(type, "type");
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		let data = new FormData();
@@ -106,12 +108,26 @@ const PaymentModal = ({ show, handleClose, type, chapterId }) => {
 				<Divider />
 
 				<div className="d-flex justify-content-lg-end justify-content-center">
-					<CommanButton
+					<span class="GeneralButton">
+						<button type="button" onClick={handleSubmit}>
+							{!response?.isLoading ? (
+								"Confirm payment"
+							) : (
+								<Spin
+									size="medium"
+									style={{
+										color: "#000",
+									}}
+								/>
+							)}
+						</button>
+					</span>
+					{/* <CommanButton
 						disabled={!stripe}
 						loading={response?.isLoading}
-						label={"Confirm payment"}
+						label={""}
 						link={"/my-profile"}
-					/>
+					/> */}
 				</div>
 			</Modal.Body>
 		</Modal>

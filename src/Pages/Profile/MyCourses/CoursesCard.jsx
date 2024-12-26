@@ -102,7 +102,7 @@ const CoursesCard = (props) => {
 										<div
 											class="progress-bar"
 											role="progressbar"
-											style={{ width: `${0}%` }}
+											style={{ width: `${item?.progress}%` }}
 											aria-valuenow="50"
 											aria-valuemin="0"
 											aria-valuemax="100"
@@ -110,7 +110,8 @@ const CoursesCard = (props) => {
 									</div>
 									<div className="completion-level mt-2">
 										<p>
-											{0}% <span className="complete">Completed</span>
+											{item?.progress}%{" "}
+											<span className="complete">Completed</span>
 										</p>
 									</div>
 								</>

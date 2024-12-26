@@ -143,7 +143,9 @@ const ViewCourses = () => {
 											<div
 												class="progress-bar"
 												role="progressbar"
-												style={{ width: "100%" }}
+												style={{
+													width: `${Math.round(viewCourse?.progress)}%`,
+												}}
 												aria-valuenow="50"
 												aria-valuemin="0"
 												aria-valuemax="100"
@@ -154,7 +156,9 @@ const ViewCourses = () => {
 										<ul className="m-0 p-0">
 											<li>
 												<span className="property">Progress :</span>
-												<span className="value">100% Completed</span>
+												<span className="value">
+													{viewCourse?.progress}% Completed
+												</span>
 											</li>
 											<li>
 												<span className="property">Chapters :</span>
