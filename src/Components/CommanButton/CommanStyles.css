@@ -17,6 +17,7 @@
 	align-content: center;
 	justify-content: center;
 	flex-wrap: wrap;
+	cursor: pointer;
 }
 
 .GeneralButton > button:hover {

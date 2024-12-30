@@ -405,3 +405,21 @@ export const changePasswordValidation = (passwordState, setFormErrors) => {
 	setFormErrors(errors);
 	return isValid;
 };
+
+// Add Student Validation
+export const addStudentValidation = (email, setFormErrors) => {
+	let isValid = true;
+	let errors = {};
+
+	// Validate Old Password
+	if (!email) {
+		errors.email = ["Email is Required"];
+		isValid = false;
+	} else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+		errors.email = ["Invalid email format"];
+		isValid = false;
+	}
+
+	setFormErrors(errors);
+	return isValid;
+};

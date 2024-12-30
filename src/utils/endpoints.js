@@ -47,6 +47,10 @@ export const REMOVE_WISHLIST = "wishlist/remove";
 
 export const CHANGE_PASSWORD = "auth/change-password";
 
+export const ADD_STUDENT = "user/add-student";
+
+export const GET_STUDENT = "/user/my-students";
+
 export const POST_COURSE_REVIEW = "review/store";
 
 export const GET_CHAPTER_DETAIL = "chapter/detail";

@@ -13,6 +13,8 @@ import {
 	MY_COURSE_DETAIL,
 	CHANGE_PASSWORD,
 	POST_QUIZ,
+	ADD_STUDENT,
+	GET_STUDENT,
 } from "../../utils/endpoints";
 
 const AuthServices = createApi({
@@ -145,6 +147,23 @@ const AuthServices = createApi({
 				};
 			},
 		}),
+		addStudent: build.mutation({
+			query: (data) => {
+				return {
+					url: ADD_STUDENT,
+					method: "POST",
+					body: data,
+				};
+			},
+		}),
+		getStudent: build.query({
+			query: () => {
+				return {
+					url: GET_STUDENT,
+					method: "GET",
+				};
+			},
+		}),
 	}),
 });
 
@@ -163,4 +182,6 @@ export const {
 	useGetQuizQuery,
 	usePostQuizMutation,
 	useChangePasswordMutation,
+	useAddStudentMutation,
+	useGetStudentQuery,
 } = AuthServices;

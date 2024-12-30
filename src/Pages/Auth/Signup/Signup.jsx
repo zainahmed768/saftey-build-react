@@ -7,17 +7,29 @@ import { signUpValidation } from "../../../constant/HelperFunction";
 import CommonInputField from "../../../Components/CommonInputField/CommonInputField";
 import { useAuthRegisterMutation } from "../../../redux/services/AuthServices";
 import Alert from "../../../Components/SweetAlert/Alert";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUserToken } from "../../../redux/reducers/AuthReducer";
 const Signup = () => {
+	const location = useLocation();
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const [selectedRole, setSelectedRole] = useState("TEAM LEADER");
+	console.log(selectedRole, "selectedRole");
+
+	const searchParams = new URLSearchParams(location?.search);
+	const role = Number(searchParams.get("role"));
+	const createdBy = searchParams.get("created_by");
+	console.log(role, "role");
+
+	useEffect(() => {
+		setSelectedRole(role !== 0 ? "TEAM LEADER" : "STUDENT");
+	}, [location.search]);
+
 	const onChange = (e) => {
 		console.log(`checked = ${e.target.checked}`);
 	};
 	const [authRegister, response] = useAuthRegisterMutation();
-	const [selectedRole, setSelectedRole] = useState("TEAM LEADER");
 	const [formErrors, setFormErrors] = useState(null);
 	const [user, setUser] = useState({
 		f_name: "",
@@ -41,6 +53,7 @@ const Signup = () => {
 			data.append("confirm_password", user?.confirm_password);
 			data.append("phone", user?.contact_no);
 			data.append("role", selectedRole == "TEAM LEADER" ? 1 : 0);
+			createdBy && data.append("created_by", createdBy);
 
 			authRegister(data);
 		}
@@ -370,7 +383,7 @@ const Signup = () => {
 												</div>
 											</div>
 
-											<div className="col-lg-6">
+											<div className="col-lg-12">
 												<label className="med-font level-8 text-capitalize mb-1">
 													Contact Number{" "}
 												</label>

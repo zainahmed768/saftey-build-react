@@ -80,46 +80,45 @@ const CheckOut = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		let data = new FormData();
-		if (checkoutFormValidation(paymentInfo, setFormErrors)) {
-			if (!stripe || !elements) {
-				return; // Stripe has not loaded yet
-			}
 
+		if (!stripe || !elements) {
+			return; // Stripe has not loaded yet
+		}
+
+		if (checkoutFormValidation(paymentInfo, setFormErrors)) {
 			const cardElement = elements.getElement(CardElement);
 
-			// Send the payment method to the backend
-			const { error, paymentMethod } = await stripe.createPaymentMethod({
-				type: "card",
-				card: cardElement,
-			});
+			// Create a token
+			const { error, token } = await stripe.createToken(cardElement);
 
 			if (error) {
+				console.error("Stripe Token Error:", error);
 				setErrorMessage(error.message);
-			} else {
-				console.log("PaymentMethod:", paymentMethod);
-
-				data.append("user_id", user_id);
-				data.append("first_name", paymentInfo?.firstName);
-				data.append("last_name", paymentInfo?.lastName);
-				data.append("phone", paymentInfo?.phone);
-				data.append("email", paymentInfo?.email);
-				data.append("address_line_1", paymentInfo?.addressLine1);
-				data.append("city", paymentInfo?.city);
-				data.append("state", paymentInfo?.state);
-				data.append("country", paymentInfo?.country);
-				data.append("postcode", paymentInfo?.postcode);
-				cart?.map((course, i) => {
-					data.append(`courses[${i}][course_id]`, course?.id);
-					data.append(`courses[${i}][quantity]`, 1);
-				});
-				data.append("stripe_token", paymentMethod?.id);
-				data.append(
-					"promo_code",
-					paymentInfo?.promo_code ? paymentInfo?.promo_code : " ",
-				);
-
-				checkoutRequest(data);
+				return;
 			}
+
+			console.log("Generated Stripe Token:", token);
+
+			data.append("user_id", user_id);
+			data.append("first_name", paymentInfo?.firstName);
+			data.append("last_name", paymentInfo?.lastName);
+			data.append("phone", paymentInfo?.phone);
+			data.append("email", paymentInfo?.email);
+			data.append("address_line_1", paymentInfo?.addressLine1);
+			data.append("city", paymentInfo?.city);
+			data.append("state", paymentInfo?.state);
+			data.append("country", paymentInfo?.country);
+			data.append("postcode", paymentInfo?.postcode);
+			cart?.map((course, i) => {
+				data.append(`courses[${i}][course_id]`, course?.id);
+				data.append(`courses[${i}][quantity]`, 1);
+			});
+			data.append("stripe_token", token?.id);
+			data.append(
+				"promo_code",
+				paymentInfo?.promo_code ? paymentInfo?.promo_code : " ",
+			);
+			checkoutRequest(data);
 		}
 	};
 	useEffect(() => {
