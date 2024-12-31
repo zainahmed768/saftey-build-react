@@ -37,9 +37,9 @@ const CourseServices = createApi({
 			providesTags: ["courseTag"],
 		}),
 		getSingleCourse: build.query({
-			query: (slug) => {
+			query: (id) => {
 				return {
-					url: `${GET_COURSE_DETAIL}/${slug}`,
+					url: `${GET_SINGLE_COURSES}?id=${id}`,
 					method: "GET",
 				};
 			},

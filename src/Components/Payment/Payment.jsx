@@ -6,7 +6,14 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useAddPaymentMutation } from "../../redux/services/CourseServices";
 import Alert from "../SweetAlert/Alert";
 
-const PaymentModal = ({ show, handleClose, type, chapterId }) => {
+const PaymentModal = ({
+	show,
+	handleClose,
+	type,
+	chapterId,
+	setShow,
+	refetch,
+}) => {
 	const stripe = useStripe();
 	const elements = useElements();
 	// Payment Api Call
@@ -17,24 +24,27 @@ const PaymentModal = ({ show, handleClose, type, chapterId }) => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		let data = new FormData();
-		if (!stripe || !elements) {
-			return; // Stripe has not loaded yet
-		}
-
 		const cardElement = elements.getElement(CardElement);
 
-		// Send the payment method to the backend
-		const { error, paymentMethod } = await stripe.createPaymentMethod({
-			type: "card",
-			card: cardElement,
-		});
+		// Create a token
+		const { error, token } = await stripe.createToken(cardElement);
+
+		if (error) {
+			console.error("Stripe Token Error:", error);
+			setErrorMessage(error.message);
+			return;
+		}
+
+		console.log("Generated Stripe Token:", token);
 
 		if (error) {
 			setErrorMessage(error.message);
 		} else {
-			data.append("stripe_token", paymentMethod?.id);
+			data.append("stripe_token", token?.id);
 			data.append("type", type);
-			chapterId && data.append("chapter_id", chapterId);
+			if (chapterId && type == "video") {
+				data.append("chapter_id", chapterId);
+			}
 
 			addPayment(data);
 		}
@@ -61,6 +71,8 @@ const PaymentModal = ({ show, handleClose, type, chapterId }) => {
 				text: response.data.message,
 				iconStyle: "success",
 			});
+			refetch();
+			setShow(false);
 		}
 	}, [response?.isSuccess]);
 

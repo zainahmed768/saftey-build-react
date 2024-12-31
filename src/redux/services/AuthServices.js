@@ -80,7 +80,7 @@ const AuthServices = createApi({
 					method: "GET",
 				};
 			},
-			invalidatesTags: ["editInfo"],
+			providesTags: ["editInfo"],
 		}),
 		editProfile: build.mutation({
 			query: (data) => {

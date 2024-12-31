@@ -5,7 +5,7 @@ import img from "../../assets/images/course-detail.png";
 import { Col, Row, List, Divider, Skeleton, Spin } from "antd";
 import { FaStar } from "react-icons/fa";
 import CommanButton from "../../Components/CommanButton/CommanButton";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import icon1 from "../../assets/images/hours-on-demand.png";
 import icon2 from "../../assets/images/mobile-icon.png";
 import icon3 from "../../assets/images/articles.png";
@@ -28,6 +28,7 @@ import {
 import Alert from "../../Components/SweetAlert/Alert";
 import ReactPlayer from "react-player";
 const CourseDetails = () => {
+	const navigate = useNavigate();
 	const location = useLocation();
 	const dispatch = useDispatch();
 	const param = useParams();
@@ -41,9 +42,13 @@ const CourseDetails = () => {
 
 	// Add Wishlist Handle
 	const handleWishlist = (id) => {
-		const formData = new FormData();
-		formData.append("course_id", id);
-		addWishlist(formData);
+		if (checkUser) {
+			const formData = new FormData();
+			formData.append("course_id", id);
+			addWishlist(formData);
+		} else {
+			navigate("/sign-in");
+		}
 	};
 
 	// Remove Wishlist Handle
@@ -79,7 +84,7 @@ const CourseDetails = () => {
 		param?.id,
 	);
 	let courseDetail = getSingleCourse?.response?.data;
-	console.log(courseDetail, "courseDetail");
+
 	const rating = 9;
 	const renderStars = (rating) => {
 		const stars = [];
@@ -286,7 +291,7 @@ const CourseDetails = () => {
 							this course includes
 						</h3>
 						<Row justify="left" align="top" className="mt-3">
-							{JSON.parse(courseDetail?.course_includes).map((includes) => {
+							{JSON.parse(courseDetail?.course_includes)?.map((includes) => {
 								return (
 									<Col xs={4} sm={4} md={6}>
 										<p className="reg-font level-7 dark-color">

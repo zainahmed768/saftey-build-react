@@ -16,10 +16,15 @@ const ViewCourses = () => {
 	const navigate = useNavigate();
 	const param = useParams();
 
-	const { data: getCourse, isLoading } = useMyCourseDetailQuery(param?.slug);
+	const {
+		data: getCourse,
+		isLoading,
+		refetch,
+	} = useMyCourseDetailQuery(param?.slug);
 	const [chapterId, setChapterId] = useState(null);
 	let viewCourse = getCourse?.response?.data;
 	const [show, setShow] = useState(false);
+	const [type, setType] = useState("");
 
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
@@ -28,12 +33,18 @@ const ViewCourses = () => {
 	};
 
 	const handleChapterDetail = (item) => {
-		if (item?.watch_time !== item?.video_length) {
-			navigate(`/chapter-detail/${item?.slug}`);
-		} else {
+		if (item?.watch_time >= item?.video_length) {
 			setChapterId(item?.id);
+			setType("video");
 			handleShow();
+		} else {
+			navigate(`/chapter-detail/${item?.slug}`);
 		}
+	};
+
+	const handelDownloadCertificate = () => {
+		setType("certificate");
+		handleShow();
 	};
 
 	if (isLoading) {
@@ -81,10 +92,12 @@ const ViewCourses = () => {
 									<span className={`GeneralButton`}>
 										<button type="submit">submit review</button>
 									</span>
-									<CommanButton
-										label={"download certificate"}
-										onClick={handleShow}
-									/>
+									{viewCourse?.progress >= "98" && (
+										<CommanButton
+											label={"download certificate"}
+											onClick={handelDownloadCertificate}
+										/>
+									)}
 								</div>
 								<div className="view-course-result-wrapper">
 									<div className="view-course-result-heading-wrapper">
@@ -199,9 +212,11 @@ const ViewCourses = () => {
 
 				<PaymentModal
 					show={show}
+					refetch={refetch}
+					setShow={setShow}
 					handleClose={handleClose}
 					chapterId={chapterId}
-					type={"video"}
+					type={type}
 				/>
 				{/* <Modal show={show} onHide={handleClose}  size="lg">
          

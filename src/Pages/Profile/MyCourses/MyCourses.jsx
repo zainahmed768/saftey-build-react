@@ -35,12 +35,16 @@ const MyCourses = () => {
 								<div className="courses-loader-wrapper">
 									<Spin size="large" />
 								</div>
-							) : (
+							) : myCourse?.length > 0 ? (
 								<CoursesCard
 									courses={myCourse}
 									setReview={setReview}
 									setCourse={setCourse}
 								/>
+							) : (
+								<h2 className="level-3-sm student-heaing heading-font dark-color mt-3 mb-0 text-uppercase">
+									You have not enrolled in any course yet.
+								</h2>
 							)
 						) : (
 							<CoursesReview course={course} setReview={setReview} />

@@ -149,183 +149,176 @@ const Signup = () => {
 								}}
 							/>
 
-							{selectedRole === "TEAM LEADER" && (
-								<>
-									<div className="auth_fields_">
-										<div className="row">
-											<div className="col-lg-6">
-												<div className="mb-3">
-													<label className="med-font level-8 text-capitalize mb-1">
-														First Name
-													</label>
+							<div className="auth_fields_">
+								<div className="row">
+									<div className="col-lg-6">
+										<div className="mb-3">
+											<label className="med-font level-8 text-capitalize mb-1">
+												First Name
+											</label>
 
-													<CommonInputField
-														className="form-control-1"
-														type={"text"}
-														name="first_name"
-														value={user.f_name}
-														onChange={(e) =>
-															setUser({
-																...user,
-																f_name: e.target.value,
-															})
-														}
-														errors={
-															formErrors?.f_name ? formErrors?.f_name : null
-														}
-													/>
-												</div>
-											</div>
+											<CommonInputField
+												className="form-control-1"
+												type={"text"}
+												name="first_name"
+												value={user.f_name}
+												onChange={(e) =>
+													setUser({
+														...user,
+														f_name: e.target.value,
+													})
+												}
+												errors={formErrors?.f_name ? formErrors?.f_name : null}
+											/>
+										</div>
+									</div>
 
-											<div className="col-lg-6">
-												<div className="mb-3">
-													<label className="med-font level-8 text-capitalize mb-1">
-														Last Name
-													</label>
+									<div className="col-lg-6">
+										<div className="mb-3">
+											<label className="med-font level-8 text-capitalize mb-1">
+												Last Name
+											</label>
 
-													<CommonInputField
-														className="form-control-1"
-														type={"text"}
-														name="first_name"
-														value={user?.l_name}
-														onChange={(e) =>
-															setUser({ ...user, l_name: e.target.value })
-														}
-														errors={
-															formErrors?.l_name ? formErrors?.l_name : null
-														}
-													/>
-												</div>
-											</div>
+											<CommonInputField
+												className="form-control-1"
+												type={"text"}
+												name="first_name"
+												value={user?.l_name}
+												onChange={(e) =>
+													setUser({ ...user, l_name: e.target.value })
+												}
+												errors={formErrors?.l_name ? formErrors?.l_name : null}
+											/>
+										</div>
+									</div>
 
-											<div className="col-lg-12">
-												<div className="mb-3">
-													<label className="med-font level-8 text-capitalize mb-1">
-														Email Address
-													</label>
-													<CommonInputField
-														className="form-control-1"
-														type={"email"}
-														name="first_name"
-														value={user?.email}
-														onChange={(e) =>
-															setUser({ ...user, email: e.target.value })
-														}
-														errors={
-															formErrors?.email ? formErrors?.email : null
-														}
-													/>
-												</div>
-											</div>
+									<div className="col-lg-12">
+										<div className="mb-3">
+											<label className="med-font level-8 text-capitalize mb-1">
+												Email Address
+											</label>
+											<CommonInputField
+												className="form-control-1"
+												type={"email"}
+												name="first_name"
+												value={user?.email}
+												onChange={(e) =>
+													setUser({ ...user, email: e.target.value })
+												}
+												errors={formErrors?.email ? formErrors?.email : null}
+											/>
+										</div>
+									</div>
 
-											<div className="col-lg-6">
+									<div
+										className={
+											selectedRole == "TEAM LEADER" ? "col-lg-6" : "col-lg-12"
+										}
+									>
+										<label className="med-font level-8 text-capitalize mb-1">
+											Contact Number{" "}
+										</label>
+										<CommonInputField
+											className="form-control-1"
+											type={"number"}
+											name="first_name"
+											value={user?.contact_no}
+											onChange={(e) =>
+												setUser({ ...user, contact_no: e.target.value })
+											}
+											errors={
+												formErrors?.contact_no ? formErrors?.contact_no : null
+											}
+										/>
+									</div>
+									{selectedRole == "TEAM LEADER" && (
+										<div className="col-lg-6">
+											<div className="mb-3">
 												<label className="med-font level-8 text-capitalize mb-1">
-													Contact Number{" "}
+													Company Name
 												</label>
+
 												<CommonInputField
 													className="form-control-1"
-													type={"number"}
+													type={"text"}
 													name="first_name"
-													value={user?.contact_no}
+													value={user?.company_name}
 													onChange={(e) =>
-														setUser({ ...user, contact_no: e.target.value })
+														setUser({ ...user, company_name: e.target.value })
 													}
 													errors={
-														formErrors?.contact_no
-															? formErrors?.contact_no
-															: null
-													}
-												/>
-											</div>
-											<div className="col-lg-6">
-												<div className="mb-3">
-													<label className="med-font level-8 text-capitalize mb-1">
-														Company Name
-													</label>
-
-													<CommonInputField
-														className="form-control-1"
-														type={"text"}
-														name="first_name"
-														value={user?.company_name}
-														onChange={(e) =>
-															setUser({ ...user, company_name: e.target.value })
-														}
-														errors={
-															formErrors?.company_name
-																? formErrors?.company_name
-																: null
-														}
-													/>
-												</div>
-											</div>
-										</div>
-
-										<div className="col-lg-12">
-											<div className="mb-3">
-												<label className="med-font level-8 text-capitalize mb-1">
-													Password
-												</label>
-
-												<CommonInputField
-													placeholder={"**********"}
-													type={"password"}
-													name="password"
-													value={user?.password}
-													onChange={(e) =>
-														setUser({ ...user, password: e.target.value })
-													}
-													errors={
-														formErrors?.password ? formErrors?.password : null
-													}
-												/>
-											</div>
-										</div>
-										<div className="col-lg-12">
-											<div className="mb-3">
-												<label className="med-font level-8 text-capitalize mb-1">
-													Confirm New Password
-												</label>
-
-												<CommonInputField
-													placeholder={"**********"}
-													type={"password"}
-													name="password"
-													value={user?.confirm_password}
-													onChange={(e) =>
-														setUser({
-															...user,
-															confirm_password: e.target.value,
-														})
-													}
-													errors={
-														formErrors?.confirm_password
-															? formErrors?.confirm_password
+														formErrors?.company_name
+															? formErrors?.company_name
 															: null
 													}
 												/>
 											</div>
 										</div>
+									)}
+								</div>
+								<div className="col-lg-12">
+									<div className="mb-3">
+										<label className="med-font level-8 text-capitalize mb-1">
+											Password
+										</label>
 
-										{/* <CommanButton
+										<CommonInputField
+											placeholder={"**********"}
+											type={"password"}
+											name="password"
+											value={user?.password}
+											onChange={(e) =>
+												setUser({ ...user, password: e.target.value })
+											}
+											errors={
+												formErrors?.password ? formErrors?.password : null
+											}
+										/>
+									</div>
+								</div>
+								<div className="col-lg-12">
+									<div className="mb-3">
+										<label className="med-font level-8 text-capitalize mb-1">
+											Confirm New Password
+										</label>
+
+										<CommonInputField
+											placeholder={"**********"}
+											type={"password"}
+											name="password"
+											value={user?.confirm_password}
+											onChange={(e) =>
+												setUser({
+													...user,
+													confirm_password: e.target.value,
+												})
+											}
+											errors={
+												formErrors?.confirm_password
+													? formErrors?.confirm_password
+													: null
+											}
+										/>
+									</div>
+								</div>
+
+								{/* <CommanButton
                       onClick={handleSubmit}
                       label={"sign up"}
                       style={{ width: "100%" }}
                       link={"/sign-in"}
                     /> */}
-										<span className={`GeneralButton`} onClick={handleSubmit}>
-											<button
-												type="submit"
-												style={{ width: "100%" }}
-												disabled={response?.isLoading}
-											>
-												Sign up
-											</button>
-										</span>
-									</div>
-								</>
-							)}
-							{selectedRole === "STUDENT" && (
+								<span className={`GeneralButton`} onClick={handleSubmit}>
+									<button
+										type="submit"
+										style={{ width: "100%" }}
+										disabled={response?.isLoading}
+									>
+										Sign up
+									</button>
+								</span>
+							</div>
+							{/* {selectedRole === "STUDENT" && (
 								<>
 									<div className="auth_fields_">
 										<div className="row">
@@ -443,11 +436,6 @@ const Signup = () => {
 											</div>
 										</div>
 
-										{/* <CommanButton
-                      onClick={handleSubmit}
-                      label={"sign up"}
-                      style={{ width: "100%" }}
-                    /> */}
 										<span className={`GeneralButton`} onClick={handleSubmit}>
 											<button
 												type="submit"
@@ -459,7 +447,7 @@ const Signup = () => {
 										</span>
 									</div>
 								</>
-							)}
+							)} */}
 						</div>
 					</div>
 					<div className="col-lg-5">

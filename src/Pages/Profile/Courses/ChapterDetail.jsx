@@ -25,6 +25,7 @@ const ChapterDetail = () => {
 
 	const [progress, setProgress] = useState(0);
 	const [duration, setDuration] = useState(0);
+	const [isBuffering, setIsBuffering] = useState(false);
 	const [play, setPlay] = useState(false);
 	console.log(`Progress: ${progress}, Duration: ${duration}`);
 
@@ -119,8 +120,15 @@ const ChapterDetail = () => {
 									onProgress={handleProgress}
 									onDuration={handleDuration}
 									onEnded={() => handleStop(false)}
-									onReady={() => setReadyToSeek(true)} // Triggered when the player is ready
+									onReady={() => setReadyToSeek(true)}
+									onBuffer={() => setIsBuffering(true)}
+									onBufferEnd={() => setIsBuffering(false)}
 								/>
+								{isBuffering && (
+									<div className="buffering-overlay">
+										<Spin size="large" style={{ color: "#fff" }} />
+									</div>
+								)}
 								<div className="timestamp position-absolute bottom-0 text-white p-3">
 									<span className="video-progress">{formatTime(progress)}</span>
 									{" / "}

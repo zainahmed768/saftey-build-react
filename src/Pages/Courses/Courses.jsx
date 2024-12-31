@@ -49,7 +49,7 @@ const Courses = () => {
 	};
 
 	const onClick = (item) => {
-		navigate("/course-details/" + item?.slug);
+		navigate("/course-details/" + item?.id);
 	};
 
 	const handleSort = (e) => {

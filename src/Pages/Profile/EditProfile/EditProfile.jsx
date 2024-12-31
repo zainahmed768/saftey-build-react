@@ -15,6 +15,7 @@ const EditProfile = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const getUser = useSelector((state) => state?.AuthReducer?.user);
+	const [file, setFile] = useState(null);
 	const [formErrors, setFormErrors] = useState(null);
 	const [user, setUser] = useState({
 		first_name: getUser?.first_name,
@@ -23,8 +24,6 @@ const EditProfile = () => {
 	});
 	const [editProfile, response] = useEditProfileMutation();
 
-	const [file, setFile] = useState(null);
-
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (editProfileValidation(user, setFormErrors)) {
@@ -32,6 +31,7 @@ const EditProfile = () => {
 			data.append("first_name", user?.first_name);
 			data.append("last_name", user?.last_name);
 			data.append("phone", user?.phone);
+			file && data.append("image", file);
 
 			editProfile(data);
 		}
@@ -61,7 +61,7 @@ const EditProfile = () => {
 	}, [response]);
 	return (
 		<>
-			<ProfileLayout type={"team leader"}>
+			<ProfileLayout type={"team leader"} File={file} setFile={setFile}>
 				<div class="row">
 					<div class="col-lg-6 col">
 						<h2 class="level-3-sm heading-font dark-color mt-3 mb-0 text-uppercase">

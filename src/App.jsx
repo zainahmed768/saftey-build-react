@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import PublicRoutes from "./Routes/PublicRoutes/Publicroutes";
-import Home from "./Pages/Home/Home";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import "../src/styles/global.css";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -11,7 +12,9 @@ const App = () => {
 	return (
 		<>
 			<Elements stripe={stripePromise}>
-				<PublicRoutes />
+				<SkeletonTheme baseColor="#eee" highlightColor="#ddd">
+					<PublicRoutes />
+				</SkeletonTheme>
 			</Elements>
 		</>
 	);

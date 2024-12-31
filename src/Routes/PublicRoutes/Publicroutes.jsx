@@ -50,8 +50,8 @@ const PublicRoutes = () => {
 					<Route path="/otp" element={<OTP />} />
 					<Route path="/verify-otp" element={<VerifyOTP />} />
 				</Route>
+				<Route path="/course-details/:id" element={<CourseDetails />} />
 				<Route element={<PrivateRoutes />}>
-					<Route path="/course-details/:id" element={<CourseDetails />} />
 					<Route path="/chapter-detail/:slug" element={<ChapterDetail />} />
 
 					<Route path="/my-cart" element={<MyCart />} />
