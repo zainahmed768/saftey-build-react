@@ -14,6 +14,8 @@ const Signup = () => {
 	const location = useLocation();
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+	const [showConfirmPassword, setShowConfirmPassword] = useState(false); // State to toggle confirm password
 	const [selectedRole, setSelectedRole] = useState("TEAM LEADER");
 	console.log(selectedRole, "selectedRole");
 
@@ -25,6 +27,14 @@ const Signup = () => {
 	useEffect(() => {
 		setSelectedRole(role !== 0 ? "TEAM LEADER" : "STUDENT");
 	}, [location.search]);
+
+	const togglePassword = () => {
+		setShowPassword(!showPassword); // Toggle password visibility
+	};
+
+	const toggleConfirmPassword = () => {
+		setShowConfirmPassword(!showConfirmPassword); // Toggle confirm password visibility
+	};
 
 	const onChange = (e) => {
 		console.log(`checked = ${e.target.checked}`);
@@ -162,12 +172,24 @@ const Signup = () => {
 												type={"text"}
 												name="first_name"
 												value={user.f_name}
-												onChange={(e) =>
-													setUser({
-														...user,
-														f_name: e.target.value,
-													})
-												}
+												onChange={(e) => {
+													const regex = /^[a-zA-Z\s]*$/;
+													if (regex.test(e.target.value)) {
+														setUser({
+															...user,
+															f_name: e.target.value,
+														});
+														setFormErrors({
+															...formErrors,
+															f_name: null, // Clear error
+														});
+													} else {
+														setFormErrors({
+															...formErrors,
+															f_name: "Only letters are allowed in this field.",
+														});
+													}
+												}}
 												errors={formErrors?.f_name ? formErrors?.f_name : null}
 											/>
 										</div>
@@ -184,9 +206,24 @@ const Signup = () => {
 												type={"text"}
 												name="first_name"
 												value={user?.l_name}
-												onChange={(e) =>
-													setUser({ ...user, l_name: e.target.value })
-												}
+												onChange={(e) => {
+													const regex = /^[a-zA-Z\s]*$/;
+													if (regex.test(e.target.value)) {
+														setUser({
+															...user,
+															l_name: e.target.value,
+														});
+														setFormErrors({
+															...formErrors,
+															l_name: null, // Clear error
+														});
+													} else {
+														setFormErrors({
+															...formErrors,
+															l_name: "Only letters are allowed in this field.",
+														});
+													}
+												}}
 												errors={formErrors?.l_name ? formErrors?.l_name : null}
 											/>
 										</div>
@@ -257,14 +294,14 @@ const Signup = () => {
 									)}
 								</div>
 								<div className="col-lg-12">
-									<div className="mb-3">
+									<div className="mb-3 position-relative">
 										<label className="med-font level-8 text-capitalize mb-1">
 											Password
 										</label>
 
 										<CommonInputField
 											placeholder={"**********"}
-											type={"password"}
+											type={showPassword ? "text" : "password"}
 											name="password"
 											value={user?.password}
 											onChange={(e) =>
@@ -274,17 +311,29 @@ const Signup = () => {
 												formErrors?.password ? formErrors?.password : null
 											}
 										/>
+										<button
+											className="input-inline-btn shop-password"
+											type="button"
+											onClick={togglePassword}
+										>
+											<i
+												className={`fa ${
+													showPassword ? "fa-eye-slash" : "fa-eye"
+												} text-color`}
+												style={{ cursor: "pointer" }}
+											></i>
+										</button>
 									</div>
 								</div>
 								<div className="col-lg-12">
-									<div className="mb-3">
+									<div className="mb-3 position-relative">
 										<label className="med-font level-8 text-capitalize mb-1">
 											Confirm New Password
 										</label>
 
 										<CommonInputField
 											placeholder={"**********"}
-											type={"password"}
+											type={showConfirmPassword ? "text" : "password"}
 											name="password"
 											value={user?.confirm_password}
 											onChange={(e) =>
@@ -299,6 +348,18 @@ const Signup = () => {
 													: null
 											}
 										/>
+										<button
+											className="input-inline-btn shop-password"
+											type="button"
+											onClick={toggleConfirmPassword}
+										>
+											<i
+												style={{ cursor: "pointer" }}
+												className={`fa ${
+													showConfirmPassword ? "fa-eye-slash" : "fa-eye"
+												} text-color`}
+											></i>
+										</button>
 									</div>
 								</div>
 

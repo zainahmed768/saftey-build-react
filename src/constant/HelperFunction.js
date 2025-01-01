@@ -30,15 +30,31 @@ export const signUpValidation = (userData, setFormErrors) => {
 	}
 
 	// Validate phone number
+
 	if (!userData || !userData.contact_no) {
-		errors.contact_no = ["Phone number is required"];
+		errors.contact_no = ["Contact number is required"];
 		isValid = false;
-	} else if (!/^\d{10}$/.test(userData.contact_no)) {
+	} else if (!/^\d+$/.test(userData.contact_no)) {
+		// Check if it contains non-numeric characters (like special characters)
 		errors.contact_no = [
-			"Contact number must be exactly 10 digits and should not contain special characters",
+			"Contact number should not contain special characters or letters",
 		];
 		isValid = false;
+	} else if (userData.contact_no.length !== 10) {
+		// Check if the length is exactly 10 digits
+		errors.contact_no = ["Contact number must be exactly 10 digits"];
+		isValid = false;
 	}
+
+	// if (!userData || !userData.contact_no) {
+	// 	errors.contact_no = ["Phone number is required"];
+	// 	isValid = false;
+	// } else if (!/^\d{10}$/.test(userData.contact_no)) {
+	// 	errors.contact_no = [
+	// 		"Contact number must be exactly 10 digits and should not contain special characters",
+	// 	];
+	// 	isValid = false;
+	// }
 
 	// Validate password
 	if (!userData || !userData.password) {
