@@ -17,6 +17,18 @@
 	/* aspect-ratio: 1.5; */
 }
 
+.remove_cart:hover {
+	color: #070808 !important;
+}
+
+.remove_cart {
+	cursor: pointer;
+}
+
+.setmarging {
+	margin-right: 12px;
+}
+
 .shop-password {
 	border: none;
 	background: none;

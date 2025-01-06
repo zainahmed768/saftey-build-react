@@ -20,14 +20,14 @@ const MyCart = () => {
 		(state) => state?.CartReducer?.promoDiscount,
 	);
 	const subTotal = useSelector((state) => state?.CartReducer?.subtotal);
-	const [discount, setDiscount] = useState(0);
+	const [discount, setDiscounts] = useState(0);
 
 	useEffect(() => {
 		if (promoDiscount?.type) {
 			if (promoDiscount.type === "fixed") {
-				setDiscount(promoDiscount.discount);
+				setDiscounts(promoDiscount.discount);
 			} else {
-				setDiscount(Math.round((subtotal * promoDiscount.discount) / 100));
+				setDiscounts(Math.round((subtotal * promoDiscount.discount) / 100));
 			}
 		}
 	}, [promoDiscount]);
@@ -86,6 +86,7 @@ const MyCart = () => {
 				text: response.data.message,
 				iconStyle: "success",
 			});
+			console.log(response?.data, "asdjiud32");
 			dispatch(setDiscount(response?.data?.response?.data));
 			setPromoCode("");
 		}
@@ -174,7 +175,7 @@ const MyCart = () => {
 											<td>
 												<div className="my-auto">
 													<a onClick={(e) => handleRemoveCart(course?.id)}>
-														<span className="heading-font level-6 text-uppercase underline text-dark leter-2">
+														<span className="heading-font level-6 text-uppercase underline text-dark leter-2 remove_cart">
 															Remove
 														</span>
 													</a>
@@ -197,7 +198,7 @@ const MyCart = () => {
 					<div className="row">
 						<div className="col-lg-6">
 							<div className="d-flex justify-content-lg-start justify-content-center">
-								<CommanButton label={"update cart"} link={"/courses"} />
+								<CommanButton label={"Buy more course"} link={"/courses"} />
 							</div>
 						</div>
 

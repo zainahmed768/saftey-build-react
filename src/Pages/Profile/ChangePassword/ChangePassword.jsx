@@ -7,7 +7,10 @@ import Alert from "../../../Components/SweetAlert/Alert";
 import { changePasswordValidation } from "../../../constant/HelperFunction";
 const ChangePassword = () => {
 	const [formErrors, setFormErrors] = useState({});
+	const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+	const [showConfirmPassword, setShowConfirmPassword] = useState(false); // State to toggle confirm password
 	// CHANGE PASSWORD API CALL
+	const [showOldPassword, setShowOldPassword] = useState(false);
 	const [changePassword, response] = useChangePasswordMutation();
 
 	const [passwordState, setPasswordState] = useState({
@@ -30,6 +33,18 @@ const ChangePassword = () => {
 		if (changePasswordValidation(passwordState, setFormErrors)) {
 			changePassword(formData);
 		}
+	};
+
+	const togglePassword = () => {
+		setShowPassword(!showPassword); // Toggle password visibility
+	};
+
+	const toggleoldPassword = () => {
+		setShowOldPassword(!showOldPassword); // Toggle password visibility
+	};
+
+	const toggleConfirmPassword = () => {
+		setShowConfirmPassword(!showConfirmPassword); // Toggle confirm password visibility
 	};
 
 	useEffect(() => {
@@ -76,15 +91,27 @@ const ChangePassword = () => {
 					<div className="col-lg-6">
 						<div className="edit-profile-form-wrapper">
 							<form onSubmit={handleChangePassword}>
-								<div className="form-group">
+								<div className="form-group position-relative">
 									<label htmlFor="f_Name">Old Password</label>
 									<input
-										type="password"
+										type={showOldPassword ? "text" : "password"}
 										value={passwordState?.oldPassword}
 										name="oldPassword"
 										onChange={handleChange}
 										className="form-control"
 									/>
+									<button
+										className="input-inline-btn shop-password"
+										type="button"
+										onClick={toggleoldPassword}
+									>
+										<i
+											style={{ cursor: "pointer", marginTop: "10px" }}
+											className={`fa ${
+												showOldPassword ? "fa-eye-slash" : "fa-eye"
+											} text-color`}
+										></i>
+									</button>
 									{formErrors?.oldPassword && (
 										<p
 											className="error text-start"
@@ -99,15 +126,27 @@ const ChangePassword = () => {
 										</p>
 									)}
 								</div>
-								<div className="form-group">
+								<div className="form-group position-relative">
 									<label htmlFor="l_Name">New Password</label>
 									<input
-										type="password"
+										type={showConfirmPassword ? "text" : "password"}
 										name="newPassword"
 										value={passwordState?.newPassword}
 										onChange={handleChange}
 										className="form-control"
 									/>
+									<button
+										className="input-inline-btn shop-password"
+										type="button"
+										onClick={toggleConfirmPassword}
+									>
+										<i
+											style={{ cursor: "pointer", marginTop: "10px" }}
+											className={`fa ${
+												showConfirmPassword ? "fa-eye-slash" : "fa-eye"
+											} text-color`}
+										></i>
+									</button>
 									{formErrors?.newPassword && (
 										<p
 											className="error text-start"
@@ -122,15 +161,27 @@ const ChangePassword = () => {
 										</p>
 									)}
 								</div>
-								<div className="form-group">
+								<div className="form-group position-relative">
 									<label htmlFor="phone_number">Confirm New Password</label>
 									<input
-										type="password"
+										type={showPassword ? "text" : "password"}
 										name="confirmPassword"
 										onChange={handleChange}
 										value={passwordState?.confirmPassword}
 										className="form-control"
 									/>
+									<button
+										className="input-inline-btn shop-password"
+										type="button"
+										onClick={togglePassword}
+									>
+										<i
+											style={{ cursor: "pointer", marginTop: "10px" }}
+											className={`fa ${
+												showPassword ? "fa-eye-slash" : "fa-eye"
+											} text-color`}
+										></i>
+									</button>
 									{formErrors?.confirmPassword && (
 										<p
 											className="error text-start"

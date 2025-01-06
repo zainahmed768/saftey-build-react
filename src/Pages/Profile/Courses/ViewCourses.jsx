@@ -22,7 +22,9 @@ const ViewCourses = () => {
 		refetch,
 	} = useMyCourseDetailQuery(param?.slug);
 	const [chapterId, setChapterId] = useState(null);
-	let viewCourse = getCourse?.response?.data;
+	let viewCourse = getCourse?.response?.data?.course;
+	let CourseMarks = getCourse?.response?.data;
+	console.log(CourseMarks, "asdjasdj6236");
 	const [show, setShow] = useState(false);
 	const [type, setType] = useState("");
 
@@ -92,12 +94,10 @@ const ViewCourses = () => {
 									<span className={`GeneralButton`}>
 										<button type="submit">submit review</button>
 									</span>
-									{viewCourse?.progress >= "98" && (
-										<CommanButton
-											label={"download certificate"}
-											onClick={handelDownloadCertificate}
-										/>
-									)}
+									<CommanButton
+										label={"download certificate"}
+										onClick={handelDownloadCertificate}
+									/>
 								</div>
 								<div className="view-course-result-wrapper">
 									<div className="view-course-result-heading-wrapper">
@@ -107,16 +107,31 @@ const ViewCourses = () => {
 									</div>
 									<div className="view-course-result-list-wrapper">
 										<ul className="p-0">
-											<li>
-												Chapters Covered : 10<b>/15</b>
-											</li>
-											<li>Quiz Percentage : 50%</li>
+											<li>Chapters Covered : {CourseMarks?.chaptersCovered}</li>
+											<li>Quiz Percentage : {CourseMarks?.quizPercentage}%</li>
 											<li>Quiz Score By Chapters :</li>
-											<li>Quiz Total Marks : 10</li>
-											<li>Achieved Marked : 10</li>
+											<li>Quiz Total Marks : {CourseMarks?.quizTotalMarks}</li>
+											<li>Achieved Marked : {CourseMarks?.achievedMarks}</li>
 										</ul>
 									</div>
 								</div>
+								<div className="row mb-3">
+									<div className="col-lg-8">
+										<div className="view-courses-chapter-wrapper">
+											<div className="chapters-tags-wrapper mt-3 d-flex gap-2 flex-wrap">
+												{CourseMarks?.chapterScores?.map((item, key) => (
+													<div className="chapter-tag-wrapper" key={key}>
+														<span class="badge bg-dark">
+															Chapter {item?.chapter} : {item?.total_marks}
+															<b>/{item?.achieved_marks}</b>
+														</span>
+													</div>
+												))}
+											</div>
+										</div>
+									</div>
+								</div>
+
 								<div className="row">
 									<div className="col-lg-8">
 										<div className="view-courses-chapter-wrapper">

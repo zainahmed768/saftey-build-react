@@ -15,6 +15,11 @@ import {
 	POST_QUIZ,
 	ADD_STUDENT,
 	GET_STUDENT,
+	FORGET_PASSWORD,
+	FORGET_OTP,
+	UPDATE_NEW_PASSWORD,
+	GET_STUDENT_DETAIL,
+	CERTIFICATE,
 } from "../../utils/endpoints";
 
 const AuthServices = createApi({
@@ -62,6 +67,15 @@ const AuthServices = createApi({
 				};
 			},
 			invalidatesTags: ["editInfo"],
+		}),
+		forgetPassword: build.mutation({
+			query: (data) => {
+				return {
+					url: FORGET_PASSWORD,
+					method: "POST",
+					body: data,
+				};
+			},
 		}),
 		resendVerifyOtp: build.mutation({
 			query: (data) => {
@@ -147,6 +161,24 @@ const AuthServices = createApi({
 				};
 			},
 		}),
+		forgetOtp: build.mutation({
+			query: (data) => {
+				return {
+					url: FORGET_OTP,
+					method: "POST",
+					body: data,
+				};
+			},
+		}),
+		UpdatePassword: build.mutation({
+			query: (data) => {
+				return {
+					url: UPDATE_NEW_PASSWORD,
+					method: "POST",
+					body: data,
+				};
+			},
+		}),
 		addStudent: build.mutation({
 			query: (data) => {
 				return {
@@ -156,10 +188,26 @@ const AuthServices = createApi({
 				};
 			},
 		}),
-		getStudent: build.query({
-			query: () => {
+		certificateStudent: build.query({
+			query: (data) => {
 				return {
-					url: GET_STUDENT,
+					url: `${CERTIFICATE}`,
+					method: "GET",
+				};
+			},
+		}),
+		getStudent: build.query({
+			query: (data) => {
+				return {
+					url: `${GET_STUDENT}?search=${data}`,
+					method: "GET",
+				};
+			},
+		}),
+		getStudentDetails: build.query({
+			query: (id) => {
+				return {
+					url: `${GET_STUDENT_DETAIL}${id}`,
 					method: "GET",
 				};
 			},
@@ -176,6 +224,7 @@ export const {
 	useLoginMutation,
 	useGetProfileQuery,
 	useEditProfileMutation,
+	useForgetOtpMutation,
 	useMyOrdersQuery,
 	useMyCoursesQuery,
 	useMyCourseDetailQuery,
@@ -183,5 +232,9 @@ export const {
 	usePostQuizMutation,
 	useChangePasswordMutation,
 	useAddStudentMutation,
+	useForgetPasswordMutation,
+	useUpdatePasswordMutation,
 	useGetStudentQuery,
+	useCertificateStudentQuery,
+	useGetStudentDetailsQuery,
 } = AuthServices;

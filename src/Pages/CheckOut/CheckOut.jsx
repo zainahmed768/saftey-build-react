@@ -22,6 +22,9 @@ const CheckOut = () => {
 	const navigate = useNavigate();
 	const [errorMessage, setErrorMessage] = useState(null);
 	const [checkoutRequest, response] = useCheckoutMutation();
+	const [checkTerms, setCheckTerms] = useState(false);
+	const [checkboxError, setCheckboxError] = useState("");
+
 	const cart = useSelector((state) => state?.CartReducer?.cart);
 	const subtotal = useSelector((state) => state?.CartReducer?.subtotal);
 	const promoDiscount = useSelector(
@@ -44,8 +47,12 @@ const CheckOut = () => {
 		promo_code: "",
 	});
 	const onChange = (e) => {
-		console.log(`checked = ${e.target.checked}`);
+		setCheckTerms(e.target.checked);
+		if (e.target.checked) {
+			setCheckboxError(""); // Clear error if checkbox is checked
+		}
 	};
+
 	const rating = 5;
 	const renderStars = (rating) => {
 		const stars = [];
@@ -79,6 +86,12 @@ const CheckOut = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+
+		if (!checkTerms) {
+			setCheckboxError("You must agree to the terms and conditions.");
+			return;
+		}
+
 		let data = new FormData();
 
 		if (!stripe || !elements) {
@@ -166,12 +179,24 @@ const CheckOut = () => {
 										type={"text"}
 										name="firstname"
 										value={paymentInfo.firstName}
-										onChange={(e) =>
-											setPaymentInfo({
-												...paymentInfo,
-												firstName: e.target.value,
-											})
-										}
+										onChange={(e) => {
+											const regex = /^[a-zA-Z\s]*$/;
+											if (regex.test(e.target.value)) {
+												setPaymentInfo({
+													...paymentInfo,
+													firstName: e.target.value,
+												});
+												setFormErrors({
+													...formErrors,
+													firstName: null, // Clear error
+												});
+											} else {
+												setFormErrors({
+													...formErrors,
+													firstName: "Only letters are allowed in this field.",
+												});
+											}
+										}}
 										errors={
 											formErrors?.firstName ? formErrors?.firstName : null
 										}
@@ -189,34 +214,25 @@ const CheckOut = () => {
 										type={"text"}
 										name="lastname"
 										value={paymentInfo.lastName}
-										onChange={(e) =>
-											setPaymentInfo({
-												...paymentInfo,
-												lastName: e.target.value,
-											})
-										}
+										onChange={(e) => {
+											const regex = /^[a-zA-Z\s]*$/;
+											if (regex.test(e.target.value)) {
+												setPaymentInfo({
+													...paymentInfo,
+													lastName: e.target.value,
+												});
+												setFormErrors({
+													...formErrors,
+													lastName: null, // Clear error
+												});
+											} else {
+												setFormErrors({
+													...formErrors,
+													lastName: "Only letters are allowed in this field.",
+												});
+											}
+										}}
 										errors={formErrors?.lastName ? formErrors?.lastName : null}
-									/>
-								</div>
-							</div>
-
-							<div className="col-lg-6">
-								<div className="mb-3">
-									<label className="med-font level-9 text-capitalize mb-1">
-										Phone
-									</label>
-									<CommonInputField
-										className="form-control-1"
-										type={"number"}
-										name="phone"
-										value={paymentInfo.phone}
-										onChange={(e) =>
-											setPaymentInfo({
-												...paymentInfo,
-												phone: e.target.value,
-											})
-										}
-										errors={formErrors?.phone ? formErrors?.phone : null}
 									/>
 								</div>
 							</div>
@@ -239,6 +255,27 @@ const CheckOut = () => {
 									errors={formErrors?.email ? formErrors?.email : null}
 								/>
 							</div>
+							<div className="col-lg-6">
+								<div className="mb-3">
+									<label className="med-font level-9 text-capitalize mb-1">
+										Phone
+									</label>
+									<CommonInputField
+										className="form-control-1"
+										type={"number"}
+										name="phone"
+										value={paymentInfo.phone}
+										onChange={(e) =>
+											setPaymentInfo({
+												...paymentInfo,
+												phone: e.target.value,
+											})
+										}
+										errors={formErrors?.phone ? formErrors?.phone : null}
+									/>
+								</div>
+							</div>
+
 							<div className="col-lg-12">
 								<label className="med-font level-9 text-capitalize mb-1">
 									Address Line 1{" "}
@@ -450,6 +487,17 @@ const CheckOut = () => {
 									lobortis eu. Donec id{" "}
 								</Checkbox>
 							</p>
+							{checkboxError && (
+								<p
+									style={{
+										color: "red",
+										fontSize: "13px",
+										marginTop: "5px",
+									}}
+								>
+									{checkboxError}
+								</p>
+							)}
 						</div>
 
 						<Divider />

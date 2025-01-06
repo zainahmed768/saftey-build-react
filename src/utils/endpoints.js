@@ -11,6 +11,12 @@ export const GET_PROFILE = `/user/info`;
 
 export const EDIT_PROFILE = `/user/update`;
 
+export const FORGET_PASSWORD = `/auth/forget-password`;
+
+export const FORGET_OTP = `/auth/check-code`;
+
+export const UPDATE_NEW_PASSWORD = `/auth/update-new-password`;
+
 // site end endpoints
 
 export const CONTACT_US = `/contact-us`;
@@ -58,3 +64,7 @@ export const GET_CHAPTER_DETAIL = "chapter/detail";
 export const POST_CHAPTER_WATCHTIME = "chapter/store-watch-time";
 
 export const ADD_PAYMENT = "charge-price";
+
+export const CERTIFICATE = "my-certificates";
+
+export const GET_STUDENT_DETAIL = "/user/student-detail/";

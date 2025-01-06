@@ -78,11 +78,8 @@ const Signup = () => {
 				title: "Success",
 				text: "Account created successfully. Please verify your email by clicking the link we sent to your inbox.",
 			});
-			navigate("/verify-otp", {
-				state: {
-					email: user?.email,
-				},
-			});
+			navigate("/verify-otp");
+			localStorage.setItem("email", user?.email);
 			// setUser({
 			//   f_name: "",
 			//   l_name: "",

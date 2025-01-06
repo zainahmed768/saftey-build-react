@@ -92,7 +92,7 @@ const Courses = () => {
 						</div>
 					) : (
 						<>
-							<div className="row">
+							<div className="row pb-5">
 								<div className="col-lg-6">
 									<label
 										htmlFor="search"
@@ -160,13 +160,15 @@ const Courses = () => {
 												price={item?.price}
 												rating={undefined}
 												isActiveStar={false}
+												width={"300px"}
+												height={"167px"}
 											/>
 										</div>
 									))}
 								</div>
 							</div>
 
-							<div className="d-flex justify-content-center">
+							<div className="d-flex justify-content-center mt-5">
 								<Pagination current={current} onChange={onChange} total={50} />
 							</div>
 						</>

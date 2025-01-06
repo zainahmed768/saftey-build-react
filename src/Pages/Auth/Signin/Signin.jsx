@@ -16,8 +16,12 @@ import Alert from "../../../Components/SweetAlert/Alert";
 const Signin = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const [showPassword, setShowPassword] = useState(false);
 	const onChange = (e) => {
 		console.log(`checked = ${e.target.checked}`);
+	};
+	const togglePassword = () => {
+		setShowPassword(!showPassword); // Toggle password visibility
 	};
 	const [authLogin, response] = useLoginMutation();
 	const [login, setLogin] = useState({
@@ -55,10 +59,16 @@ const Signin = () => {
 		}
 
 		if (response?.isError) {
-			if (response?.error?.data?.errors?.email[0]) {
+			if (response?.error?.data?.errors?.email?.[0]) {
 				Alert({
 					title: "Error",
-					text: response?.error?.data?.errors?.email[0],
+					text: response?.error?.data?.errors?.email?.[0],
+					iconStyle: "error",
+				});
+			} else if (response?.error?.data?.errors?.[0]) {
+				Alert({
+					title: "Error",
+					text: response?.error?.data?.errors?.[0],
 					iconStyle: "error",
 				});
 			} else {
@@ -116,14 +126,14 @@ const Signin = () => {
 									/>
 								</div>
 
-								<div className="">
+								<div className="position-relative">
 									<label className="med-font level-8 text-capitalize mb-1">
 										Password
 									</label>
 
 									<CommonInputField
 										className="form-control-1"
-										type={"password"}
+										type={showPassword ? "text" : "password"}
 										name="email"
 										value={login.password}
 										onChange={(e) =>
@@ -134,6 +144,18 @@ const Signin = () => {
 										}
 										errors={formErrors?.password ? formErrors?.password : null}
 									/>
+									<button
+										className="input-inline-btn shop-password"
+										type="button"
+										onClick={togglePassword}
+									>
+										<i
+											className={`fa ${
+												showPassword ? "fa-eye-slash" : "fa-eye"
+											} text-color`}
+											style={{ cursor: "pointer" }}
+										></i>
+									</button>
 								</div>
 								<div className="row">
 									<div className="col-lg-6">

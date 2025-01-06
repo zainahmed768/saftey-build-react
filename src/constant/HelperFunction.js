@@ -56,12 +56,50 @@ export const signUpValidation = (userData, setFormErrors) => {
 	// 	isValid = false;
 	// }
 
+	// // Validate password
+	// if (!userData || !userData.password) {
+	// 	errors.password = ["Password is required"];
+	// 	isValid = false;
+	// } else if (userData.password.length < 8 || userData.password.length > 20) {
+	// 	errors.password = ["Password must be between 8 to 20 characters"];
+	// 	isValid = false;
+	// }
+
+	// // Validate confirm password
+	// if (!userData || !userData.confirm_password) {
+	// 	errors.confirm_password = ["Confirm password is required"];
+	// 	isValid = false;
+	// } else if (userData.confirm_password !== userData.password) {
+	// 	errors.confirm_password = ["Passwords do not match"];
+	// 	isValid = false;
+	// }
+
 	// Validate password
 	if (!userData || !userData.password) {
 		errors.password = ["Password is required"];
 		isValid = false;
 	} else if (userData.password.length < 8 || userData.password.length > 20) {
 		errors.password = ["Password must be between 8 to 20 characters"];
+		isValid = false;
+	} else if (
+		!/[A-Z]/.test(userData.password) // At least one uppercase letter
+	) {
+		errors.password = ["Password must include at least one uppercase letter"];
+		isValid = false;
+	} else if (
+		!/[a-z]/.test(userData.password) // At least one lowercase letter
+	) {
+		errors.password = ["Password must include at least one lowercase letter"];
+		isValid = false;
+	} else if (
+		!/[0-9]/.test(userData.password) // At least one digit
+	) {
+		errors.password = ["Password must include at least one number"];
+		isValid = false;
+	} else if (
+		!/[!@#$%^&*(),.?":{}|<>]/.test(userData.password) // At least one special character
+	) {
+		errors.password = ["Password must include at least one special character"];
 		isValid = false;
 	}
 
@@ -81,6 +119,29 @@ export const signUpValidation = (userData, setFormErrors) => {
 	}
 
 	// Set errors and return validation status
+	setFormErrors(errors);
+	return isValid;
+};
+
+export const forgetPasswordValidation = (userData, setFormErrors) => {
+	let isValid = true;
+	let errors = {};
+
+	if (!userData || !userData?.email) {
+		if (!errors || !errors?.email) {
+			if (!errors) errors = {};
+			errors.email = [];
+		}
+		errors?.email?.push("Email is required");
+		isValid = false;
+	} else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userData?.email)) {
+		if (!errors || !errors?.email) {
+			if (!errors) errors = {};
+			errors.email = [];
+		}
+		errors?.email?.push("Invalid email format");
+		isValid = false;
+	}
 	setFormErrors(errors);
 	return isValid;
 };
@@ -399,6 +460,31 @@ export const changePasswordValidation = (passwordState, setFormErrors) => {
 		errors.oldPassword = ["Old password is required"];
 		isValid = false;
 	}
+
+	// Validate New Password
+	if (!passwordState?.newPassword) {
+		errors.newPassword = ["New password is required"];
+		isValid = false;
+	} else if (passwordState?.newPassword.length < 8) {
+		errors.newPassword = ["New password must be atleast 8 characters"];
+		isValid = false;
+	}
+
+	// Validate Confirm Password
+	if (!passwordState?.confirmPassword) {
+		errors.confirmPassword = ["Confirm password is required"];
+		isValid = false;
+	} else if (passwordState?.confirmPassword !== passwordState?.newPassword) {
+		errors.confirmPassword = ["Confirm password must match the new password"];
+		isValid = false;
+	}
+
+	setFormErrors(errors);
+	return isValid;
+};
+export const PasswordValidation = (passwordState, setFormErrors) => {
+	let isValid = true;
+	let errors = {};
 
 	// Validate New Password
 	if (!passwordState?.newPassword) {

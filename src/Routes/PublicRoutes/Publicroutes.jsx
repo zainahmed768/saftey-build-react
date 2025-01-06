@@ -49,26 +49,30 @@ const PublicRoutes = () => {
 					<Route path="/forgot-password" element={<ForgotPassword />} />
 					<Route path="/otp" element={<OTP />} />
 					<Route path="/verify-otp" element={<VerifyOTP />} />
+					<Route
+						path="/auth-change-password"
+						element={<UserChangePassword />}
+					/>
 				</Route>
 				<Route path="/course-details/:id" element={<CourseDetails />} />
 				<Route element={<PrivateRoutes />}>
 					<Route path="/chapter-detail/:slug" element={<ChapterDetail />} />
 
 					<Route path="/my-cart" element={<MyCart />} />
+					<Route path="/change-password" element={<ChangePassword />} />
 					<Route path="/check-out" element={<CheckOut />} />
 					<Route path="/contact-us" element={<ContacUs />} />
 					<Route path="/terms-conditions" element={<TermCondition />} />
 					<Route path="/privacy-policy" element={<PrivacyPolicy />} />
 					<Route path="/my-profile" element={<MyProfile />} />
 					<Route path="/edit-profile" element={<EditProfile />} />
-					<Route
-						path="/auth-change-password"
-						element={<UserChangePassword />}
-					/>
-					<Route path="/change-password" element={<ChangePassword />} />
+
 					<Route path="/my-orders" element={<MyOrders />} />
 					<Route path="/my-student" element={<MyStudent />} />
-					<Route path="/my-student-detail" element={<StudentCourseDetail />} />
+					<Route
+						path="/my-student-detail/:id"
+						element={<StudentCourseDetail />}
+					/>
 					<Route path="/add-student" element={<AddStudent />} />
 					<Route path="/my-course" element={<MyCourses />} />
 					<Route path="/review-course" element={<CoursesReview />} />

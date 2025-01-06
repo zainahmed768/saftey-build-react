@@ -159,6 +159,14 @@ const CourseDetails = () => {
 									src={courseDetail?.course_img}
 									alt=""
 									className="img-fluid"
+									style={{
+										width: "435px",
+										height: "327px",
+										objectFit: "contain",
+										border: "1px solid rgb(146 144 144)",
+										outlineColor: "rgba(0, 0, 0, 0.5)",
+										padding: "5px",
+									}}
 								/>
 							</div>
 						</Col>
@@ -189,7 +197,7 @@ const CourseDetails = () => {
 							</div>
 
 							<div className="row">
-								<div className="col-lg-2">
+								<div className="col-lg-2 setmarging">
 									<span className="reg-font level-8">Price</span>
 									<h1 className="heading-font level-5 text-uppercase dark-color letter-2">
 										${courseDetail?.price}
