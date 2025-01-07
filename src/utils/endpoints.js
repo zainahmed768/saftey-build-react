@@ -25,6 +25,8 @@ export const FAQ = "faqs";
 
 export const PAGES = "page";
 
+export const REVIEWS = "reviews";
+
 export const ALL_COURSES = "get-all-course";
 
 export const GET_SINGLE_COURSES = "get-single-course";

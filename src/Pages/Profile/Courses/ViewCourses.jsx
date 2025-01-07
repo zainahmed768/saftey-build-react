@@ -65,7 +65,7 @@ const ViewCourses = () => {
 	}
 	return (
 		<>
-			<ProfileLayout type={"team leader"} sidebar={false}>
+			<ProfileLayout type={viewCourse?.title} sidebar={false}>
 				<div className="col-lg-12">
 					<div className="row">
 						<div className="col-lg-8">
@@ -134,7 +134,7 @@ const ViewCourses = () => {
 									</div>
 								</div>
 
-								<div className="row">
+								{/* <div className="row">
 									<div className="col-lg-8">
 										<div className="view-courses-chapter-wrapper">
 											<h3 className="heading-font level-4  text-uppercase">
@@ -149,7 +149,6 @@ const ViewCourses = () => {
 														style={{ cursor: "pointer" }}
 													>
 														<span class="badge bg-dark">
-															{/* Chapter 1 : 10<b>/15</b> */}
 															{item?.title}
 														</span>
 													</div>
@@ -157,7 +156,7 @@ const ViewCourses = () => {
 											</div>
 										</div>
 									</div>
-								</div>
+								</div> */}
 							</div>
 						</div>
 						<div className="col-lg-4">
@@ -220,7 +219,7 @@ const ViewCourses = () => {
 											course content
 										</h4>
 									</div>
-									<CourseContent content={viewCourse} />
+									<CourseContent content={viewCourse} handleChapterDetail={handleChapterDetail} />
 								</div>
 							</div>
 						</div>

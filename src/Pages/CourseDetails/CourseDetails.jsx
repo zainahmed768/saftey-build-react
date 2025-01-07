@@ -391,7 +391,7 @@ const CourseDetails = () => {
 											<FeedBackCard
 												title={item?.title}
 												desc={item?.content}
-												avatar={item?.image}
+												avatar={item?.user?.image_url}
 												blockquote={item?.blockquote}
 												rating={item?.rating}
 											/>

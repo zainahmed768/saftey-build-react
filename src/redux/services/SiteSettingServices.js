@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { BASE_URL } from "../../utils/baseUrl";
-import { PAGES } from "../../utils/endpoints";
+import { PAGES, REVIEWS } from "../../utils/endpoints";
 
 const SiteSettingServices = createApi({
   reducerPath: "SiteSettingServices",
@@ -16,9 +16,17 @@ const SiteSettingServices = createApi({
         };
       },
     }),
+    reviews: build.query({
+      query: (name) => {
+        return {
+          url: `${REVIEWS}`,
+          method: "GET",
+        };
+      },
+    }),
   }),
 });
 
 export default SiteSettingServices;
 
-export const { usePagesQuery } = SiteSettingServices;
+export const { usePagesQuery, useReviewsQuery } = SiteSettingServices;
