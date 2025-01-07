@@ -16,21 +16,23 @@ import {
 
 const Courses = () => {
 	const navigate = useNavigate();
-	const { data: allcourses, isLoading } = useAllCoursesQuery();
+	const [current, setCurrent] = useState(1);
+	const { data: allcourses, isLoading } = useAllCoursesQuery(current);
 	const [sortCourse, { data: sortCourseData }] = useLazySortCoursesQuery();
 	const [searchCourses, { data: searchCourseData }] =
 		useLazySearchCoursesQuery(); // Add lazy query for search
-
 	const [allCourses, setAllCourses] = useState([]);
 	const [searchTerm, setSearchTerm] = useState("");
-	const [current, setCurrent] = useState(1);
-	const [debounceTimeout, setDebounceTimeout] = useState(null);
 
+	const [debounceTimeout, setDebounceTimeout] = useState(null);
+	console.log(allCourses, "asdklasdk");
 	useEffect(() => {
 		if (allcourses?.response?.data) {
 			setAllCourses(allcourses.response.data);
 		}
 	}, [allcourses]);
+	const pageSize = allCourses?.limit || 6;
+	const total = allCourses?.total;
 
 	useEffect(() => {
 		if (sortCourseData?.response?.data) {
@@ -135,7 +137,7 @@ const Courses = () => {
 									</select>
 								</div>
 
-								<div className="col-lg-1 my-auto">
+								{/* <div className="col-lg-1 my-auto">
 									<div className="yellow_box">
 										<img src={box_icon} alt="Box Icon" className="img-fluid" />
 									</div>
@@ -145,12 +147,12 @@ const Courses = () => {
 									<div className="dots_bar">
 										<img src={dots_bar} alt="Dots Icon" className="img-fluid" />
 									</div>
-								</div>
+								</div> */}
 							</div>
 
 							<div className="py-3">
 								<div className="row">
-									{allCourses?.map((item, key) => (
+									{allCourses?.data?.map((item, key) => (
 										<div className="col-lg-4" key={key}>
 											<CoursesCard
 												onClick={() => onClick(item)}
@@ -158,7 +160,7 @@ const Courses = () => {
 												label={item?.label}
 												title={item?.title}
 												price={item?.price}
-												rating={undefined}
+												rating={item?.course_avg_rating}
 												isActiveStar={false}
 												width={"300px"}
 												height={"167px"}
@@ -169,7 +171,12 @@ const Courses = () => {
 							</div>
 
 							<div className="d-flex justify-content-center mt-5">
-								<Pagination current={current} onChange={onChange} total={50} />
+								<Pagination
+									current={current}
+									pageSize={pageSize}
+									total={total}
+									onChange={onChange}
+								/>
 							</div>
 						</>
 					)}

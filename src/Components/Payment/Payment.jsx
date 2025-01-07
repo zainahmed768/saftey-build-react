@@ -13,6 +13,7 @@ const PaymentModal = ({
 	chapterId,
 	setShow,
 	refetch,
+	onPaymentSuccess = () => {},
 }) => {
 	const stripe = useStripe();
 	const elements = useElements();
@@ -44,6 +45,8 @@ const PaymentModal = ({
 			data.append("type", type);
 			if (chapterId && type == "video") {
 				data.append("chapter_id", chapterId);
+			} else if (chapterId && type == "certificate") {
+				data.append("certificate_id", chapterId);
 			}
 
 			addPayment(data);
@@ -73,6 +76,9 @@ const PaymentModal = ({
 			});
 			refetch();
 			setShow(false);
+			if (type == "certificate") {
+				onPaymentSuccess();
+			}
 		}
 	}, [response?.isSuccess]);
 

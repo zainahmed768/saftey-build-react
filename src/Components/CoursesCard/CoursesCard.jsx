@@ -32,7 +32,7 @@ const CoursesCard = ({
 		setActiveStar(isActiveStar);
 	}, []);
 
-	console.log(activeStar, rating, "asdjasd");
+	console.log(isActiveStar, rating, "asdjasd");
 
 	return (
 		<>
@@ -72,14 +72,14 @@ const CoursesCard = ({
 						</h2>
 					</div>
 					<hr />
-					{activeStar ? (
+					{!activeStar ? (
 						<>
 							<div className="d-flex justify-content-between">
 								<p>
 									{renderStars(rating)}{" "}
 									<span className="level-9 bold-font text-uppercase">
 										{" "}
-										{rating}
+										{rating ? Number(rating).toFixed(1) : "0"}{" "}
 									</span>
 								</p>
 								<p className="heading-font dark-color level-5">${price}</p>

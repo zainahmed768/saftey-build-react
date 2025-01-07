@@ -4,8 +4,8 @@ import CertificatesCard from "./CertificatesCard";
 import { useCertificateStudentQuery } from "../../../redux/services/AuthServices";
 
 const MyCertificates = () => {
-	const { data } = useCertificateStudentQuery();
-
+	const { data, refetch } = useCertificateStudentQuery();
+	let certificate = data?.response?.data;
 	console.log(data?.response?.data, "daj22");
 	return (
 		<>
@@ -20,7 +20,7 @@ const MyCertificates = () => {
 				</div>
 				<div className="row">
 					<div className="col-lg-12">
-						<CertificatesCard />
+						<CertificatesCard certificate={certificate} refetch={refetch} />
 					</div>
 				</div>
 			</ProfileLayout>

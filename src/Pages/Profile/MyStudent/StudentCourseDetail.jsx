@@ -12,6 +12,7 @@ const StudentCourseDetail = () => {
 	const { data } = useGetStudentDetailsQuery(id);
 	const student = data?.response?.data?.student;
 	const course = data?.response?.data?.courses;
+
 	return (
 		<ProfileLayout type={"team leader"}>
 			<div className="row">
@@ -20,7 +21,7 @@ const StudentCourseDetail = () => {
 						<div className="student-info-wrapper">
 							<div className="student-info-img-wrapper">
 								<figure>
-									<img src={courseImg1} className="img-fluid" alt="" />
+									<img src={student?.image} className="img-fluid" alt="" />
 								</figure>
 								<div className="student-name-wrapper">
 									<h4 className="heading-font dark-color mt-3 mb-0 text-uppercase">

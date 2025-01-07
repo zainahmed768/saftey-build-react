@@ -28,6 +28,8 @@ const ViewCourses = () => {
 	const [show, setShow] = useState(false);
 	const [type, setType] = useState("");
 
+	
+
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 	const onChange = (e) => {

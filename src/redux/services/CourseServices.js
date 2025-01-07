@@ -28,9 +28,9 @@ const CourseServices = createApi({
 	}),
 	endpoints: (build) => ({
 		allCourses: build.query({
-			query: () => {
+			query: (page) => {
 				return {
-					url: ALL_COURSES,
+					url: `${ALL_COURSES}?page=${page}`,
 					method: "GET",
 				};
 			},
