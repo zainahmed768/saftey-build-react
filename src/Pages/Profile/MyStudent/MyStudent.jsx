@@ -7,9 +7,11 @@ import StudentCard from "./StudentCard";
 import { courseImg1, courseImg2, courseImg3 } from "../../../constant";
 import { students } from "../../../constant/data";
 import { useGetStudentQuery } from "../../../redux/services/AuthServices";
+import { useSelector } from "react-redux";
 
 const MyStudent = () => {
 	const [search, setSearch] = useState("");
+	const userData = useSelector((state) => state.AuthReducer.user);
 	const [debouncedSearch, setDebouncedSearch] = useState("");
 	const { data: student, isLoading } = useGetStudentQuery(debouncedSearch);
 	let myStudents = student?.response?.data;
@@ -26,7 +28,7 @@ const MyStudent = () => {
 
 	return (
 		<>
-			<ProfileLayout type={"team leader"}>
+			<ProfileLayout type={userData?.role_name}>
 				<div class="row">
 					<div class="col-lg-4 col">
 						<h2 class="level-3-sm student-heaing heading-font dark-color mt-3 mb-0 text-uppercase">

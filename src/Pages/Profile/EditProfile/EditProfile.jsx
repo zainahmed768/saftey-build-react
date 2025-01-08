@@ -59,15 +59,16 @@ const EditProfile = () => {
 			});
 		}
 	}, [response]);
+	const userads = useSelector((state) => state?.AuthReducer?.user);
 	return (
 		<>
-			<ProfileLayout type={"team leader"} File={file} setFile={setFile}>
+			<ProfileLayout type={userads?.role_name} File={file} setFile={setFile}>
 				<div class="row">
 					<div class="col-lg-6 col">
 						<h2 class="level-3-sm heading-font dark-color mt-3 mb-0 text-uppercase">
 							Edit Profile
 						</h2>
-						<p>Nunc pellentesque libero et lore</p>
+						{/* <p>Nunc pellentesque libero et lore</p> */}
 					</div>
 				</div>
 				<div class="row">

@@ -24,6 +24,8 @@ export const CONTACT_US = `/contact-us`;
 export const FAQ = "faqs";
 
 export const PAGES = "page";
+export const ABOUT = "about-us";
+export const SITE_SETTINGS = "site-settings";
 
 export const REVIEWS = "reviews";
 

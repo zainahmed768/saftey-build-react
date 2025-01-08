@@ -4,6 +4,7 @@ import { myorderImg } from "../../../constant";
 import "../MyOrders/MyOrder.css";
 import { useMyOrdersQuery } from "../../../redux/services/AuthServices";
 import { Spin } from "antd";
+import { useSelector } from "react-redux";
 
 const MyOrders = () => {
 	const { data: orders, isLoading, refetch } = useMyOrdersQuery();
@@ -21,15 +22,16 @@ const MyOrders = () => {
 		refetch();
 	}, [orders, myOrders]);
 	console.log(isLoading, myOrders, "hdcbsdjnc");
+	const user = useSelector((state) => state?.AuthReducer?.user);
 	return (
 		<>
-			<ProfileLayout type={"team leader"}>
+			<ProfileLayout type={user?.role_name}>
 				<div className="row">
 					<div className="col-lg-6">
 						<h2 className="level-3-sm heading-font dark-color mt-3 mb-0 text-uppercase">
 							My Orders
 						</h2>
-						<p>Nunc pellentesque libero et lore</p>
+						{/* <p>Nunc pellentesque libero et lore</p> */}
 					</div>
 				</div>
 				{isLoading ? (
@@ -214,13 +216,14 @@ const MyOrders = () => {
 							<tbody>
 								{myOrders?.map((order, index) =>
 									order?.order_detail?.map((course, i) => {
+										console.log(course, "sadkhasjdh");
 										return (
 											<tr className="light-bg-div p-0 border-1 my-3">
 												<td className="py-md-1 py-2">
 													<div className="d-flex align-items-center p-2 product-wrapper justify-content-around">
 														<div className="my-order-product-img">
 															<img
-																src={course?.course?.thumbnail}
+																src={course?.course?.course_img}
 																alt="my-order-product"
 																className="img-fluid"
 															/>

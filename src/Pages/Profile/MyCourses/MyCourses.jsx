@@ -6,6 +6,7 @@ import { courses } from "../../../constant/data";
 import CoursesReview from "./CoursesReview";
 import { useMyCoursesQuery } from "../../../redux/services/AuthServices";
 import { Spin } from "antd";
+import { useSelector } from "react-redux";
 
 const MyCourses = () => {
 	const { data: getMyCourses, isLoading, refetch } = useMyCoursesQuery();
@@ -17,15 +18,16 @@ const MyCourses = () => {
 	useEffect(() => {
 		refetch();
 	}, [myCourse]);
+	const user = useSelector((state) => state?.AuthReducer?.user);
 	return (
 		<>
-			<ProfileLayout type={"team leader"}>
+			<ProfileLayout type={user?.role_name}>
 				<div class="row">
 					<div class="col-lg-6 col">
 						<h2 class="level-3-sm student-heaing heading-font dark-color mt-3 mb-0 text-uppercase">
 							mY courses
 						</h2>
-						<p>Nunc pellentesque libero et lore</p>
+						{/* <p>Nunc pellentesque libero et lore</p> */}
 					</div>
 				</div>
 				<div className="row">

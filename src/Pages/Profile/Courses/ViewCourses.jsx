@@ -28,8 +28,6 @@ const ViewCourses = () => {
 	const [show, setShow] = useState(false);
 	const [type, setType] = useState("");
 
-	
-
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 	const onChange = (e) => {
@@ -219,7 +217,10 @@ const ViewCourses = () => {
 											course content
 										</h4>
 									</div>
-									<CourseContent content={viewCourse} handleChapterDetail={handleChapterDetail} />
+									<CourseContent
+										content={viewCourse}
+										handleChapterDetail={handleChapterDetail}
+									/>
 								</div>
 							</div>
 						</div>

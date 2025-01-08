@@ -5,6 +5,7 @@ import CommanButton from "../../../Components/CommanButton/CommanButton";
 import { useChangePasswordMutation } from "../../../redux/services/AuthServices";
 import Alert from "../../../Components/SweetAlert/Alert";
 import { changePasswordValidation } from "../../../constant/HelperFunction";
+import { useSelector } from "react-redux";
 const ChangePassword = () => {
 	const [formErrors, setFormErrors] = useState({});
 	const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
@@ -75,16 +76,16 @@ const ChangePassword = () => {
 			});
 		}
 	}, [response?.isSuccess]);
-
+	const user = useSelector((state) => state?.AuthReducer?.user);
 	return (
 		<>
-			<ProfileLayout type={"team leader"}>
+			<ProfileLayout type={user?.role_name}>
 				<div class="row">
 					<div class="col-lg-8 col">
 						<h2 class="level-3-sm heading-font dark-color mt-3 mb-0 text-uppercase">
 							Change Password
 						</h2>
-						<p>Nunc pellentesque libero et lore</p>
+						{/* <p>Nunc pellentesque libero et lore</p> */}
 					</div>
 				</div>
 				<div class="row">
