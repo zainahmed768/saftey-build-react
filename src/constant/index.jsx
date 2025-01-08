@@ -7,15 +7,17 @@ import pdfImg from "../assets/images/pdf.png";
 import myorderImg from "../assets/images/product_img.png";
 import coursesImage from "../assets/images/courses-img.png";
 import playImg from "../assets/images/play.png";
+import DummyVideo from "../assets/images/dummy-video.mp4";
 
 export {
-  courseImg1,
-  courseImg2,
-  courseImg3,
-  coursesImg,
-  certificatesImg,
-  pdfImg,
-  myorderImg,
-  coursesImage,
-  playImg
+	courseImg1,
+	courseImg2,
+	courseImg3,
+	coursesImg,
+	certificatesImg,
+	pdfImg,
+	myorderImg,
+	coursesImage,
+	playImg,
+	DummyVideo,
 };

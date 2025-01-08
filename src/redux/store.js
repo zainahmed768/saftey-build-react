@@ -43,34 +43,34 @@ import PaymentServices from "./services/PaymentServices";
 
 // Persist configuration for CartReducer
 const cartPersistConfig = {
-  key: "cart",
-  storage, // Use localStorage for persistence
+	key: "cart",
+	storage, // Use localStorage for persistence
 };
 // Wrap the CartReducer with persistReducer
 const persistedCartReducer = persistReducer(cartPersistConfig, CartReducer);
 
 const store = configureStore({
-  reducer: {
-    AuthReducer: AuthReducer,
-    CartReducer: persistedCartReducer, // Use the persisted reducer here
-    [AuthServices.reducerPath]: AuthServices.reducer,
-    [ContactServices.reducerPath]: ContactServices.reducer,
-    [FaqServices.reducerPath]: FaqServices.reducer,
-    [SiteSettingServices.reducerPath]: SiteSettingServices.reducer,
-    [CourseServices.reducerPath]: CourseServices.reducer,
-    [PaymentServices.reducerPath]: PaymentServices.reducer,
-  },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: false, // Required to handle non-serializable actions from redux-persist
-    }).concat([
-      AuthServices.middleware,
-      ContactServices.middleware,
-      FaqServices.middleware,
-      SiteSettingServices.middleware,
-      CourseServices.middleware,
-      PaymentServices.middleware,
-    ]),
+	reducer: {
+		AuthReducer: AuthReducer,
+		CartReducer: persistedCartReducer, // Use the persisted reducer here
+		[AuthServices.reducerPath]: AuthServices.reducer,
+		[ContactServices.reducerPath]: ContactServices.reducer,
+		[FaqServices.reducerPath]: FaqServices.reducer,
+		[SiteSettingServices.reducerPath]: SiteSettingServices.reducer,
+		[CourseServices.reducerPath]: CourseServices.reducer,
+		[PaymentServices.reducerPath]: PaymentServices.reducer,
+	},
+	middleware: (getDefaultMiddleware) =>
+		getDefaultMiddleware({
+			serializableCheck: false, // Required to handle non-serializable actions from redux-persist
+		}).concat([
+			AuthServices.middleware,
+			ContactServices.middleware,
+			FaqServices.middleware,
+			SiteSettingServices.middleware,
+			CourseServices.middleware,
+			PaymentServices.middleware,
+		]),
 });
 
 // Persist the store

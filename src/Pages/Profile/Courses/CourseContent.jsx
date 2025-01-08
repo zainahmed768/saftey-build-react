@@ -1,14 +1,22 @@
 import React from "react";
 import { IoIosPlayCircle } from "react-icons/io";
 import CommanButton from "../../../Components/CommanButton/CommanButton";
+import { Link } from "react-router-dom";
 
-const CourseContent = ({ content }) => {
+const CourseContent = ({ content, handleChapterDetail }) => {
+  const chapterRedirect = (content) => {
+    console.log(content, "dhsdb");
+    handleChapterDetail(content);
+  };
   return (
     <>
       {content?.chapters?.map((item, index) => {
         return (
           <div className="course-content-list-wrapper d-flex align-items-center justify-content-between py-3">
-            <div className="course-list-right-wrapper">
+            <div
+              className="course-list-right-wrapper"
+              onClick={() => chapterRedirect(item)}
+            >
               <div className="course-heading-wrapper">
                 <h5>{item?.title}</h5>
               </div>

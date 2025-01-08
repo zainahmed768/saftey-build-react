@@ -4,41 +4,43 @@ import { myorderImg } from "../../../constant";
 import "../MyOrders/MyOrder.css";
 import { useMyOrdersQuery } from "../../../redux/services/AuthServices";
 import { Spin } from "antd";
+import { useSelector } from "react-redux";
 
 const MyOrders = () => {
-  const { data: orders, isLoading, refetch } = useMyOrdersQuery();
-  let myOrders = orders?.response?.data;
+	const { data: orders, isLoading, refetch } = useMyOrdersQuery();
+	let myOrders = orders?.response?.data;
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
-    const year = date.getFullYear();
-    return `${day}-${month}-${year}`;
-  };
+	const formatDate = (dateString) => {
+		const date = new Date(dateString);
+		const day = String(date.getDate()).padStart(2, "0");
+		const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
+		const year = date.getFullYear();
+		return `${day}-${month}-${year}`;
+	};
 
-  useEffect(() => {
-    refetch();
-  }, [orders,myOrders]);
-  console.log(isLoading, myOrders, "hdcbsdjnc");
-  return (
-    <>
-      <ProfileLayout type={"team leader"}>
-        <div className="row">
-          <div className="col-lg-6">
-            <h2 className="level-3-sm heading-font dark-color mt-3 mb-0 text-uppercase">
-              My Orders
-            </h2>
-            <p>Nunc pellentesque libero et lore</p>
-          </div>
-        </div>
-        {isLoading ? (
-          <div className="courses-loader-wrapper">
-            <Spin size="large" />
-          </div>
-        ) : (
-          <div className="table-responsive">
-            {/* <table className="order-table w-100">
+	useEffect(() => {
+		refetch();
+	}, [orders, myOrders]);
+	console.log(isLoading, myOrders, "hdcbsdjnc");
+	const user = useSelector((state) => state?.AuthReducer?.user);
+	return (
+		<>
+			<ProfileLayout type={user?.role_name}>
+				<div className="row">
+					<div className="col-lg-6">
+						<h2 className="level-3-sm heading-font dark-color mt-3 mb-0 text-uppercase">
+							My Orders
+						</h2>
+						{/* <p>Nunc pellentesque libero et lore</p> */}
+					</div>
+				</div>
+				{isLoading ? (
+					<div className="courses-loader-wrapper">
+						<Spin size="large" />
+					</div>
+				) : (
+					<div className="table-responsive">
+						{/* <table className="order-table w-100">
               <thead>
                 <tr>
                   <th className="level-5 primary-bold-font order-img-col dark-color uppercase mt-2 text-center"></th>
@@ -189,69 +191,76 @@ const MyOrders = () => {
                 </tr>
               </tbody>
             </table> */}
-            <table className="order-table w-100">
-              <thead>
-                <tr>
-                  <th className="level-5 primary-bold-font order-img-col dark-color uppercase mt-2 text-center"></th>
-                  <th className="level-5 primary-bold-font order-no-col dark-color uppercase mt-2 text-center pb-2">
-                    oRDER NUMBER
-                  </th>
-                  <th className="level-5 primary-bold-font dark-color uppercase mt-2 text-center dated-col pb-2">
-                    Dated
-                  </th>
-                  <th className="level-5 primary-bold-font dark-color uppercase mt-2 text-center amount-col pb-2">
-                    TOTAL AMOUNT
-                  </th>
-                </tr>
-              </thead>
+						<table className="order-table w-100">
+							{myOrders?.length > 0 ? (
+								<thead>
+									<tr>
+										<th className="level-5 primary-bold-font order-img-col dark-color uppercase mt-2 text-center"></th>
+										<th className="level-5 primary-bold-font order-no-col dark-color uppercase mt-2 text-center pb-2">
+											oRDER NUMBER
+										</th>
+										<th className="level-5 primary-bold-font dark-color uppercase mt-2 text-center dated-col pb-2">
+											Dated
+										</th>
+										<th className="level-5 primary-bold-font dark-color uppercase mt-2 text-center amount-col pb-2">
+											TOTAL AMOUNT
+										</th>
+									</tr>
+								</thead>
+							) : (
+								<h2 className="level-3-sm student-heaing heading-font dark-color mt-3 mb-0 text-uppercase">
+									you have not placed any order yet
+								</h2>
+							)}
 
-              <tbody>
-                {myOrders?.map((order, index) =>
-                  order?.order_detail?.map((course, i) => {
-                    return (
-                      <tr className="light-bg-div p-0 border-1 my-3">
-                        <td className="py-md-1 py-2">
-                          <div className="d-flex align-items-center p-2 product-wrapper justify-content-around">
-                            <div className="my-order-product-img">
-                              <img
-                                src={course?.course?.thumbnail}
-                                alt="my-order-product"
-                                className="img-fluid"
-                              />
-                            </div>
-                            <div className="ms-lg-3">
-                              <span className="level-6 secondary-regular-font dark-color text-center m-0">
-                                {course?.course?.title}
-                              </span>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="py-md-1 py-2">
-                          <p className="level-6 secondary-regular-font dark-color text-center m-0 order-no">
-                            {course?.order_id}
-                          </p>
-                        </td>
-                        <td className="py-md-1 py-2">
-                          <p className="level-6 secondary-regular-font dark-color text-center m-0 dated">
-                            {formatDate(order?.created_at)}
-                          </p>
-                        </td>
-                        <td className="py-md-1 py-2">
-                          <p className="level-6 secondary-regular-font dark-color text-center m-0 price">
-                            $ {course?.price}
-                          </p>
-                        </td>
-                      </tr>
-                    );
-                  })
-                )}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </ProfileLayout>
-    </>
-  );
+							<tbody>
+								{myOrders?.map((order, index) =>
+									order?.order_detail?.map((course, i) => {
+										console.log(course, "sadkhasjdh");
+										return (
+											<tr className="light-bg-div p-0 border-1 my-3">
+												<td className="py-md-1 py-2">
+													<div className="d-flex align-items-center p-2 product-wrapper justify-content-around">
+														<div className="my-order-product-img">
+															<img
+																src={course?.course?.course_img}
+																alt="my-order-product"
+																className="img-fluid"
+															/>
+														</div>
+														<div className="ms-lg-3">
+															<span className="level-6 secondary-regular-font dark-color text-center m-0">
+																{course?.course?.title}
+															</span>
+														</div>
+													</div>
+												</td>
+												<td className="py-md-1 py-2">
+													<p className="level-6 secondary-regular-font dark-color text-center m-0 order-no">
+														{course?.order_id}
+													</p>
+												</td>
+												<td className="py-md-1 py-2">
+													<p className="level-6 secondary-regular-font dark-color text-center m-0 dated">
+														{formatDate(order?.created_at)}
+													</p>
+												</td>
+												<td className="py-md-1 py-2">
+													<p className="level-6 secondary-regular-font dark-color text-center m-0 price">
+														$ {course?.price}
+													</p>
+												</td>
+											</tr>
+										);
+									}),
+								)}
+							</tbody>
+						</table>
+					</div>
+				)}
+			</ProfileLayout>
+		</>
+	);
 };
 
 export default MyOrders;
