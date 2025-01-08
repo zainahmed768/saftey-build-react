@@ -81,7 +81,7 @@ const ChapterDetail = () => {
 
 	useEffect(() => {
 		// Trigger handleStop when progress is close to duration
-		if (duration > 0 && progress >= duration - 1) {
+		if (duration > 0 && progress >= duration) {
 			handleStop(false);
 		}
 	}, [progress, duration]);
@@ -123,6 +123,7 @@ const ChapterDetail = () => {
 									onReady={() => setReadyToSeek(true)}
 									onBuffer={() => setIsBuffering(true)}
 									onBufferEnd={() => setIsBuffering(false)}
+									controls={true}
 								/>
 								{isBuffering && (
 									<div className="buffering-overlay">
@@ -154,15 +155,19 @@ const ChapterDetail = () => {
 										</span>
 									</div>
 									<div className="text-end d-flex justify-content-end mt-3">
-										<span className={`GeneralButton`}>
-											<button
-												onClick={() =>
-													navigate("/quiz/" + chapterDetails?.quizes?.[0]?.slug)
-												}
-											>
-												Take Quiz 1
-											</button>
-										</span>
+										{chapterDetails?.quizes?.length != 0 && (
+											<span className={`GeneralButton`}>
+												<button
+													onClick={() =>
+														navigate(
+															"/quiz/" + chapterDetails?.quizes?.[0]?.slug,
+														)
+													}
+												>
+													Take Quiz 1
+												</button>
+											</span>
+										)}
 									</div>
 									<p>{chapterDetails?.description}</p>
 								</div>

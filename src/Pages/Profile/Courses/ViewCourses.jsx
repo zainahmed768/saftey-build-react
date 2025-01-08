@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ProfileLayout from "../../../layout/ProfileLayout/ProfileLayout";
 import { coursesImage, playImg } from "../../../constant";
 import CommanButton from "../../../Components/CommanButton/CommanButton";
@@ -24,9 +24,52 @@ const ViewCourses = () => {
 	const [chapterId, setChapterId] = useState(null);
 	let viewCourse = getCourse?.response?.data?.course;
 	let CourseMarks = getCourse?.response?.data;
-	console.log(CourseMarks, "asdjasdj6236");
+	console.log(viewCourse?.certificates, "asdjasdj6236");
 	const [show, setShow] = useState(false);
 	const [type, setType] = useState("");
+
+	//   const handelDownloadCertificate = () => {
+	//     setType("certificate");
+	//     handleShowasd()
+	//   };
+
+	const [paymentCompleted, setPaymentCompleted] = useState(false);
+	const [downloadLink, setDownloadLink] = useState("");
+	const [showPayment, setShowPayment] = useState(false);
+	// Simulate download after payment
+	useEffect(() => {
+		if (paymentCompleted && downloadLink) {
+			// Automatically trigger the certificate download
+			const link = document.createElement("a");
+			link.href = downloadLink;
+			link.download = "certificate.pdf"; // File name
+			link.target = "_blank";
+			link.click();
+
+			// Reset state after download
+			setPaymentCompleted(false);
+			setDownloadLink("");
+		}
+	}, [paymentCompleted, downloadLink]);
+
+	const handleShowasd = (url, key) => {
+		if (!key) {
+			setShowPayment(true);
+			setDownloadLink(url);
+		} else {
+			const link = document.createElement("a");
+			link.href = url;
+			link.download = "certificate.pdf"; // File name
+			link.target = "_blank";
+			link.click();
+		}
+	};
+
+	const handleClosePayment = () => setShowPayment(false);
+	const handlePaymentSuccess = () => {
+		// Set the download link after payment success
+		setPaymentCompleted(true);
+	};
 
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
@@ -42,11 +85,6 @@ const ViewCourses = () => {
 		} else {
 			navigate(`/chapter-detail/${item?.slug}`);
 		}
-	};
-
-	const handelDownloadCertificate = () => {
-		setType("certificate");
-		handleShow();
 	};
 
 	if (isLoading) {
@@ -94,10 +132,17 @@ const ViewCourses = () => {
 									<span className={`GeneralButton`}>
 										<button type="submit">submit review</button>
 									</span>
-									<CommanButton
-										label={"download certificate"}
-										onClick={handelDownloadCertificate}
-									/>
+									{viewCourse?.certificates?.length > 0 && (
+										<CommanButton
+											label={"download certificate"}
+											onClick={() =>
+												handleShowasd(
+													viewCourse?.certificates?.[0]?.certificate_url,
+													viewCourse?.certificates?.[0]?.is_purchased,
+												)
+											}
+										/>
+									)}
 								</div>
 								<div className="view-course-result-wrapper">
 									<div className="view-course-result-heading-wrapper">
@@ -202,11 +247,15 @@ const ViewCourses = () => {
 											</li>
 											<li>
 												<span className="property">Total Marks :</span>
-												<span className="value">50</span>
+												<span className="value">
+													{CourseMarks?.quizTotalMarks}
+												</span>
 											</li>
 											<li>
 												<span className="property">Achieved Marks :</span>
-												<span className="value">50</span>
+												<span className="value">
+													{CourseMarks?.achievedMarks}
+												</span>
 											</li>
 										</ul>
 									</div>
@@ -234,6 +283,15 @@ const ViewCourses = () => {
 					handleClose={handleClose}
 					chapterId={chapterId}
 					type={type}
+				/>
+				<PaymentModal
+					show={showPayment}
+					handleClose={handleClosePayment}
+					type={"certificate"}
+					chapterId={viewCourse?.certificates?.[0]?.id}
+					setShow={setShowPayment}
+					refetch={refetch}
+					onPaymentSuccess={() => handlePaymentSuccess()}
 				/>
 				{/* <Modal show={show} onHide={handleClose}  size="lg">
          
