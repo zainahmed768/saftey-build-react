@@ -130,7 +130,12 @@ const ViewCourses = () => {
 								</div>
 								<div className="view-course-btn-wrapper d-flex gap-3 mb-5">
 									<span className={`GeneralButton`}>
-										<button type="submit">submit review</button>
+										<button
+											type="button"
+											onClick={() => navigate("/my-course")}
+										>
+											submit review
+										</button>
 									</span>
 									{viewCourse?.certificates?.length > 0 && (
 										<CommanButton
