@@ -3,7 +3,7 @@ import { IoIosPlayCircle } from "react-icons/io";
 import CommanButton from "../../../Components/CommanButton/CommanButton";
 import { Link } from "react-router-dom";
 
-const CourseContent = ({ content, handleChapterDetail }) => {
+const CourseContent = ({ content, handleChapterDetail, navigate }) => {
 	// const isChapterDisabled = (data, index) => {
 	// 	console.log(data[index - 1], "asdjjasdj");
 	// 	// Agar index 0 hai tou button kabhi disable nahi hoga

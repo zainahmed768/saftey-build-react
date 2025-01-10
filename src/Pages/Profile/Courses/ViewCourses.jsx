@@ -24,7 +24,7 @@ const ViewCourses = () => {
 	const [chapterId, setChapterId] = useState(null);
 	let viewCourse = getCourse?.response?.data?.course;
 	let CourseMarks = getCourse?.response?.data;
-	console.log(viewCourse?.certificates, "asdjasdj6236");
+	console.log(param?.slug, "asdjasdj6236");
 	const [show, setShow] = useState(false);
 	const [type, setType] = useState("");
 
@@ -78,7 +78,8 @@ const ViewCourses = () => {
 	};
 
 	const handleChapterDetail = (item) => {
-		if (item?.watch_time >= item?.video_length) {
+		console.log(viewCourse, "asdjkjas");
+		if (viewCourse?.is_complete && item?.watch_time >= item?.video_length) {
 			setChapterId(item?.id);
 			setType("video");
 			handleShow();
@@ -274,6 +275,7 @@ const ViewCourses = () => {
 									<CourseContent
 										content={viewCourse}
 										handleChapterDetail={handleChapterDetail}
+										navigate={param?.slug}
 									/>
 								</div>
 							</div>

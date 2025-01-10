@@ -6,79 +6,79 @@ import { useSelector } from "react-redux";
 import { useSiteSettingQuery } from "../../redux/services/SiteSettingServices";
 
 const Footer = () => {
-  const user = useSelector((state) => state?.AuthReducer?.userToken);
-  const { data, isLoading } = useSiteSettingQuery();
-  let footerInfo = data?.response?.data;
-  console.log(data, "ajcnsdata");
-  return (
-    <>
-      <section className="footer_container">
-        <div className="container">
-          <Row
-            justify="space-between"
-            align="middle"
-            className="footer_content"
-          >
-            <Col xs={24} sm={24} md={2}>
-              <div className="footer_logo">
-                <img src={Logo} title="Logo" className="img-fluid" alt="Logo" />
-              </div>
-            </Col>
-            <Col xs={24} sm={24} md={7}>
-              <p className="footer_desc">
-                Building a safer future for site workers through comprehensive
-                training and education.
-              </p>
-            </Col>
+	const user = useSelector((state) => state?.AuthReducer?.userToken);
+	const { data, isLoading } = useSiteSettingQuery();
+	let footerInfo = data?.response?.data;
+	console.log(data, "ajcnsdata");
+	return (
+		<>
+			<section className="footer_container">
+				<div className="container">
+					<Row
+						justify="space-between"
+						align="middle"
+						className="footer_content"
+					>
+						<Col xs={24} sm={24} md={2}>
+							<div className="footer_logo">
+								<img src={Logo} title="Logo" className="img-fluid" alt="Logo" />
+							</div>
+						</Col>
+						<Col xs={24} sm={24} md={7}>
+							<p className="footer_desc">
+								Building a safer future for site workers through comprehensive
+								training and education.
+							</p>
+						</Col>
 
-            <Col xs={24} sm={24} md={3}>
-              <Space direction="vertical">
-                <h4 className="footer_link_heading">Quick Links</h4>
-                <ul className="footer_links">
-                  <li>
-                    <a href="/courses">Courses</a>
-                  </li>
-                  {user && (
-                    <li>
-                      <a href="/my-wishlist">Wishlist</a>
-                    </li>
-                  )}
-                  <li>
-                    <a href="/contact-us">Contact</a>
-                  </li>
-                </ul>
-              </Space>
-            </Col>
+						<Col xs={24} sm={24} md={3}>
+							<Space direction="vertical">
+								<h4 className="footer_link_heading">Quick Links</h4>
+								<ul className="footer_links">
+									<li>
+										<a href="/courses">Courses</a>
+									</li>
+									{user && (
+										<li>
+											<a href="/my-wishlist">Wishlist</a>
+										</li>
+									)}
+									<li>
+										<a href="/contact-us">Contact</a>
+									</li>
+								</ul>
+							</Space>
+						</Col>
 
-            <Col xs={24} sm={24} md={3}>
-              <Space direction="vertical">
-                <h4 className="footer_link_heading">Quick Links</h4>
-                <ul className="footer_links">
-                  <li>
-                    <a href="/faq">FAQs</a>
-                  </li>
-                  <li>
-                    <a href="/privacy-policy">Privacy Policy</a>
-                  </li>
-                  <li>
-                    <a href="/terms-conditions">Terms & Conditions</a>
-                  </li>
-                </ul>
-              </Space>
-            </Col>
+						<Col xs={24} sm={24} md={3}>
+							<Space direction="vertical">
+								<h4 className="footer_link_heading">Quick Links</h4>
+								<ul className="footer_links">
+									<li>
+										<a href="/faq">FAQs</a>
+									</li>
+									<li>
+										<a href="/privacy-policy">Privacy Policy</a>
+									</li>
+									<li>
+										<a href="/terms-conditions">Terms & Conditions</a>
+									</li>
+								</ul>
+							</Space>
+						</Col>
 
-            <Col xs={24} sm={24} md={5}>
-              <Space direction="vertical">
-                <h4 className="footer_link_heading">Contact us</h4>
-                <ul className="footer_links">
-                  <li>{footerInfo?.contact_email}</li>
-                  <li>{footerInfo?.contact_phone}</li>
-                  <li>{footerInfo?.address} </li>
-                </ul>
-              </Space>
-            </Col>
+						<Col xs={24} sm={24} md={5}>
+							<Space direction="vertical">
+								<h4 className="footer_link_heading">Contact us</h4>
+								<ul className="footer_links">
+									<li>{footerInfo?.contact_email}</li>
+									<li>{footerInfo?.contact_phone}</li>
+									<li>{footerInfo?.address} </li>
+								</ul>
+							</Space>
+						</Col>
 
-            {/* <Col xs={24} sm={24} md={3}>
+						{/* <Col xs={24} sm={24} md={3}>
               <Space direction="vertical">
                 <h4 className='footer_link_heading'>Contact Us</h4>
                 <p>Email: info@safetybuilt.net</p>
@@ -86,22 +86,22 @@ const Footer = () => {
                 <p>1703 W 111th Pl Los Angeles, CA 90059</p>
               </Space>
             </Col> */}
-          </Row>
-          <Divider
-            style={{
-              borderColor: "#545454",
-            }}
-          />
-          <Row justify="center">
-            <Col>
-              <p className="footer_copy">
-                © 2024 Safety Built. All Rights Reserved.
-              </p>
-            </Col>
-          </Row>
-        </div>
-      </section>
-      {/* <section className='footer_container'>
+					</Row>
+					<Divider
+						style={{
+							borderColor: "#545454",
+						}}
+					/>
+					<Row justify="center">
+						<Col>
+							<p className="footer_copy">
+								© {new Date().getFullYear()} Safety Built. All Rights Reserved.
+							</p>
+						</Col>
+					</Row>
+				</div>
+			</section>
+			{/* <section className='footer_container'>
         <div className="container my-auto px-5 pt-5 pb-2">
           <div className="row">
             <div className="col-lg-2 p-3">
@@ -145,8 +145,8 @@ const Footer = () => {
           </div>
         </div>
       </section> */}
-    </>
-  );
+		</>
+	);
 };
 
 export default Footer;

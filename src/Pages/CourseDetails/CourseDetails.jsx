@@ -201,7 +201,7 @@ const CourseDetails = () => {
 								<div className="col-lg-2 setmarging">
 									<span className="reg-font level-8">Price</span>
 									<h1 className="heading-font level-5 text-uppercase dark-color letter-2">
-										${Math.round(courseDetail?.price)}
+										${courseDetail?.price}
 									</h1>
 								</div>
 

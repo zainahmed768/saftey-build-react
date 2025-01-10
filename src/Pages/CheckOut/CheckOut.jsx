@@ -548,7 +548,7 @@ const CheckOut = () => {
 													{course?.short_des}
 												</p>
 												<p className="semi-b-font  level-8 text-capitalize">
-													price $ {Math.round(course?.price)}
+													price $ {course?.price}
 												</p>
 											</div>
 										</>
@@ -569,7 +569,7 @@ const CheckOut = () => {
 								</div>
 								<div className="col-lg-4">
 									<p className="med-font level-7 text-end text-capitalize leter-1 text-white">
-										${Math.round(paymentInfo?.promo_code)}
+										${paymentInfo?.promo_code}
 									</p>
 								</div>
 							</div>
@@ -582,7 +582,7 @@ const CheckOut = () => {
 								</div>
 								<div className="col-lg-4">
 									<p className="med-font level-7 text-end text-capitalize leter-1 text-white">
-										${Math.round(subtotal)}
+										${subtotal}
 									</p>
 								</div>
 							</div>
@@ -596,7 +596,7 @@ const CheckOut = () => {
 								</div>
 								<div className="col-lg-4">
 									<p className="med-font level-7 text-capitalize text-end leter-1 text-white">
-										${Math.round(subtotal - paymentInfo?.promo_code)}
+										${subtotal - paymentInfo?.promo_code}
 									</p>
 								</div>
 							</div>

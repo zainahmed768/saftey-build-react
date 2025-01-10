@@ -123,7 +123,7 @@ const ChapterDetail = () => {
 									onReady={() => setReadyToSeek(true)}
 									onBuffer={() => setIsBuffering(true)}
 									onBufferEnd={() => setIsBuffering(false)}
-									controls={true}
+									controls={false}
 								/>
 								{isBuffering && (
 									<div className="buffering-overlay">
