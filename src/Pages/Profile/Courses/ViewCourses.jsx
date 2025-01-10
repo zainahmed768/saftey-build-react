@@ -87,6 +87,9 @@ const ViewCourses = () => {
 			navigate(`/chapter-detail/${item?.slug}`);
 		}
 	};
+	useEffect(() => {
+		refetch();
+	  }, [refetch]);
 
 	if (isLoading) {
 		return (
