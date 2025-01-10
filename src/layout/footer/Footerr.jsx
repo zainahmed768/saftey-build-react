@@ -1,14 +1,23 @@
-import React from 'react'
-import "../footer/Footer.css"
-import Logo from "../../assets/images/footer_logo.png"
-import { Col, Divider, Row, Space } from 'antd'
+import React from "react";
+import "../footer/Footer.css";
+import Logo from "../../assets/images/footer_logo.png";
+import { Col, Divider, Row, Space } from "antd";
+import { useSelector } from "react-redux";
+import { useSiteSettingQuery } from "../../redux/services/SiteSettingServices";
 
 const Footer = () => {
+  const user = useSelector((state) => state?.AuthReducer?.userToken);
+  const { data, isLoading } = useSiteSettingQuery();
+  let footerInfo = data?.response?.data;
+  console.log(data, "ajcnsdata");
   return (
     <>
       <section className="footer_container">
         <div className="container">
-          <Row justify="space-between" align="middle" className="footer_content"
+          <Row
+            justify="space-between"
+            align="middle"
+            className="footer_content"
           >
             <Col xs={24} sm={24} md={2}>
               <div className="footer_logo">
@@ -16,42 +25,55 @@ const Footer = () => {
               </div>
             </Col>
             <Col xs={24} sm={24} md={7}>
-
               <p className="footer_desc">
-                Building a safer future for site workers through comprehensive training and education.
+                Building a safer future for site workers through comprehensive
+                training and education.
               </p>
             </Col>
 
             <Col xs={24} sm={24} md={3}>
               <Space direction="vertical">
-                <h4 className='footer_link_heading'>Quick Links</h4>
+                <h4 className="footer_link_heading">Quick Links</h4>
                 <ul className="footer_links">
-                  <li><a href="/courses">Courses</a></li>
-                  <li><a href="/wishlist">Wishlist</a></li>
-                  <li><a href="/contact-us">Contact</a></li>
+                  <li>
+                    <a href="/courses">Courses</a>
+                  </li>
+                  {user && (
+                    <li>
+                      <a href="/my-wishlist">Wishlist</a>
+                    </li>
+                  )}
+                  <li>
+                    <a href="/contact-us">Contact</a>
+                  </li>
                 </ul>
               </Space>
             </Col>
 
             <Col xs={24} sm={24} md={3}>
               <Space direction="vertical">
-                <h4 className='footer_link_heading'>Quick Links</h4>
+                <h4 className="footer_link_heading">Quick Links</h4>
                 <ul className="footer_links">
-                  <li><a href="/faq">FAQs</a></li>
-                  <li><a href="/privacy-policy">Privacy Policy</a></li>
-                  <li><a href="/terms-conditions">Terms & Conditions</a></li>
+                  <li>
+                    <a href="/faq">FAQs</a>
+                  </li>
+                  <li>
+                    <a href="/privacy-policy">Privacy Policy</a>
+                  </li>
+                  <li>
+                    <a href="/terms-conditions">Terms & Conditions</a>
+                  </li>
                 </ul>
               </Space>
             </Col>
 
-
             <Col xs={24} sm={24} md={5}>
               <Space direction="vertical">
-                <h4 className='footer_link_heading'>Contact us</h4>
+                <h4 className="footer_link_heading">Contact us</h4>
                 <ul className="footer_links">
-                  <li>info@safetybuilt.net</li>
-                  <li>(323) 202 - 8641</li>
-                  <li>1766 E 111th PI Los Angles, CA 90059  </li>
+                  <li>{footerInfo?.contact_email}</li>
+                  <li>{footerInfo?.contact_phone}</li>
+                  <li>{footerInfo?.address} </li>
                 </ul>
               </Space>
             </Col>
@@ -65,12 +87,16 @@ const Footer = () => {
               </Space>
             </Col> */}
           </Row>
-          <Divider style={{
-            borderColor: '#545454',
-          }} />
+          <Divider
+            style={{
+              borderColor: "#545454",
+            }}
+          />
           <Row justify="center">
             <Col>
-              <p className="footer_copy">© 2024 Safety Built. All Rights Reserved.</p>
+              <p className="footer_copy">
+                © 2024 Safety Built. All Rights Reserved.
+              </p>
             </Col>
           </Row>
         </div>
@@ -119,10 +145,8 @@ const Footer = () => {
           </div>
         </div>
       </section> */}
-
     </>
-  )
-}
+  );
+};
 
-export default Footer
-
+export default Footer;
