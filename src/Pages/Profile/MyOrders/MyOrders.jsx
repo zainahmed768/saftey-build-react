@@ -247,7 +247,7 @@ const MyOrders = () => {
 												</td>
 												<td className="py-md-1 py-2">
 													<p className="level-6 secondary-regular-font dark-color text-center m-0 price">
-														$ {course?.price}
+														$ {Math.round(course?.price)}
 													</p>
 												</td>
 											</tr>

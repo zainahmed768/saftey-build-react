@@ -195,7 +195,7 @@ const MyCart = () => {
 											<td>
 												<div className="my-auto">
 													<h2 className="bold-font level-6 text-capitalize">
-														$ {course?.price}
+														$ {Math.round(course?.price)}
 													</h2>
 												</div>
 											</td>
@@ -244,7 +244,7 @@ const MyCart = () => {
 									</div>
 									<div className="col-lg-4">
 										<p className="med-font level-7 text-capitalize leter-1 text-white">
-											${subTotal}
+											${Math.round(subTotal)}
 										</p>
 									</div>
 								</div>
@@ -257,7 +257,10 @@ const MyCart = () => {
 									</div>
 									<div className="col-lg-4">
 										<p className="med-font level-7 text-capitalize leter-1 text-white">
-											$ {subTotal < promoDiscount?.discount ? 0 : discount}
+											${" "}
+											{subTotal < promoDiscount?.discount
+												? 0
+												: Math.round(discount)}
 										</p>
 									</div>
 								</div>
@@ -273,7 +276,7 @@ const MyCart = () => {
 											$
 											{(subTotal < promoDiscount?.discount &&
 												subTotal - discount) ||
-												subTotal}
+												Math.round(subTotal)}
 										</p>
 									</div>
 								</div>

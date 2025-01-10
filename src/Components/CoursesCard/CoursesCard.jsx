@@ -82,13 +82,17 @@ const CoursesCard = ({
 										{rating ? Number(rating).toFixed(1) : "0"}{" "}
 									</span>
 								</p>
-								<p className="heading-font dark-color level-5">${price}</p>
+								<p className="heading-font dark-color level-5">
+									${Math.round(price)}
+								</p>
 							</div>
 						</>
 					) : (
 						<>
 							<div className="text-lg-end text-center">
-								<p className="heading-font dark-color level-5">${price}</p>
+								<p className="heading-font dark-color level-5">
+									${Math.round(price)}
+								</p>
 							</div>{" "}
 						</>
 					)}

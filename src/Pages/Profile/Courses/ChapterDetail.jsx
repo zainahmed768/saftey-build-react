@@ -86,16 +86,16 @@ const ChapterDetail = () => {
 		}
 	}, [progress, duration]);
 
-	useEffect(() => {
-		if (response?.isSuccess) {
-			Alert({
-				title: "Success",
-				text: `You have successfully watched ${chapterDetails?.title} chapter`,
-				iconStyle: "success",
-			});
-			navigate("/my-course");
-		}
-	}, [response?.isSuccess]);
+	// useEffect(() => {
+	// 	if (response?.isSuccess) {
+	// 		Alert({
+	// 			title: "Success",
+	// 			text: `You have successfully watched ${chapterDetails?.title} chapter`,
+	// 			iconStyle: "success",
+	// 		});
+	// 		navigate("/my-course");
+	// 	}
+	// }, [response?.isSuccess]);
 
 	return (
 		<>
