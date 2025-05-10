@@ -1,13 +1,22 @@
 import React from "react";
 import "../CommanButton/CommanStyles.css";
 import { Link } from "react-router-dom";
+import { Spin } from "antd";
 
-const CommanButton = ({ label, onClick, className, style, link, disabled }) => {
+const CommanButton = ({
+  label,
+  onClick,
+  className,
+  style,
+  link,
+  disabled,
+  loading,
+}) => {
   return (
     <Link to={link}>
       <span className={`GeneralButton ${className}`} onClick={onClick}>
         <button type="submit" style={style} disabled={disabled}>
-          {label}{" "}
+          {loading ? <Spin /> : label}
         </button>
       </span>
     </Link>

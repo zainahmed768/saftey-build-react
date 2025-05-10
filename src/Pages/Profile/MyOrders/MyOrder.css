@@ -92,6 +92,11 @@ table.order-table tbody tr td:last-child {
 table.order-table tbody tr td .product-wrapper span {
   font-size: 12px;
   line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 104px;
+  display: block;
 }
 .product-wrapper .my-order-product-img img {
   width: 76px;

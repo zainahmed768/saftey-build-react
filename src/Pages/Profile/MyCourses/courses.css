@@ -39,6 +39,7 @@
   height: 161px;
   object-fit: cover;
   border-radius: 8px;
+  width: 100%;
 }
 .rating-star-wrapper svg.star-svg {
   width: 30px;
@@ -49,11 +50,11 @@
   border-radius: 8px;
   padding: 12px;
 }
-.allcourse-wrapper{
-    background: #f6f6f6;
-    border-radius: 8px;
+.allcourse-wrapper {
+  background: #f6f6f6;
+  border-radius: 8px;
 }
 .courses-content-wrapper span.value b {
-    font-size: 13px;
-    font-family: 'PoppinsBold';
+  font-size: 13px;
+  font-family: "PoppinsBold";
 }

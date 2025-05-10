@@ -131,3 +131,35 @@
 .GeneralButton > button:disabled {
   opacity: 0.6;
 }
+
+.ant-spin-dot i {
+  background-color: #000 !important; /* Set the color of the default dots */
+}
+.learn-list {
+  column-count: 2;
+}
+.video-player-wrapper video {
+  height: 504px;
+}
+
+.nothing-wrapper {
+  padding: 100px 0px;
+}
+
+.nothing-wrapper h2 {
+  text-align: center;
+}
+
+.loader-wrapper {
+  height: 100vh;
+  background: #e8b71b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.courses-loader-wrapper {
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
